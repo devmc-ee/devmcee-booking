@@ -30,7 +30,7 @@ function App() {
 	return (
 		<div className = "App">
 			<header className = "App-header">
-
+				<h1>Booking</h1>
 				<div className = {"container"}>
 
 					<Form name = "booking-form" method = "post" action = "" />

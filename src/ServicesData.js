@@ -18,15 +18,13 @@ const ServicesData= {
 				90: {
 					code: 'th15',
 					length: 90,
-					price: 60,
-					discountedPrice:0
+
 
 				},
 				120: {
 					code: 'th2',
 					length: 120,
-					price: 75,
-					discountedPrice:0
+
 
 				}
 
@@ -45,21 +43,18 @@ const ServicesData= {
 				60: {
 					code: 'oil1',
 					length: 60,
-					price: 45,
-					discountedPrice:0
+
 
 				},
 				90: {
 					code: 'oil15',
 					length: 90,
-					price: 60,
-					discountedPrice:0
+
 				},
 				120: {
 					code: 'oil2',
 					length: 120,
-					price: 75,
-					discountedPrice:0
+
 				}
 
 			}
@@ -176,7 +171,7 @@ export default ServicesData
 
 export const Prices = ServicesData.prices;
 export const BookingSettings = ServicesData.bookingSettings;
-export const ServiceLengths = ServicesData.lengths;
+export const ServiceOptionsNames = ServicesData.lengths;
 export const ServicesBaseCodes=ServicesData.baseCodes;
 export const Services=ServicesData.services;
 

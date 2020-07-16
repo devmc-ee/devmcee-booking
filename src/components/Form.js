@@ -1,28 +1,18 @@
 import React, {Component} from "react";
 import ServiceGroup from "./ServiceGroup";
 import {Prices} from '../ServicesData';
+import {getPrices, totalPriceCalc, updatePrices} from "../utils";
 import TotalPrice from './TotalPrice'
 
 class Form extends Component {
 	constructor(props) {
 		super(props);
 		//localStorage.clear()
-
-		let totalServicesPrice = 0;
-		let selectedServicesPrices = {}
+		// {index: serviceOptionCode,...}
 		let selectedServices = JSON.parse(localStorage.getItem('DevmceeBooking__selectedServices'));
 		selectedServices = selectedServices ? selectedServices : {};
-		if (selectedServices) {
-			for (let key in selectedServices) {
-				if (Prices[selectedServices[key]]) {
-					totalServicesPrice += Prices[selectedServices[key]].price
-					selectedServicesPrices[key] = Prices[selectedServices[key]].price
-				}
-			}
 
-		}
-
-
+		let updatedPrices=updatePrices(selectedServices)
 		let selectedServicesNumber = JSON.parse(localStorage.getItem('DevmceeBooking__selectedServicesNumber'))
 
 		this.state = {
@@ -31,25 +21,25 @@ class Form extends Component {
 			selectedServiceCode: '',
 			servicePrice: '',
 			selectedServicesNumber: selectedServicesNumber ? selectedServicesNumber : 1,
-			totalServicesPrice: totalServicesPrice,
-			selectedServicesPrices: selectedServicesPrices
-
+			totalServicesPrice: updatedPrices.totalServicesPrice,
+			selectedServicesPrices: updatedPrices.selectedServicesPrices,
+			testValue: ''
 		}
 		this.handleServiceOptionSelect = this.handleServiceOptionSelect.bind(this)
 		this.addServiceClickandler = this.addServiceClickandler.bind(this)
 		this.deleteService = this.deleteService.bind(this)
 	}
 
-
 	handleServiceOptionSelect = (e) => {
-		let serviceId = e.target.id;
+		let serviceId = e.target.dataset.serviceGroupId;
 		let selectedServiceCode = e.target.value;
-
 
 		let selectedServices = this.state.selectedServices;
 		selectedServices[serviceId] = selectedServiceCode;
 
-		let prices = this.getPrices(Object.values(selectedServices))
+		let prices = getPrices(Object.values(selectedServices))
+
+
 		let servicePrice = selectedServiceCode ? Prices[selectedServiceCode].price : 0
 
 		this.setState({
@@ -59,7 +49,7 @@ class Form extends Component {
 			selectedServices: selectedServices,
 			servicePrice: servicePrice,
 			servicePrices: this.selectedServiceCode,
-			totalServicesPrice: this.totalPriceCalc(prices),
+			totalServicesPrice: totalPriceCalc(prices),
 			selectedServicesPrices: prices
 		})
 
@@ -69,28 +59,18 @@ class Form extends Component {
 	}
 
 	resetServiceOptionSelected = (e) => {
-
-		let targetId=e.target.id;
-		let serviceGroupId=targetId?targetId.substring(targetId.indexOf('__')+2):'';
-		console.log(serviceGroupId)
+		//console.log('Forms: resetServiceOptionSelected=> ',e.target)
+		let serviceGroupId= e.target.dataset.serviceGroupId;
 		let services=this.state.selectedServices
-		this.updatePrices(services,serviceGroupId)
-
-	}
-
-	getPrices = codes => {
-		return codes.map(code => {
-			if (Prices[code])
-				return Prices[code].price
-			return false
-		})
-
+		let updatedPrices=updatePrices(services,serviceGroupId)
+		//console.log('Forms: updatePrices=> ',updatedPrices)
+		this.setState(updatePrices)
 	}
 
 	addServiceClickandler = (e) => {
 		e.preventDefault();
 		let selectedServicesNumber = this.state.selectedServicesNumber + 1
-		console.log(selectedServicesNumber)
+
 		this.setState({
 			selectedServicesNumber: selectedServicesNumber
 
@@ -99,86 +79,68 @@ class Form extends Component {
 
 	}
 
-	totalPriceCalc = prices => {
-		let sum = 0;
-		for (let i in prices) {
-			sum += prices[i] ? prices[i] : 0;
-		}
-		return sum;
-	};
-
-	updatePrices=(service,skipIndex)=>{
-		let totalServicesPrice = 0
-		let selectedServicesPrices = {}
-		if (service) {
-			for (let key in service) {
-				if (Prices[service[key]] && key.toString()!==skipIndex.toString()) {
-					totalServicesPrice += Prices[service[key]].price
-					selectedServicesPrices[key] =Prices[service[key]].price
-				}else{
-					selectedServicesPrices[key] =''
-				}
-			}
-
-		}
-		console.log(selectedServicesPrices)
-		this.setState({
-			totalServicesPrice: totalServicesPrice,
-			selectedServicesPrices: selectedServicesPrices
-		})
-	}
-
 	deleteService = (e) => {
+		const {selectedServicesNumber, selectedServices}= this.state
 		e.preventDefault()
-		console.log(e.target.id)
-		let groupsQty = this.state.selectedServicesNumber - 1
-		let selectedServices = this.state.selectedServices
+		let groupsQty = selectedServicesNumber - 1
 		let selectedServicesNewKeys = Object.keys(selectedServices).filter(key => key.toString() !== e.target.id)
 		let selectedServicesNew = {...selectedServicesNewKeys.map(key => selectedServices[key])}
-		let totalServicesPrice = 0
-		let selectedServicesPrices = {}
-		if (selectedServicesNew) {
-			for (let key in selectedServicesNew) {
-				if (Prices[selectedServicesNew[key]]) {
-					totalServicesPrice += Prices[selectedServicesNew[key]].price
-					selectedServicesPrices[key] = Prices[selectedServicesNew[key]].price
-				}
-			}
 
-		}
+		let updatedPrices=updatePrices(selectedServicesNew)
 		this.setState({
 			selectedServicesNumber: groupsQty,
 			selectedServices: selectedServicesNew,
-			totalServicesPrice: totalServicesPrice,
-			selectedServicesPrices: selectedServicesPrices
+
+			totalServicesPrice: updatedPrices.totalServicesPrice,
+			selectedServicesPrices: updatedPrices.selectedServicesPrices
 
 		})
+
 		localStorage.setItem('DevmceeBooking__selectedServicesNumber', groupsQty)
 		localStorage.setItem('DevmceeBooking__selectedServices', JSON.stringify(selectedServicesNew))
+	}
+	componentWillUnmount() {
 
 	}
 
 	listServicesGroups = servicesNumber => {
 		let servicesGroups = []
 		let selectedServices = JSON.parse(localStorage.getItem('DevmceeBooking__selectedServices'))
-		//let selectedServicesPrices=this.getPrices(Object.values(selectedServices))
+
 
 		for (let i = 0; i < servicesNumber; i++) {
 			servicesGroups.push(
-				<ServiceGroup deleteService = {this.deleteService} key = {i} serviceGroupId = {i} selectedServices = {selectedServices ? selectedServices[i] : ''} handleOptionSelectChange = {this.handleServiceOptionSelect} resetServiceOptions = {this.resetServiceOptionSelected} selectedServicesPrices = {this.state.selectedServicesPrices} selectedServicePrice = {this.state.selectedServicesPrices[i]}/>
+				<ServiceGroup
+					props={this.state}
+					deleteService = {this.deleteService}
+					key = {i}
+					testValue={this.state.testValue}
+					serviceGroupId = {i}
+					selectedServices = {selectedServices ? selectedServices[i] : ''}
+					handleOptionSelectChange = {this.handleServiceOptionSelect}
+					resetServiceOptions = {this.resetServiceOptionSelected}
+					selectedServicesPrices = {this.state.selectedServicesPrices}
+					selectedServicePrice = {this.state.selectedServicesPrices[i]}/>
 			)
 		}
 		return servicesGroups
 	}
 
 	render() {
+	const {name, method, action} = this.props;
 		return (
-			<form name = {this.props.name} method = {this.props.method} action = {this.props.action}>
+			<form name = {name} method = {method} action = {action}>
 
 				{this.listServicesGroups(this.state.selectedServicesNumber)}
 
 				<div className = "booking-form__services-groups-footer">
-					<button name = "add-service" onClick = {this.addServiceClickandler} value = "1">Add Service</button>
+					<button
+						name = "add-service"
+						id="add-service"
+						onClick = {this.addServiceClickandler}
+						value = "1">
+							Add Service
+					</button>
 
 					<TotalPrice totalServicesPrice = {this.state.totalServicesPrice}/>
 				</div>
@@ -198,6 +160,7 @@ export default Form;
  // Appointment Booking Group
  //Appointment Date
  //Appointment Time
+ //TODO: Testing React
 
  //Customer Info Group -
  //Name

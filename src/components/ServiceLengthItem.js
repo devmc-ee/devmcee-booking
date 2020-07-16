@@ -4,16 +4,18 @@ export default function ServiceLengthItem(props) {
 	//if(props.selectedService)
 	let obj = props.serviceOptions
 	const lang = props.lang
-	let options=props.options
-	let list = [];
-	list.push(<option key='0' value="" >Length...</option>)
+	let optionNames=props.options
+	console.log('props.serviceOptions in Service Option: ',obj)
+	console.log('props.options in Service Option: ',optionNames)
+	let serviceOptions = [];
+	serviceOptions.push(<option key='0' value="" >Length...</option>)
 	for (let key in obj) {
 		if (obj.hasOwnProperty(key)) {
-			list.push(<option
+			serviceOptions.push(<option
 				value={obj[key].code}
-				key = {obj[key].code}>{options[key][lang]}</option>);
+				key = {obj[key].code}>{optionNames[key][lang]}</option>);
 		}
 	}
-	return list;
+	return serviceOptions;
 
 }
