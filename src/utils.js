@@ -1,4 +1,4 @@
-import {Prices} from "./ServicesData";
+import {Prices} from "./SERVICES_DATA";
 
 export const getPrices = codes => {
 	return codes.map(code => {

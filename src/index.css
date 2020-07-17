@@ -25,3 +25,26 @@ code {
 .btn.hidden{
 	visibility: hidden;
 }
+.service-group-container {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+.discounted-price {
+	font-size: 10px;
+	text-decoration: line-through;
+}
+.service-price--discounted {
+	color: red;
+}
+.App {
+	font-family: sans-serif;
+	text-align: center;
+	width: 100%;
+	font-size: 18px;
+}
+.service-group-container {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
