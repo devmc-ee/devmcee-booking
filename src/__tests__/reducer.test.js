@@ -1,9 +1,6 @@
-import React, {useEffect, useReducer} from "react";
-import ServiceGroupsArray from "../components/ServiceGroupsArray";
-import ServiceBaseSelect from '../components/ServiceBaseSelect'
-import reducer from "../reducer";
-import ServiceGroup from '../components/ServiceGroup'
-import Enzyme, {mount, render} from "enzyme";
+import React from "react";
+
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import TComp from "../TComp";
 

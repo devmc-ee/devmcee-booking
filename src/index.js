@@ -7,9 +7,10 @@ import * as serviceWorker from './serviceWorker';
 const target = document.getElementById('devmcee-booking-root');
 if (target){
 	ReactDOM.render(
-		<React.StrictMode>
+		//<React.StrictMode>
 			<App />
-		</React.StrictMode>,
+		//</React.StrictMode>
+	,
 		target
 	);
 }

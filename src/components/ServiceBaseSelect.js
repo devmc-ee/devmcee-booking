@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
 import { AppContext } from "../AppContext";
 import SelectInput from "./SelectInput";
+
 import { SERVICES } from "../SERVICES_DATA";
+
 
 function ServiceBaseSelect(props) {
 
 	const appContext = useContext(AppContext);
+	const {dispatch} = appContext;
 	const serviceGroupId = props.serviceGroupdId;
 	const options = {
 		optionValues: Reflect.ownKeys(SERVICES),
@@ -13,7 +16,6 @@ function ServiceBaseSelect(props) {
 		selectId: "service-base-" + serviceGroupId,
 		serviceGroupId: serviceGroupId,
 		defaultText: "Service...",
-		lang: appContext.lang,
 		classes: "select-class",
 		actionType: 'selectServiceBase'
 	};
@@ -23,8 +25,10 @@ function ServiceBaseSelect(props) {
 			<SelectInput
 
 				options={options}
-				value= {props.value ? props.value : ""}
-				onChange={props.onChange}
+
+				/*value= {props.value ? props.value : ""}*/
+				value= {props.value }
+				onChange={dispatch}
 			/>
 		</div>
 	);

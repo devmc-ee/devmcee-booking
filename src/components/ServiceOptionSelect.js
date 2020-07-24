@@ -34,7 +34,7 @@ function ServiceOptionSelect(props) {
 	return (
 		<SelectInput
 			options={options}
-			value={props.value ? props.value : ""}
+			value={props.value}
 			onChange={props.onChange}
 		/>
 	);

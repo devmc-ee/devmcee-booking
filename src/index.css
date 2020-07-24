@@ -44,7 +44,7 @@ code {
 	font-size: 18px;
 
 }
-.service-group-container {
+.service-group-container, .services-container__footer {
 	display: flex;
 	width: 100%;
 	justify-content: space-between;

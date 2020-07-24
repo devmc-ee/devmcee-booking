@@ -2,8 +2,12 @@ import {SERVICE_PRICES} from "./SERVICES_DATA";
 
 export const getPrices = codes => {
 	return codes.map(code => {
-		if (SERVICE_PRICES[code])
-			return SERVICE_PRICES[code].price
+		if (SERVICE_PRICES[code]){
+			return SERVICE_PRICES[code].discountedPrice > 0?
+				SERVICE_PRICES[code].discountedPrice:
+				SERVICE_PRICES[code].price
+		}
+
 		return false
 	})
 
@@ -16,6 +20,11 @@ export const totalPriceCalc = prices => {
 	}
 	return sum;
 };
+
+export const getTotalPrice = codes =>{
+	const prices = getPrices( codes );
+	return totalPriceCalc( prices );
+}
 
 export const updatePrices=(service,skipIndex)=>{
 	//console.log('updatePrices',service)

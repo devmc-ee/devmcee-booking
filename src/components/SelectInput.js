@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
+import {AppContext} from "../AppContext";
 
 function SelectInput(props) {
 	const {
@@ -9,12 +10,12 @@ function SelectInput(props) {
 		optionNames,
 		classes,
 		defaultText,
-		lang,
 		actionType
 	} = {
 		...props.options
 	};
-
+	const appContext = useContext(AppContext);
+	const {lang} = appContext;
 	let options = [];
 	options.push(
 		<option key = ""
@@ -46,6 +47,7 @@ function SelectInput(props) {
 				});
 			}
 			}
+
 			className = {classes}>
 			{options}
 		</select>

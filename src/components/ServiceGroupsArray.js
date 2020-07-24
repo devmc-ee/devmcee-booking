@@ -7,7 +7,7 @@ import ServiceDeleteBtn from "./ServiceDeleteBtn";
 
 
 const ServiceGroupsArray = ({num, state, dispatch}) => {
-	let servicesQty = num ? num : 1;
+	//let servicesQty = num ? num : 1;
 	let serviceInputs = [];
 	let serviceBase, serviceOption = '';
 	let serviceGroups = state && state.hasOwnProperty('serviceGroups') ?

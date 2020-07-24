@@ -2,16 +2,19 @@ export default function (state, {type, payload}) {
 
 	switch (type) {
 		case "selectServiceBase":
-			/*console.log('____________selectServiceBase__________');
-			console.log( '1. state before: ', state);*/
+			console.log('____________selectServiceBase__________');
+			console.log( '1. state before: ', state);
+			if(null === state)
+				state= JSON.parse(localStorage.getItem("selectedServices"))
 			if (state && state.hasOwnProperty('serviceBase')) {
 
 				state.serviceBase = {...state.serviceBase, ...{[payload.serviceGroupdId]: payload.value}};
-
 				delete state.serviceOption[payload.serviceGroupdId]
+
 			}
-			/*console.log( '2. stateAfter', state);
-			console.log('____________//selectServiceBase__________');*/
+			console.log( '2. stateAfter', state);
+			console.log('____________//selectServiceBase__________');
+			//localStorage.setItem("selectedServices", JSON.stringify(state));
 			return {...state};
 		case "selectServiceOption":
 
@@ -24,6 +27,7 @@ export default function (state, {type, payload}) {
 			/*console.log( '2. stateAfter', state);
 			console.log( '2. stateAfter{}', {...state});
 			console.log('____________//selectServiceOption__________');*/
+			localStorage.setItem("selectedServices", JSON.stringify(state));
 			return {...state};
 		case 'deleteServiceGroup':
 			/*console.log('____________deleteServiceGroup__________');
@@ -34,11 +38,12 @@ export default function (state, {type, payload}) {
 			/*console.log('3. serviceGroups, serviceBase, serviceOption:  ',x
 				serviceBase, serviceGroups, serviceOption);*/
 			if ('group0' === payload.value){
-				return {
+				/*return {...{
 					serviceGroups:{group0: 0},
 					serviceBase:{},
 					serviceOption:{}
-				}
+				}}*/
+				return null
 			}
 
 			if(payload.value && serviceGroups.hasOwnProperty(payload.value)){
@@ -82,8 +87,9 @@ export default function (state, {type, payload}) {
 		/*	console.log('____________//addServiceGroup_________')*/
 			return {...state}
 		default:
-
-			return state;
+			console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><//called_default')
+			return  {...state}
 	}
+	console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><//called_default')
 
 }
