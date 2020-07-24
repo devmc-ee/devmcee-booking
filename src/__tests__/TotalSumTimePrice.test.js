@@ -10,7 +10,7 @@ Enzyme.configure({adapter: new Adapter()});
 describe('Total Price and Time:', () => {
 	let wrapper;
 	beforeEach(() => {
-		wrapper = mount(<TotalSumTimePrice serviceOptions={{0: 'th1', 1:'h05'}}/>);
+		wrapper = mount(<TotalSumTimePrice value={{0: 'th1', 1:'h05'}}/>);
 	});
 
 	it('1. Should exist', () => {
