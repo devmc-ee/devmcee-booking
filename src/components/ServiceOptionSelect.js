@@ -20,7 +20,6 @@ function ServiceOptionSelect(props) {
 					]
 		};
 	}
-
 	const serviceGroupId = props.serviceGroupdId;
 	const options = {
 		optionValues: optionValues,
@@ -29,12 +28,13 @@ function ServiceOptionSelect(props) {
 		serviceGroupId: serviceGroupId,
 		defaultText: "Options...",
 		lang: appContext.lang,
-		classes: "select-class"
+		classes: "select-class",
+		actionType: 'selectServiceOption'
 	};
 	return (
 		<SelectInput
 			options={options}
-			value={props.value}
+			value={props.value ? props.value : ""}
 			onChange={props.onChange}
 		/>
 	);

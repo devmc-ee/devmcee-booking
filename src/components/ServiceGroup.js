@@ -3,32 +3,22 @@ import PropTypes from "prop-types";
 
 const ServiceGroup = props => {
 	return (
-		<div
-			className={"service-group-container " + props.classes}
-			data-service-group-id={props.serviceGroupdId}
-		>
-			<div
-				className="service-base-select-container"
-				data-service-group-id={props.serviceGroupdId}
-			>
+		<div className = {"service-group-container " + props.classes}
+			data-service-group-id = {props.serviceGroupdId}>
+			<div className = "service-base-select-container"
+				data-service-group-id = {props.serviceGroupdId}>
 				{props.serviceBase}
 			</div>
-			<div
-				className="service-option-select-container"
-				data-service-group-id={props.serviceGroupdId}
-			>
+			<div className = "service-option-select-container"
+				data-service-group-id = {props.serviceGroupdId}>
 				{props.serviceOption}
 			</div>
-			<div
-				className="service-price-container"
-				data-service-group-id={props.serviceGroupdId}
-			>
+			<div className = "service-price-container"
+				data-service-group-id = {props.serviceGroupdId}>
 				{props.servicePrice}
 			</div>
-			<div
-				className="service-group-delete-btn-container"
-				data-service-group-id={props.serviceGroupdId}
-			>
+			<div className = "service-group-delete-btn-container"
+				data-service-group-id = {props.serviceGroupdId}>
 				{props.serviceDeleteBtn}
 			</div>
 		</div>
@@ -36,7 +26,7 @@ const ServiceGroup = props => {
 };
 ServiceGroup.propTypes = {
 	classes: PropTypes.string,
-	serviceGroupdId: PropTypes.number.isRequired,
+	serviceGroupdId: PropTypes.string.isRequired,
 	serviceBase: PropTypes.object.isRequired,
 	serviceOption: PropTypes.object.isRequired,
 	servicePrice: PropTypes.object.isRequired,

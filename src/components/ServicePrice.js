@@ -2,14 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { SERVICE_PRICES } from "../SERVICES_DATA";
 const ServicePrice = props => {
-	let priceRegular = "";
-	priceRegular =
-		props.serviceOption && SERVICE_PRICES[props.serviceOption]["price"] + "€";
+	const priceRegular =props.serviceOption && SERVICE_PRICES[props.serviceOption]["price"] + "€";
 	let priceDiscounted =
 		props.serviceOption &&
 		SERVICE_PRICES[props.serviceOption]["discountedPrice"];
-	let priceDiscountedBlock = "";
-	let discountedClass = "";
+	let priceDiscountedBlock, discountedClass = "";
 
 	if (priceDiscounted > 0) {
 		priceDiscounted = priceDiscounted + "€";

@@ -45,7 +45,9 @@ describe("Component SelectInput generates select form", () => {
 		defaultText: "Service...",
 		onChange: setServiceBaseValue,
 		lang: "en",
-		classes: "select-class"
+		classes: "select-class",
+		serviceGroupId: '0'
+
 	};
 
 	it("1. Should generate 6 options from SERVICES data", () => {
@@ -74,7 +76,7 @@ describe("Component SelectInput generates select form", () => {
 		selectInput.unmount();
 	});
 
-	it("3. On change select value is b ", () => {
+	it("3. On change select change is called ", () => {
 		const div = global.document.createElement("div");
 		global.document.body.appendChild(div);
 		const selectInput = mount(
@@ -89,7 +91,10 @@ describe("Component SelectInput generates select form", () => {
 
 		selectInputField.simulate("change", {
 			target: {
-				value: "th"
+					value: 'th',
+					dataset:{
+						serviceGroupdId: 0
+					}
 			}
 		});
 		const selectInputField2 = selectInput.find("select");

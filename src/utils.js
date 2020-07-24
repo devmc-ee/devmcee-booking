@@ -1,9 +1,9 @@
-import {Prices} from "./SERVICES_DATA";
+import {SERVICE_PRICES} from "./SERVICES_DATA";
 
 export const getPrices = codes => {
 	return codes.map(code => {
-		if (Prices[code])
-			return Prices[code].price
+		if (SERVICE_PRICES[code])
+			return SERVICE_PRICES[code].price
 		return false
 	})
 
@@ -25,9 +25,9 @@ export const updatePrices=(service,skipIndex)=>{
 
 	if (service && skipIndex) {
 		for (let key in service) {
-			if (Prices[service[key]] && key.toString()!==skipIndex.toString()) {
-				totalServicesPrice += Prices[service[key]].price
-				selectedServicesPrices[key] =Prices[service[key]].price
+			if (SERVICE_PRICES[service[key]] && key.toString()!==skipIndex.toString()) {
+				totalServicesPrice += SERVICE_PRICES[service[key]].price
+				selectedServicesPrices[key] =SERVICE_PRICES[service[key]].price
 			}else{
 				selectedServicesPrices[key] =''
 			}
@@ -35,9 +35,9 @@ export const updatePrices=(service,skipIndex)=>{
 
 	}else{
 		for (let key in service) {
-			if (Prices[service[key]]) {
-				totalServicesPrice += Prices[service[key]].price
-				selectedServicesPrices[key] =Prices[service[key]].price
+			if (SERVICE_PRICES[service[key]]) {
+				totalServicesPrice += SERVICE_PRICES[service[key]].price
+				selectedServicesPrices[key] =SERVICE_PRICES[service[key]].price
 			}else{
 				selectedServicesPrices[key] =''
 			}

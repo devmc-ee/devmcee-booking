@@ -16,7 +16,7 @@ describe("ServicePrice:", () => {
 
 	it("2. Reg Price Should be 25 on f05 serviceOption", () => {
 		const priceBlock = shallow(<ServicePrice serviceOption="f05" />);
-		console.log(priceBlock.html());
+		//console.log(priceBlock.html());
 		expect(priceBlock.find(".service-price--regular").text()).toEqual("25€");
 	});
 });

@@ -4,6 +4,7 @@ import SelectInput from "./SelectInput";
 import { SERVICES } from "../SERVICES_DATA";
 
 function ServiceBaseSelect(props) {
+
 	const appContext = useContext(AppContext);
 	const serviceGroupId = props.serviceGroupdId;
 	const options = {
@@ -13,14 +14,16 @@ function ServiceBaseSelect(props) {
 		serviceGroupId: serviceGroupId,
 		defaultText: "Service...",
 		lang: appContext.lang,
-		classes: "select-class"
+		classes: "select-class",
+		actionType: 'selectServiceBase'
 	};
 
 	return (
 		<div>
 			<SelectInput
+
 				options={options}
-				value={props.value}
+				value= {props.value ? props.value : ""}
 				onChange={props.onChange}
 			/>
 		</div>

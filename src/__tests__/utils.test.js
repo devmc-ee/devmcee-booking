@@ -1,7 +1,7 @@
-import {Prices} from "./SERVICES_DATA";
+import {SERVICE_PRICES} from "../SERVICES_DATA";
 import React from "react";
-import {updatePrices, getPrices, totalPriceCalc} from './utils'
-
+import {updatePrices, getPrices, totalPriceCalc} from '../utils'
+const Prices = SERVICE_PRICES;
 describe('1.1: getPrices from Util Getting Prices', () => {
 		test('For the th1 code price is tobe [45]', () => {
 			expect(getPrices(['th1'])).toEqual([45])
