@@ -1,13 +1,16 @@
 import React from "react";
+import ClearIcon from '@material-ui/icons/Clear';
+import { IconButton, Button } from '@material-ui/core';
 
 const ServiceDeleteBtn= ({state, dispatch, value, id}) =>{
-	return <button id={id} value = {value}
-		onClick={e=>{dispatch({
-			type: 'deleteServiceGroup',
-			payload: {
-				value: e.target.value,
-			}
-		})}}>X</button>
+	const handleClick=value=> e=>{dispatch({
+		type: 'deleteServiceGroup',
+		payload: {
+			value: value,
+		}
+	})}
+	return <Button  id={id} value = {value}
+		onClick={handleClick(value)}><ClearIcon /></Button >
 
 }
 

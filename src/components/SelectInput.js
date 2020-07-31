@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
+import {TextField, MenuItem} from '@material-ui/core'
 import {AppContext} from "../AppContext";
 
 function SelectInput(props) {
@@ -10,7 +11,9 @@ function SelectInput(props) {
 		optionNames,
 		classes,
 		defaultText,
-		actionType
+		actionType,
+		label,
+		helperText
 	} = {
 		...props.options
 	};
@@ -18,39 +21,44 @@ function SelectInput(props) {
 	const {lang} = appContext;
 	let options = [];
 	options.push(
-		<option key = ""
+		<MenuItem key = ""
 			value = "">
 			{defaultText}
-		</option>
+		</MenuItem>
 	);
 	for (let i in optionValues) {
 		let optionText = optionNames[optionValues[i]][lang];
 		options.push(
-			<option key = {optionValues[i]}
-				value = {optionValues[i]}>
+			<MenuItem key = {optionValues[i]}
+				value = {optionValues[i]?optionValues[i] : ''}>
 				{optionText}
-			</option>
+			</MenuItem>
 		);
+	}
+	const handleChange = (groupId )=>e =>{
+
+		props.onChange({
+			type: actionType,
+			payload: {
+				value: e.target.value,
+				serviceGroupdId: groupId
+			}
+		});
 	}
 
 	return (
-		<select id = {selectId}
-			value = {props.value}
+		<TextField id = {selectId}
+			value = {props.value? props.value : ''}
+			select
+			label={label}
+			helperText={helperText}
 			data-service-group-id = {serviceGroupId}
-			onChange = {e => {
-				props.onChange({
-					type: actionType,
-					payload: {
-						value: e.target.value,
-						serviceGroupdId: e.target.dataset.serviceGroupId
-					}
-				});
-			}
-			}
-
+			onChange = {handleChange( serviceGroupId)}
+			fullWidth
 			className = {classes}>
+
 			{options}
-		</select>
+		</TextField>
 	);
 }
 

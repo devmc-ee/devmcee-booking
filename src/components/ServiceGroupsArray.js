@@ -1,9 +1,10 @@
 import React from "react";
-import ServiceGroup from "./ServiceGroup";
+
 import ServiceBaseSelect from "./ServiceBaseSelect";
 import ServiceOptionSelect from "./ServiceOptionSelect";
 import ServicePrice from "./ServicePrice";
 import ServiceDeleteBtn from "./ServiceDeleteBtn";
+import {Grid} from '@material-ui/core';
 
 
 const ServiceGroupsArray = ({num, state, dispatch}) => {
@@ -14,32 +15,51 @@ const ServiceGroupsArray = ({num, state, dispatch}) => {
 		state.serviceGroups :
 		{group0: 0};
 
-	//for (let i = 0; i < servicesQty; i++) {
-	for(let groupId in serviceGroups){
+	for (let groupId in serviceGroups) {
 		serviceBase = state && state.hasOwnProperty('serviceBase') ?
 			state.serviceBase[serviceGroups[groupId]] : '';
 		serviceOption = state && state.hasOwnProperty('serviceOption') ?
 			state.serviceOption[serviceGroups[groupId]] : '';
 
 		serviceInputs.push(
-			<ServiceGroup key = {groupId}
-				serviceGroupdId = {groupId}
-				serviceBase = {
+			<Grid container
+				key = {groupId}
+				spacing = {1}
+				direction = "row"
+				justify = "flex-start"
+				alignItems = "flex-end">
+
+				<Grid item
+					xs = {12}
+					sm = {6}>
+
 					<ServiceBaseSelect value = {serviceBase}
 						onChange = {dispatch}
 						serviceGroupdId = {serviceGroups[groupId]}/>
-				}
-				serviceOption = {
+
+				</Grid>
+
+				<Grid item
+					xs = {4}>
+
 					<ServiceOptionSelect servicebase = {serviceBase}
 						value = {serviceOption}
 						onChange = {dispatch}
 						serviceGroupdId = {serviceGroups[groupId]}/>
-				}
-				servicePrice = {<ServicePrice serviceOption = {serviceOption}/>}
-				serviceDeleteBtn = {<ServiceDeleteBtn value = {groupId}
-					id = {groupId}
-					dispatch = {dispatch}
-					state = {state}/>}/>
+
+				</Grid>
+
+				<Grid xs = {2}
+					item>
+
+					<ServiceDeleteBtn value = {groupId}
+						id = {groupId}
+						dispatch = {dispatch}
+						state = {state}/>
+
+				</Grid>
+
+			</Grid>
 		);
 	}
 

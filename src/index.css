@@ -8,28 +8,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.booking-form__service-item-group{
-	padding: 10px ;
-	display:grid;
-	grid-template-columns: 2fr 1fr 0.5fr 0.5fr;
-	grid-gap: 10px;
-}
+
 .booking-form__service-item{
 	width: 100%;
 }
-.booking-form__services-groups-footer{
-	display: flex;
-	justify-content: space-between;
-	padding: 10px;
-}
+
 .btn.hidden{
 	visibility: hidden;
 }
-.service-group-container {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-}
+
 .discounted-price {
 	font-size: 10px;
 	text-decoration: line-through;
@@ -37,15 +24,5 @@ code {
 .service-price--discounted {
 	color: red;
 }
-.App {
-	font-family: sans-serif;
-	text-align: center;
-	width: 100%;
-	font-size: 18px;
 
-}
-.service-group-container, .services-container__footer {
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
-}
+

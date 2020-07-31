@@ -1,27 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Grid, Paper} from '@material-ui/core'
 
 const ServiceGroup = props => {
-	return (
-		<div className = {"service-group-container " + props.classes}
-			data-service-group-id = {props.serviceGroupdId}>
-			<div className = "service-base-select-container"
-				data-service-group-id = {props.serviceGroupdId}>
-				{props.serviceBase}
-			</div>
-			<div className = "service-option-select-container"
-				data-service-group-id = {props.serviceGroupdId}>
-				{props.serviceOption}
-			</div>
-			<div className = "service-price-container"
-				data-service-group-id = {props.serviceGroupdId}>
+	return (<Grid container
+			spacing = {1}
+			direction = "row"
+			justify = "flex-start"
+			alignItems = "bottom"> <Grid item
+			xs = {12}
+			sm = {6}>
+
+			{props.serviceBase}
+
+		</Grid> <Grid item
+			xs = {4}>
+			{props.serviceOption}
+		</Grid> {/*	<Grid item xs={2} >
 				{props.servicePrice}
-			</div>
-			<div className = "service-group-delete-btn-container"
-				data-service-group-id = {props.serviceGroupdId}>
-				{props.serviceDeleteBtn}
-			</div>
-		</div>
+			</Grid>*/} <Grid xs = {2}
+			item>
+			{props.serviceDeleteBtn}
+		</Grid>
+
+		</Grid>
 	);
 };
 ServiceGroup.propTypes = {

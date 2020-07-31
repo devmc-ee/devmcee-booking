@@ -3,7 +3,11 @@ import SelectInput from "../components/SelectInput";
 import sinon from "sinon";
 import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import {TextField, MenuItem} from '@material-ui/core';
+import {createMount} from '@material-ui/core/test-utils';
+
 Enzyme.configure({ adapter: new Adapter() });
+
 
 const SERVICES = {
 	th: {
@@ -76,9 +80,12 @@ describe("Component SelectInput generates select form", () => {
 		selectInput.unmount();
 	});
 
+	//let mount;
 	it("3. On change select change is called ", () => {
+
 		const div = global.document.createElement("div");
 		global.document.body.appendChild(div);
+		//mount = createMount();
 		const selectInput = mount(
 			<SelectInput
 				options={options}
@@ -87,7 +94,8 @@ describe("Component SelectInput generates select form", () => {
 			/>,
 			{ attachTo: div }
 		);
-		const selectInputField = selectInput.find("select");
+
+		const selectInputField = selectInput.find('.MuiSelect-nativeInput');
 
 		selectInputField.simulate("change", {
 			target: {

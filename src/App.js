@@ -1,4 +1,4 @@
-import React, {useReducer, useEffect} from "react";
+import React, {useReducer, useEffect, useState} from "react";
 import './App.css'
 import ServicesContainer from "./ServicesContainer";
 import {AppContext} from "./AppContext";
@@ -6,6 +6,7 @@ import reducer from "./reducer";
 import ServiceGroupsArray from './components/ServiceGroupsArray';
 import AddServiceGroupBtn from './components/AddServiceGroupBtn'
 import TotalSumTimePrice from "./components/TotalSumTimePrice";
+import {Grid} from '@material-ui/core';
 
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
 		reducer,
 		JSON.parse(localStorage.getItem("selectedServices"))
 	);
+
 
 	useEffect(() => {
 
@@ -44,19 +46,22 @@ export default function App() {
 	return (
 		<div className = "App">
 			<AppContext.Provider value = {contextValues}>
-				<ServicesContainer>
+
+				<Grid container direction="column" spacing={2}>
 					<ServiceGroupsArray
 						state = {state}
 						dispatch = {dispatch}/>
-					<div className="services-container__footer">
-						<div className="service-container__add-service-btn-wrap">
+					<Grid container item direction="row" spacing={1} className="services-container__footer"
+					>
+						<Grid item  xs={6} className="service-container__add-service-btn-wrap">
 							<AddServiceGroupBtn state = {state}
 								dispatch = {dispatch}/>
-						</div>
+						</Grid>
+						<Grid item xs={6}>
 						<TotalSumTimePrice  value={serviceOptions }  onChange={dispatch}/>
-
-					</div>
-			</ServicesContainer>
+						</Grid>
+					</Grid>
+				</Grid>
 			</AppContext.Provider>
 		</div>
 	);

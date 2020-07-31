@@ -1,5 +1,6 @@
 import React from "react";
 import {getTotalPrice} from "../utils";
+import './TotalSumTimePrice.css'
 
 
 const TotalSumTimePrice = ({value}) => {

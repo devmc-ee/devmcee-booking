@@ -17,7 +17,9 @@ function ServiceBaseSelect(props) {
 		serviceGroupId: serviceGroupId,
 		defaultText: "Service...",
 		classes: "select-class",
-		actionType: 'selectServiceBase'
+		actionType: 'selectServiceBase',
+		label: 'Massage',
+		//helperText: 'Select a massage type'
 	};
 
 	return (

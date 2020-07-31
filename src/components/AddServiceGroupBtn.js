@@ -1,16 +1,18 @@
 import React from "react";
+import AddIcon from '@material-ui/icons/Add';
+import { Button } from '@material-ui/core';
 
 const AddServiceGroupBtn =({dispatch,state})=>{
-
+	const handleClick=e => {
+		e.preventDefault();
+		dispatch({type: 'addServiceGroup'})
+	}
 	return (
-		<button id = "addServiceGroup"
+		<Button id = "addServiceGroup"
 
-			onClick = {e => {
-				e.preventDefault();
-				dispatch({type: 'addServiceGroup'})
-			}}>
-			Add service
-		</button>
+			onClick = {handleClick}>
+			<AddIcon /> Add service
+		</Button>
 	)
 
 }

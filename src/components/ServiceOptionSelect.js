@@ -29,7 +29,8 @@ function ServiceOptionSelect(props) {
 		defaultText: "Options...",
 		lang: appContext.lang,
 		classes: "select-class",
-		actionType: 'selectServiceOption'
+		actionType: 'selectServiceOption',
+		label: 'Options'
 	};
 	return (
 		<SelectInput
