@@ -1,10 +1,11 @@
 import React from "react";
 import {Formik, Form, FieldArray} from "formik";
-import {Grid, Stepper, Step, StepLabel, StepContent} from "@material-ui/core";
+import {Grid, Stepper, Step, StepLabel, StepContent, Divider, Box } from "@material-ui/core";
 import ServiceOption from "./components/ServiceOption";
 import ServiceBase from "./components/ServiceBase";
 import DeleteService from "./components/DeleteService";
 import AddService from "./components/AddService";
+import TotalSumTimePrice from './components/TotalSumTimePrice'
 import './App.css';
 
 const initialValues = () => {
@@ -41,8 +42,7 @@ export default function App() {
 											<Grid container direction = "column">
 												{formik.values.services.length > 0 &&
 												formik.values.services.map((service, index) => (
-													<Grid
-														container item direction = "row" key = {index}>
+													<Grid className="services-service-option" container item direction = "row" key = {index}>
 
 														<Grid xs = {5} item>
 
@@ -66,9 +66,29 @@ export default function App() {
 													</Grid>
 												))}
 
-												<AddService array = {array} formik = {formik}/>
-												<pre>{JSON.stringify(formik.values.services, null, 2)}</pre>
+												<Grid   container className="services-action-footer" >
+													<Grid item xs={5}>
+														<Box mb={2}  mt={1}>
+														<AddService array = {array} formik = {formik}/>
+														</Box>
+													</Grid>
+												</Grid>
+												<Divider lighter="true" component="hr"/>
+												<Grid container className="services-action-footer" >
+
+													<Grid container item xs={12}>
+
+														<Box mb={2}  mt={1} >
+															Total: <TotalSumTimePrice value={formik.values.services} />
+														</Box>
+
+													</Grid>
+
+												</Grid>
+												<Divider  lighter="true"/>
+
 											</Grid>
+
 										)}
 									</FieldArray>
 

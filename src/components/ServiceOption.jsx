@@ -23,7 +23,6 @@ const serviceOptions = serviceBase => {
 const ServiceOption = ({ index, formik, ...props }) => {
 	useEffect(() => {
 		localStorage.setItem("bookingFormData", JSON.stringify(formik.values));
-		console.log('Called useEffect from ', formik.values.services[index].serviceOption);
 		// eslint-disable-next-line
 	}, [ formik.values.services[index].serviceOption]);
 
@@ -39,9 +38,9 @@ const ServiceOption = ({ index, formik, ...props }) => {
 			component={TextField}
 			name={`services.${index}.serviceOption`}
 			select={true}
-			placeholder="options"
+			placeholder="Options..."
 			variant="standard"
-			label="Options..."
+			label="Option"
 			fullWidth
 			validate={validateOption}
 		>

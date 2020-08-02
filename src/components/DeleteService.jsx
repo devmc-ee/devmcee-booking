@@ -1,5 +1,6 @@
 import React from "react";
 import { IconButton } from "@material-ui/core";
+import ClearIcon from '@material-ui/icons/Clear';
 
 const DeleteService = ({ formik, index, array, ...props }) => {
 	return (
@@ -18,7 +19,7 @@ const DeleteService = ({ formik, index, array, ...props }) => {
 					);
 				}}
 			 href="">
-				x
+				<ClearIcon />
 			</IconButton>
 		</>
 	);

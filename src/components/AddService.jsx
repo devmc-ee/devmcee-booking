@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 
 const AddService = ({ array, formik, ...props }) => {
 	const length = formik.values.services.length;
@@ -27,10 +28,11 @@ const AddService = ({ array, formik, ...props }) => {
 		<Button
 			type="button"
 			variant="outlined"
+			fullWidth
 			disabled={isDisabled()}
 			onClick={clickHandler}
 		>
-			+ ADD SERVICE
+			<AddIcon /> ADD
 		</Button>
 	);
 };
