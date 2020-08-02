@@ -1,10 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Field } from "formik";
 import { TextField } from "formik-material-ui";
 import { MenuItem } from "@material-ui/core";
 import { SERVICES } from "../DATA";
 
 const ServiceBase = ({ index, formik, ...props }) => {
+	useEffect(() => {
+
+		if(formik.dirty) {
+			formik.values.services[index].serviceOption = '';
+			localStorage.setItem("bookingFormData", JSON.stringify(formik.values));
+		}
+		// eslint-disable-next-line
+	}, [ formik.values.services[index].serviceBase]);
 	const serviceBases = Reflect.ownKeys(SERVICES);
 	const selectedBases = formik.values.services.map(
 		service => service.serviceBase
