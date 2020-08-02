@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { SERVICE_PRICES } from "../SERVICES_DATA";
+import { SERVICE_PRICES } from "../DATA";
 const ServicePrice = props => {
 	const priceRegular =props.serviceOption && SERVICE_PRICES[props.serviceOption]["price"] + "€";
 	let priceDiscounted =

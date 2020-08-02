@@ -1,4 +1,4 @@
-import {SERVICE_PRICES} from "../SERVICES_DATA";
+import {SERVICE_PRICES} from "../DATA";
 import React from "react";
 import {updatePrices, getPrices, totalPriceCalc, getTotalPrice} from '../utils'
 

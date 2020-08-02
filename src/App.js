@@ -1,68 +1,71 @@
-import React, {useReducer, useEffect, useState} from "react";
-import './App.css'
-import ServicesContainer from "./ServicesContainer";
-import {AppContext} from "./AppContext";
-import reducer from "./reducer";
-import ServiceGroupsArray from './components/ServiceGroupsArray';
-import AddServiceGroupBtn from './components/AddServiceGroupBtn'
-import TotalSumTimePrice from "./components/TotalSumTimePrice";
-import {Grid} from '@material-ui/core';
-
+import React from "react";
+import { Formik, Form, FieldArray } from "formik";
+import { Grid, Stepper, Step, StepLabel, StepContent } from "@material-ui/core";
+import ServiceOption from "./components/ServiceOption";
+import ServiceBase from "./components/ServiceBase";
+import DeleteService from "./components/DeleteService";
+import AddService from "./components/AddService";
+import './App.css';
+const initialValues = () => {
+	const savedValue = JSON.parse(localStorage.getItem("bookingFormData"));
+	if (savedValue) {
+		return savedValue;
+	}
+	return {
+		services: [
+			{
+				serviceBase: "",
+				serviceOption: ""
+			}
+		]
+	};
+};
 
 export default function App() {
-
-	const [state, dispatch] = useReducer(
-		reducer,
-		JSON.parse(localStorage.getItem("selectedServices"))
-	);
-
-
-	useEffect(() => {
-
-		if( null === state || Reflect.ownKeys(state).length === 0 ){
-			localStorage.setItem("selectedServices", JSON.stringify({
-				serviceGroups:{group0: 0},
-				serviceBase:{},
-				serviceOption:{}
-			}));
-
-		}else{
-
-			localStorage.setItem("selectedServices", JSON.stringify(state));
-
-		}
-
-	}, [state]);
-
-
-	const contextValues = {
-		lang: "en",
-		dispatch: dispatch,
-		state: state
-	};
-	const serviceOptions = state && state.hasOwnProperty('serviceOption')?
-		state.serviceOption: {};
-
 	return (
-		<div className = "App">
-			<AppContext.Provider value = {contextValues}>
+		<div className="App">
+			<h1>Booking:</h1>
+			<Formik initialValues={initialValues()} onSubmit={(values)=> console.log(values)}>
+				{formik => (
+					<Form>
+						<FieldArray name="services">
+							{array => (
+								<Grid container  direction="column">
+									{formik.values.services.length > 0 &&
+									formik.values.services.map((service, index) => (
+										<Grid
+											container
+											item
+											direction="row"
 
-				<Grid container direction="column" spacing={2}>
-					<ServiceGroupsArray
-						state = {state}
-						dispatch = {dispatch}/>
-					<Grid container item direction="row" spacing={1} className="services-container__footer"
-					>
-						<Grid item  xs={6} className="service-container__add-service-btn-wrap">
-							<AddServiceGroupBtn state = {state}
-								dispatch = {dispatch}/>
-						</Grid>
-						<Grid item xs={6}>
-						<TotalSumTimePrice  value={serviceOptions }  onChange={dispatch}/>
-						</Grid>
-					</Grid>
-				</Grid>
-			</AppContext.Provider>
+											key={index}
+										>
+											<Grid xs={5} item>
+												<ServiceBase index={index} formik={formik} />
+											</Grid>
+											<Grid xs={1} item>
+											</Grid>
+											<Grid xs={5} item>
+												<ServiceOption formik={formik} index={index} />
+											</Grid>
+											<Grid xs={1} item>
+												<DeleteService
+													array={array}
+													index={index}
+													formik={formik}
+												/>
+											</Grid>
+										</Grid>
+									))}
+
+									<AddService array={array} formik={formik} />
+									<pre>{JSON.stringify(formik.values.services, null, 2)}</pre>
+								</Grid>
+							)}
+						</FieldArray>
+					</Form>
+				)}
+			</Formik>
 		</div>
 	);
 }
