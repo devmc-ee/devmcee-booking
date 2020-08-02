@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { IconButton, Button } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 
 const AddService = ({ array, formik, ...props }) => {
@@ -26,13 +26,12 @@ const AddService = ({ array, formik, ...props }) => {
 	};
 	return (
 		<Button
-			type="button"
-			variant="outlined"
-			fullWidth
+			size="small"
+			disableRipple={false}
 			disabled={isDisabled()}
 			onClick={clickHandler}
 		>
-			<AddIcon /> ADD
+			<AddIcon /> add
 		</Button>
 	);
 };

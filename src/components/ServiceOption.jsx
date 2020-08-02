@@ -11,11 +11,11 @@ const serviceOptions = serviceBase => {
 
 	return Reflect.ownKeys(serviceOptionsObj).map(key => {
 		return (
-			<MenuItem key={key} value={key}>
-				{SERVICE_OPTIONS_NAMES[serviceOptionsObj[key]]["en"]} {":  "}
+			<MenuItem key={key} value={key} disableRipple={true}>
+				{SERVICE_OPTIONS_NAMES[serviceOptionsObj[key]]["en"]} {" ("}
 				{SERVICE_PRICES[key].discountedPrice > 0
-					? SERVICE_PRICES[key].discountedPrice + "€ (discounted)"
-					: SERVICE_PRICES[key].price + "€ "}
+					? SERVICE_PRICES[key].discountedPrice + "€ (discounted!))"
+					: SERVICE_PRICES[key].price + "€)"}
 			</MenuItem>
 		);
 	});

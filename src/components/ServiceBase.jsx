@@ -52,7 +52,7 @@ const ServiceBase = ({ index, formik, ...props }) => {
 			<MenuItem value="">Service...</MenuItem>
 			{serviceBases.map(key => {
 				return (
-					<MenuItem key={key} value={key} disabled={isDisabled(index, key)}>
+					<MenuItem key={key} value={key} disabled={isDisabled(index, key)} disableRipple={true}>
 						{[SERVICES[key]["en"]]}
 					</MenuItem>
 				);
