@@ -7,7 +7,7 @@ import ServiceDeleteBtn from "./ServiceDeleteBtn";
 import {Grid} from '@material-ui/core';
 
 
-const ServiceGroupsArray = ({num, state, dispatch}) => {
+const ServiceGroupsArray = ({errors, state, dispatch}) => {
 	//let servicesQty = num ? num : 1;
 	let serviceInputs = [];
 	let serviceBase, serviceOption = '';
@@ -35,6 +35,7 @@ const ServiceGroupsArray = ({num, state, dispatch}) => {
 
 					<ServiceBaseSelect value = {serviceBase}
 						onChange = {dispatch}
+						errors = {errors}
 						serviceGroupdId = {serviceGroups[groupId]}/>
 
 				</Grid>

@@ -1,8 +1,16 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
-import {TextField, MenuItem} from '@material-ui/core'
+import {MenuItem} from '@material-ui/core'
+import {TextField} from 'formik-material-ui';
+import {Field} from 'formik'
 import {AppContext} from "../AppContext";
-
+const validateSelect = value => {
+	let error;
+	if( !value ){
+		error = 'Required!';
+	}
+	return error;
+}
 function SelectInput(props) {
 	const {
 		selectId,
@@ -47,7 +55,9 @@ function SelectInput(props) {
 	}
 
 	return (
-		<TextField id = {selectId}
+		<Field id = {selectId}
+			name={selectId}
+			component={TextField}
 			value = {props.value? props.value : ''}
 			select
 			label={label}
@@ -55,10 +65,12 @@ function SelectInput(props) {
 			data-service-group-id = {serviceGroupId}
 			onChange = {handleChange( serviceGroupId)}
 			fullWidth
+			validate={validateSelect}
+
 			className = {classes}>
 
 			{options}
-		</TextField>
+		</Field>
 	);
 }
 

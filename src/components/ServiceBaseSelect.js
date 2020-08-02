@@ -8,6 +8,8 @@ import { SERVICES } from "../SERVICES_DATA";
 function ServiceBaseSelect(props) {
 
 	const appContext = useContext(AppContext);
+	const errors = props.errors;
+	console.log(errors)
 	const {dispatch} = appContext;
 	const serviceGroupId = props.serviceGroupdId;
 	const options = {
@@ -19,7 +21,7 @@ function ServiceBaseSelect(props) {
 		classes: "select-class",
 		actionType: 'selectServiceBase',
 		label: 'Massage',
-		//helperText: 'Select a massage type'
+		helperText: 'Select a massage type'
 	};
 
 	return (
