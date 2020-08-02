@@ -8,7 +8,9 @@ const DeleteService = ({formik, index, array, ...props}) => {
 			<IconButton
 
 				onClick={() => {
+
 					array.remove(index);
+
 					localStorage.setItem(
 						"bookingFormData",
 						JSON.stringify({
@@ -17,7 +19,7 @@ const DeleteService = ({formik, index, array, ...props}) => {
 							)
 						})
 					);
-				}} href=""> <ClearIcon/> </IconButton>
+				}}> <ClearIcon/> </IconButton>
 		</>
 	);
 };

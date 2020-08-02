@@ -22,9 +22,12 @@ const serviceOptions = serviceBase => {
 };
 const ServiceOption = ({ index, formik, ...props }) => {
 	useEffect(() => {
-		localStorage.setItem("bookingFormData", JSON.stringify(formik.values));
+		let storedValues = JSON.parse(localStorage.getItem("bookingFormData"));
+		if(formik.dirty && Object.keys(formik.touched).length > 0 && storedValues.services[index]
+			&& storedValues.services[index].serviceBase !== formik.values.services[index].serviceBase)
+		formik.setFieldValue(`services.${index}.serviceOption`, '')
 		// eslint-disable-next-line
-	}, [ formik.values.services[index].serviceOption]);
+	}, [ formik.values.services[index].serviceBase]);
 
 	const validateOption = value => {
 		let error;

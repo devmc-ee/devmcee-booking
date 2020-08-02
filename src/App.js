@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Formik, Form, FieldArray} from "formik";
-import {Grid, Stepper, Step, StepLabel, StepContent, Divider, Box, Button} from "@material-ui/core";
+import {Grid, Stepper, Step, StepLabel, StepContent, Divider, Box} from "@material-ui/core";
 import ServiceOption from "./components/ServiceOption";
 import ServiceBase from "./components/ServiceBase";
 import DeleteService from "./components/DeleteService";
@@ -72,9 +72,7 @@ export default function App() {
 													</Grid>
 												))}
 
-												<Grid container className="services-action-footer">
-
-												</Grid> <Divider lighter="true" component="hr"/> <Grid
+												 <Divider lighter="true" component="hr"/> <Grid
 												container className="services-action-footer"> <Grid item xs={6}> <Box
 												mb={2} mt={1}> <AddService array={array} formik={formik}/> </Box>
 											</Grid>
@@ -89,7 +87,9 @@ export default function App() {
 												</Grid>
 
 											</Grid> <Divider lighter="true"/>
-
+											<pre>
+												{JSON.stringify(formik.values.services, null, 2)}
+											</pre>
 											</Grid>
 
 										)}
