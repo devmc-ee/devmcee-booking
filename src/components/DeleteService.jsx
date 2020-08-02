@@ -1,12 +1,12 @@
 import React from "react";
-import { IconButton } from "@material-ui/core";
+import {IconButton} from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
 
-const DeleteService = ({ formik, index, array, ...props }) => {
+const DeleteService = ({formik, index, array, ...props}) => {
 	return (
 		<>
 			<IconButton
-				type="button"
+
 				onClick={() => {
 					array.remove(index);
 					localStorage.setItem(
@@ -17,10 +17,7 @@ const DeleteService = ({ formik, index, array, ...props }) => {
 							)
 						})
 					);
-				}}
-			 href="">
-				<ClearIcon />
-			</IconButton>
+				}} href=""> <ClearIcon/> </IconButton>
 		</>
 	);
 };
