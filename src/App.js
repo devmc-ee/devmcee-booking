@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {Formik, Form, FieldArray} from "formik";
-import {Grid, Stepper, Step, StepLabel, StepContent, Divider, Box} from "@material-ui/core";
+import {Grid, Stepper, Step, StepLabel, StepContent, Divider, Box, IconButton} from "@material-ui/core";
 import ServiceOption from "./components/ServiceOption";
 import ServiceBase from "./components/ServiceBase";
 import DeleteService from "./components/DeleteService";
 import AddService from "./components/AddService";
 import TotalPrice from './components/TotalPrice';
 import NextStep from "./components/NextStep";
+import EditIcon from '@material-ui/icons/Edit';
 import './App.css';
 
 const initialValues = () => {
@@ -27,6 +28,7 @@ const initialValues = () => {
 
 export default function App() {
 	const [activeStep, setActiveStep] = useState(0);
+
 	return (
 		<div className="App">
 			<h1>Booking:</h1>
@@ -37,7 +39,8 @@ export default function App() {
 						<Stepper activeStep={activeStep} orientation="vertical">
 
 							<Step> <StepLabel>Select service [Total: <TotalPrice
-								services={formik.values.services}/>]</StepLabel>
+								services={formik.values.services}/>]
+								{activeStep !== 0 ?<IconButton size="small"  onClick={()=>setActiveStep(0)}>  <EditIcon /></IconButton>:''}</StepLabel>
 
 								<StepContent>
 
@@ -47,6 +50,7 @@ export default function App() {
 												{formik.values.services.length > 0 &&
 												formik.values.services.map((service, index) => (
 													<Grid
+
 														className="services-service-option" container item
 														direction="row" key={index}>
 
