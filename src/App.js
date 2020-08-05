@@ -37,7 +37,7 @@ export default function App() {
 				{formik => (
 					<Form>
 
-						<Stepper activeStep={activeStep} orientation="vertical">
+						<Stepper className="booking-form-stepper-container" activeStep={activeStep} orientation="vertical">
 
 							<Step> <StepLabel onClick={()=>setActiveStep(0)}>Select service [Total: <TotalPrice
 								services={formik.values.services}/>]
@@ -106,7 +106,7 @@ export default function App() {
 
 							<Step><StepLabel>Select Date and Time</StepLabel>
 
-								<StepContent>
+								<StepContent className="step-calendar-select">
 									<AvailableTimePicker locale="et"/>
 								</StepContent>
 

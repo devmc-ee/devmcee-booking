@@ -11,7 +11,7 @@ const AvailableTimePicker = ({locale}) => {
 	const [calendarDate, setCalendarDate] = useState(moment().date());
 	const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
 	const {maxAvailableDays, disabledWeekDays}= CALENDAR_SETTINGS;
-	console.log(selectedDate);
+
 	let calendarDays = [];
 	let disabledDay, selectedDay;
 
@@ -47,9 +47,10 @@ const AvailableTimePicker = ({locale}) => {
 			<div className="calendar-month-year">{moment().date(calendarDate).format('MMMM, Y')}</div>
 			<div className="calendar-week">
 				<IconButton
+					className="calendar-btn-left"
 					disabled={calendarDate === moment().date() ? true : false}
 					onClick={handleLeftClick}
-					size="small"><ChevronLeft/></IconButton>
+					><ChevronLeft/></IconButton>
 				<div className="calendar-weekdays">
 
 					{calendarDays.map(
@@ -60,7 +61,7 @@ const AvailableTimePicker = ({locale}) => {
 								</div>
 								<div className="calendar-date">
 									<Button
-
+										className="calendar-date-btn"
 										onClick={e=>{setSelectedDate( day.fullDate)}}
 										variant={day.selected ? 'contained' : 'text'}
 										color={day.selected ? 'primary' : 'default'}
@@ -73,7 +74,8 @@ const AvailableTimePicker = ({locale}) => {
 				</div>
 
 				<IconButton
-					disabled={calendarDate > maxAvailableDays ? true : false} size="small"
+					className="calendar-btn-right"
+					disabled={calendarDate > maxAvailableDays ? true : false}
 					onClick={handleRightClick}><ChevronRight/></IconButton>
 			</div>
 			Selected date: {selectedDate}
