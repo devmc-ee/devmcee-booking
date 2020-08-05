@@ -9,17 +9,24 @@ import 'moment/locale/ru';
 const AvailableTimePicker = ({locale}) => {
 	moment.locale(locale);
 	const [calendarDate, setCalendarDate] = useState(moment().date());
+	const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
 	const {maxAvailableDays, disabledWeekDays}= CALENDAR_SETTINGS;
+	console.log(selectedDate);
 	let calendarDays = [];
-	let disabledDay;
+	let disabledDay, selectedDay;
 
 	for (let i = calendarDate; i < calendarDate + 7; i++) {
 		disabledDay = (Math.abs(moment().date() - i + 1) >= maxAvailableDays);
 		disabledDay = disabledDay || disabledWeekDays.includes(moment().date(i).day());
+
+		selectedDay = moment(moment().date(i).format('YYYY-MM-DD')).isSame(moment(selectedDate));
+
 		calendarDays.push({
 			weekday: moment().date(i).format('ddd'),
 			date: moment().date(i).format('D'),
-			disabled: disabledDay
+			fullDate : moment().date(i).format('YYYY-MM-DD'),
+			disabled: disabledDay,
+			selected: selectedDay
 		})
 
 	}
@@ -28,12 +35,12 @@ const AvailableTimePicker = ({locale}) => {
 		if (maxAvailableDays > calendarDate)
 			setCalendarDate(prevDate => prevDate + 7);
 
-	}
+	};
 	const handleLeftClick = () => {
 		if (moment().date() < calendarDate)
 			setCalendarDate(prevDate => prevDate - 7);
 
-	}
+	};
 
 	return (
 		<div>
@@ -53,7 +60,11 @@ const AvailableTimePicker = ({locale}) => {
 								</div>
 								<div className="calendar-date">
 									<Button
-										disabled={day.disabled}>{day.date}</Button>
+
+										onClick={e=>{setSelectedDate( day.fullDate)}}
+										variant={day.selected ? 'contained' : 'text'}
+										color={day.selected ? 'primary' : 'default'}
+											disabled={day.disabled}>{day.date}</Button>
 								</div>
 							</div>
 
@@ -65,6 +76,7 @@ const AvailableTimePicker = ({locale}) => {
 					disabled={calendarDate > maxAvailableDays ? true : false} size="small"
 					onClick={handleRightClick}><ChevronRight/></IconButton>
 			</div>
+			Selected date: {selectedDate}
 		</div>
 	)
 }
