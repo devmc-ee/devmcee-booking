@@ -9,11 +9,13 @@ import 'moment/locale/ru';
 const AvailableTimePicker = ({locale}) => {
 	moment.locale(locale);
 	const [calendarDate, setCalendarDate] = useState(moment().date());
-	const maxAvailableDays = CALENDAR_SETTINGS.maxAvailableDays;
+	const {maxAvailableDays, disabledWeekDays}= CALENDAR_SETTINGS;
 	let calendarDays = [];
 	let disabledDay;
+
 	for (let i = calendarDate; i < calendarDate + 7; i++) {
 		disabledDay = (Math.abs(moment().date() - i + 1) >= maxAvailableDays);
+		disabledDay = disabledDay || disabledWeekDays.includes(moment().date(i).day());
 		calendarDays.push({
 			weekday: moment().date(i).format('ddd'),
 			date: moment().date(i).format('D'),

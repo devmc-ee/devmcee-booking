@@ -111,5 +111,6 @@ export const SERVICE_PRICES = {
 };
 
 export const CALENDAR_SETTINGS = {
-	maxAvailableDays: 30
+	maxAvailableDays: 30,
+	disabledWeekDays: [1]
 }
