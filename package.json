@@ -11,6 +11,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "moment": "^2.27.0",
     "qs": "^6.9.4",
     "react": "^16.13.1",
     "react-day-picker": "^7.4.8",
@@ -43,6 +44,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "formik": "^2.1.5",
     "formik-material-ui": "^3.0.0-alpha.0",
+    "moment-timezone": "^0.5.31",
     "sinon": "^9.0.2",
     "yup": "^0.29.2"
   }

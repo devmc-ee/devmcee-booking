@@ -9,6 +9,7 @@ import TotalPrice from './components/TotalPrice';
 import NextStep from "./components/NextStep";
 import EditIcon from '@material-ui/icons/Edit';
 import './App.css';
+import AvailableTimePicker from "./components/AvailableTimePicker";
 
 const initialValues = () => {
 
@@ -27,7 +28,7 @@ const initialValues = () => {
 };
 
 export default function App() {
-	const [activeStep, setActiveStep] = useState(0);
+	const [activeStep, setActiveStep] = useState(1);
 
 	return (
 		<div className="App">
@@ -38,7 +39,7 @@ export default function App() {
 
 						<Stepper activeStep={activeStep} orientation="vertical">
 
-							<Step> <StepLabel>Select service [Total: <TotalPrice
+							<Step> <StepLabel onClick={()=>setActiveStep(0)}>Select service [Total: <TotalPrice
 								services={formik.values.services}/>]
 								{activeStep !== 0 ?<IconButton size="small"  onClick={()=>setActiveStep(0)}>  <EditIcon /></IconButton>:''}</StepLabel>
 
@@ -105,7 +106,9 @@ export default function App() {
 
 							<Step><StepLabel>Select Date and Time</StepLabel>
 
-								<StepContent></StepContent>
+								<StepContent>
+									<AvailableTimePicker locale="en"/>
+								</StepContent>
 
 							</Step>
 
