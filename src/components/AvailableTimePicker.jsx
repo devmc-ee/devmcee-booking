@@ -37,7 +37,9 @@ const AvailableTimePicker = ({locale}) => {
 		<div>
 			<div className="calendar-month-year">{moment().date(calendarDate).format('MMMM, Y')}</div>
 			<div className="calendar-week">
-				<IconButton onClick={handleLeftClick}
+				<IconButton
+					disabled={calendarDate === moment().date() ? true : false}
+					onClick={handleLeftClick}
 					size="small"><ChevronLeft/></IconButton>
 				<div className="calendar-weekdays">
 
