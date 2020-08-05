@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import moment from 'moment';
-import {ChevronLeft, ChevronRight} from '@material-ui/icons';
-import {IconButton, Button} from "@material-ui/core";
+import {ChevronLeft, ChevronRight, ExpandMore } from '@material-ui/icons';
+import {IconButton, Button, Accordion, AccordionSummary, AccordionDetails   } from "@material-ui/core";
 import {CALENDAR_SETTINGS} from '../DATA';
 import 'moment/locale/et';
 import 'moment/locale/ru';
@@ -80,7 +80,46 @@ const AvailableTimePicker = ({locale}) => {
 					disabled={calendarDate > maxAvailableDays ? true : false}
 					onClick={handleRightClick}><ChevronRight/></IconButton>
 			</div>
-			Selected date: {selectedDate}
+			<Accordion className="calendar-accordion-item">
+				<AccordionSummary
+					expandIcon={<ExpandMore />}
+					aria-controls="panel1a-content"
+					id="panel1a-header"
+				>
+					11:00 - 14:00
+				</AccordionSummary>
+				<AccordionDetails>
+					Content
+				</AccordionDetails>
+			</Accordion>
+			<Accordion className="calendar-accordion-item"
+				>
+				<AccordionSummary
+					expandIcon={<ExpandMore />}
+					aria-controls="panel2a-content"
+					id="panel2a-header"
+				>
+					14:00 - 18:00
+				</AccordionSummary>
+				<AccordionDetails>
+					Content
+				</AccordionDetails>
+			</Accordion>
+			<Accordion className="calendar-accordion-item"
+				>
+				<AccordionSummary
+					expandIcon={<ExpandMore />}
+
+					aria-controls="panel3a-content"
+					id="panel3a-header"
+				>
+					18:00 - 21:00
+				</AccordionSummary>
+				<AccordionDetails>
+					Content
+				</AccordionDetails>
+			</Accordion>
+
 		</div>
 	)
 }

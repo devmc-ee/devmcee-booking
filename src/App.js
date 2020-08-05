@@ -107,7 +107,7 @@ export default function App() {
 							<Step><StepLabel>Select Date and Time</StepLabel>
 
 								<StepContent className="step-calendar-select">
-									<AvailableTimePicker locale="et"/>
+									<AvailableTimePicker locale="en"/>
 								</StepContent>
 
 							</Step>
