@@ -44,7 +44,9 @@ const AvailableTimePicker = ({locale}) => {
 
 	return (
 		<div>
-			<div className="calendar-month-year">{moment().date(calendarDate).format('MMMM, Y')}</div>
+			<div className="calendar-month-year">
+				{moment().date(calendarDate).format('MMMM, Y')}
+			</div>
 			<div className="calendar-week">
 				<IconButton
 					className="calendar-btn-left"
