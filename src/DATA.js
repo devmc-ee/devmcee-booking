@@ -109,3 +109,7 @@ export const SERVICE_PRICES = {
 		discountedPrice: 0
 	}
 };
+
+export const CALENDAR_SETTINGS = {
+	maxAvailableDays: 30
+}

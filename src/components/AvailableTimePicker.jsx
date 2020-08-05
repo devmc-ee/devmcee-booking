@@ -1,43 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
+import {ChevronLeft, ChevronRight} from '@material-ui/icons';
+import {IconButton, Button} from "@material-ui/core";
+import {CALENDAR_SETTINGS} from '../DATA';
 import 'moment/locale/et';
 import 'moment/locale/ru';
 
 const AvailableTimePicker = ({locale}) => {
-	moment.locale(locale)
-	const m = moment();
-	const weekDays = moment.weekdaysShort();
-	console.log(moment());
-	const todayDoW = moment().day();
-	let weekDaysD = [];
-	const todayDate = moment().date();
-	let weekDates = [];
-	for(let i = todayDate; i < todayDate + 7; i++){
-		weekDaysD.push(m.date(i).format('ddd'));
-		weekDates.push(m.date(i).format('D'));
-		console.log(weekDates);
+	moment.locale(locale);
+	const [calendarDate, setCalendarDate] = useState(moment().date());
+	const maxAvailableDays = CALENDAR_SETTINGS.maxAvailableDays;
+	let calendarDays = [];
+	let disabledDay;
+	for (let i = calendarDate; i < calendarDate + 7; i++) {
+		disabledDay = (Math.abs(moment().date() - i + 1) >= maxAvailableDays);
+		calendarDays.push({
+			weekday: moment().date(i).format('ddd'),
+			date: moment().date(i).format('D'),
+			disabled: disabledDay
+		})
+
 	}
 
+	const handleRightClick = () => {
+		if (maxAvailableDays > calendarDate)
+			setCalendarDate(prevDate => prevDate + 7);
 
+	}
+	const handleLeftClick = () => {
+		if (moment().date() < calendarDate)
+			setCalendarDate(prevDate => prevDate - 7);
+
+	}
 
 	return (
 		<div>
-			<div>{m.format('MMMM, Y')  }</div>
-			<div className="calendar-weekdays">
-			{weekDaysD.map(
-				day=>(
-					<div className="calendar-week-day" key={day}>{day}</div>
-				)
-			)}
+			<div className="calendar-month-year">{moment().date(calendarDate).format('MMMM, Y')}</div>
+			<div className="calendar-week">
+				<IconButton onClick={handleLeftClick}
+					size="small"><ChevronLeft/></IconButton>
+				<div className="calendar-weekdays">
 
+					{calendarDays.map(
+						(day, i) => (
+							<div key={i} className="calendar-day">
+								<div className="calendar-weekday-name">
+									{day.weekday}
+								</div>
+								<div className="calendar-date">
+									<Button
+										disabled={day.disabled}>{day.date}</Button>
+								</div>
+							</div>
 
-			</div>
-			<div className="calendar-dates">
-				{weekDates.map(
-					day=>(
-						<div className="calendar-week-day" key={day}>{day}</div>
-					)
-				)}
+						)
+					)}
+				</div>
+
+				<IconButton
+					disabled={calendarDate > maxAvailableDays ? true : false} size="small"
+					onClick={handleRightClick}><ChevronRight/></IconButton>
 			</div>
 		</div>
 	)
