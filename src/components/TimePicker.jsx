@@ -6,10 +6,10 @@ import {Accordion, AccordionDetails, AccordionSummary, Button} from '@material-u
 import {ExpandMore} from "@material-ui/icons";
 
 const TimePicker = ({selectedDate}) => {
-	const [bookingTime, setBookingTime] = useState('');
+
 	const context = useFormikContext();
 	const services = context.values.services || [];
-
+	const time = context.values.appointment? context.values.appointment.time : '';
 	const servicesTotalLength = getTotalDuration(services);
 	const timeSlots = getTimeSlots(
 		servicesTotalLength,
@@ -20,7 +20,8 @@ const TimePicker = ({selectedDate}) => {
 	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups );
 
 	const handleClick =  slot => event=>{
-		setBookingTime(slot);
+
+		//setBookingTime(slot);
 		context.setValues({
 			services: services,
 			appointment:{
@@ -28,6 +29,7 @@ const TimePicker = ({selectedDate}) => {
 				time: slot
 			}
 		})
+
 	}
 
 	const availableTimeSlots = timeSlots => {
@@ -35,8 +37,8 @@ const TimePicker = ({selectedDate}) => {
 			timeSlots.map(slot => (
 
 						<Button
-							variant={(slot === bookingTime )? 'contained':'text'}
-							color={(slot === bookingTime )? 'primary':'default'}
+							variant={(slot === time )? 'contained':'text'}
+							color={(slot === time )? 'primary':'default'}
 							value={slot}
 							key={slot}
 							onClick={handleClick(slot)}>

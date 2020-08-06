@@ -6,8 +6,12 @@ import TimePicker from './TimePicker'
 import {CALENDAR_SETTINGS} from '../DATA';
 import 'moment/locale/et';
 import 'moment/locale/ru';
+import {useFormikContext} from "formik";
 
 const Calendar = ({locale}) => {
+	const context = useFormikContext();
+	const services = context.values.services || [];
+
 	moment.locale(locale);
 	const [calendarDate, setCalendarDate] = useState(moment().date());
 	const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
@@ -42,6 +46,17 @@ const Calendar = ({locale}) => {
 			setCalendarDate(prevDate => prevDate - 7);
 
 	};
+	const handleSelect = date => event => {
+		setSelectedDate( date);
+		context.setValues({
+			services: services,
+			appointment:{
+				date: date,
+				time: ''
+			}
+		})
+
+	}
 
 	return (
 		<>
@@ -65,7 +80,7 @@ const Calendar = ({locale}) => {
 								<div className="calendar-date">
 									<Button
 										className="calendar-date-btn"
-										onClick={e=>{setSelectedDate( day.fullDate)}}
+										onClick={handleSelect( day.fullDate)}
 										variant={day.selected ? 'contained' : 'text'}
 										color={day.selected ? 'primary' : 'default'}
 											disabled={day.disabled}>{day.date}</Button>
