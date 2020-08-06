@@ -9,7 +9,7 @@ import TotalPrice from './components/TotalPrice';
 import NextStep from "./components/NextStep";
 import EditIcon from '@material-ui/icons/Edit';
 import './App.css';
-import AvailableTimePicker from "./components/AvailableTimePicker";
+import Calendar from "./components/Calendar";
 
 const initialValues = () => {
 
@@ -107,7 +107,7 @@ export default function App() {
 							<Step><StepLabel>Select Date and Time</StepLabel>
 
 								<StepContent className="step-calendar-select">
-									<AvailableTimePicker locale="en"/>
+									<Calendar locale="en"/>
 								</StepContent>
 
 							</Step>

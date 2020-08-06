@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import moment from 'moment';
 import {ChevronLeft, ChevronRight, ExpandMore } from '@material-ui/icons';
 import {IconButton, Button, Accordion, AccordionSummary, AccordionDetails   } from "@material-ui/core";
+import TimePicker from './TimePicker'
 import {CALENDAR_SETTINGS} from '../DATA';
 import 'moment/locale/et';
 import 'moment/locale/ru';
 
-const AvailableTimePicker = ({locale}) => {
+const Calendar = ({locale}) => {
 	moment.locale(locale);
 	const [calendarDate, setCalendarDate] = useState(moment().date());
 	const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
@@ -43,7 +44,7 @@ const AvailableTimePicker = ({locale}) => {
 	};
 
 	return (
-		<div>
+		<>
 			<div className="calendar-month-year">
 				{moment().date(calendarDate).format('MMMM, Y')}
 			</div>
@@ -79,6 +80,9 @@ const AvailableTimePicker = ({locale}) => {
 					className="calendar-btn-right"
 					disabled={calendarDate > maxAvailableDays ? true : false}
 					onClick={handleRightClick}><ChevronRight/></IconButton>
+			</div>
+			<div className="calendar-available-times">
+				<TimePicker selectedDate={selectedDate}/>
 			</div>
 			<Accordion className="calendar-accordion-item">
 				<AccordionSummary
@@ -120,7 +124,7 @@ const AvailableTimePicker = ({locale}) => {
 				</AccordionDetails>
 			</Accordion>
 
-		</div>
+		</>
 	)
 }
-export default AvailableTimePicker;
+export default Calendar;
