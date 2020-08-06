@@ -1,5 +1,5 @@
-import {SERVICE_PRICES, SERVICE_OPTIONS} from "./DATA";
-
+import {SERVICE_PRICES, SERVICE_OPTIONS, CALENDAR_SETTINGS} from "./DATA";
+import moment from 'moment'
 
 export const getPrices = codes => {
 	return codes.map(code => {
@@ -72,3 +72,19 @@ export const getTotalDuration = services => {
 	}
 	return 0;
 };
+
+export const getTimeSlots = (serviceDuration, workingTime, timeStep) => {
+	//console.log('serviceDuration, workingTime, timeStep', serviceDuration, workingTime, timeStep)
+	const m = moment(workingTime.start, 'HH:mm');
+	//m.locale('en');
+	let timeSlots = [];
+	const end = moment(workingTime.end, 'HH:mm');
+	end.subtract(serviceDuration, 'm')
+
+	while (m.isSameOrBefore(end)) {
+		timeSlots.push(m.format('HH:mm'));
+		m.add(timeStep, 'm');
+	}
+
+	return timeSlots;
+}

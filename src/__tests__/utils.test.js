@@ -1,6 +1,6 @@
 import {SERVICE_PRICES} from "../DATA";
 import React from "react";
-import {updatePrices, getPrices, totalPriceCalc, getTotalPrice, getTotalDuration} from '../utils'
+import {updatePrices, getPrices, totalPriceCalc, getTotalPrice, getTotalDuration, getTimeSlots} from '../utils'
 
 const Prices = SERVICE_PRICES;
 describe('1.1: getPrices from Util Getting Prices', () => {
@@ -76,5 +76,29 @@ describe('1.4: getTotalDuration from Utils', () => {
 		}];
 	it('1.4.2: should return 150 on [th2, f05] services', () => {
 		expect(getTotalDuration(services2)).toEqual(150);
+	})
+})
+
+describe('1.5: getTimeSlots from Utils', () => {
+	const timePickerSettings1 = {
+		servicesDuration: 0,
+		workingTime: {
+			start: '11:00',
+			end: '12:00'
+		},
+		timeStep: 15
+	};
+	it('1.5.1 Should return 5 timeslots if in service duration 0 min  ', () => {
+		expect(getTimeSlots(
+			timePickerSettings1.servicesDuration,
+			timePickerSettings1.workingTime,
+			timePickerSettings1.timeStep)).toHaveLength(5)
+	})
+
+	it('1.5.2 Should return 2 timeslot if service duration = 30  ', () => {
+		expect(getTimeSlots(
+			30,
+			timePickerSettings1.workingTime,
+			timePickerSettings1.timeStep)).toHaveLength(3)
 	})
 })
