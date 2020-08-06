@@ -1,6 +1,14 @@
 import {SERVICE_PRICES} from "../DATA";
 import React from "react";
-import {updatePrices, getPrices, totalPriceCalc, getTotalPrice, getTotalDuration, getTimeSlots} from '../utils'
+import {
+	updatePrices,
+	getPrices,
+	totalPriceCalc,
+	getTotalPrice,
+	getTotalDuration,
+	getTimeSlots,
+	extendUnavailableSlots
+} from '../utils'
 
 const Prices = SERVICE_PRICES;
 describe('1.1: getPrices from Util Getting Prices', () => {
@@ -103,7 +111,7 @@ describe('1.5: getTimeSlots from Utils', () => {
 		expect(getTimeSlots(
 			30,
 			timePickerSettings1.workingTime,
-			timePickerSettings1.timeStep)).toEqual(['11:00','11:15', '11:30']);
+			timePickerSettings1.timeStep)).toEqual(['11:00', '11:15', '11:30']);
 	})
 
 	it('1.5.3 Should return [11:30,11:45] if service duration = 30 and unavailableSlots =[11:00,11:15]', () => {
@@ -115,7 +123,19 @@ describe('1.5: getTimeSlots from Utils', () => {
 				end: '12:15'
 			},
 			timePickerSettings1.timeStep,
-			['11:00','11:15']
-			)).toEqual([ '11:30', '11:45']);
+			['11:00', '11:15']
+		)).toEqual(['11:30', '11:45']);
+	})
+});
+
+describe('1.6: extendUnavailableSlots from utils', () => {
+	it('1.6.1: Should return [ 11:00, 11:15, 11:30] for 30min service and [11:30] of unavailable', () => {
+		expect(extendUnavailableSlots(['11:30'],30, 15))
+			.toEqual(['11:00','11:15','11:30'])
+	})
+
+	it('1.6.2: Should return 9 elements in array for 90min service and [12:30, 13:00] of unavailable', () => {
+		expect(extendUnavailableSlots(['12:30','13:00'],90, 15))
+			.toHaveLength(9)
 	})
 })

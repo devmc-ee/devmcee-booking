@@ -13,7 +13,7 @@ const TimePicker = ({selectedDate}) => {
 		servicesTotalLength,
 		CALENDAR_SETTINGS.workingTime,
 		CALENDAR_SETTINGS.timeStep,
-		['11:00', '11:30']);
+		['11:30','11:45', '13:00']);
 	const availableTimeSlots = timeSlots => {
 		return (
 			timeSlots.map(slot => (

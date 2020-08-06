@@ -78,6 +78,7 @@ export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailable
 	if (!unavailableSlots)
 		unavailableSlots = [];
 
+	unavailableSlots = extendUnavailableSlots(unavailableSlots, serviceDuration,timeStep);
 	const m = moment(workingTime.start, 'HH:mm');
 	//m.locale('en');
 	let timeSlots = [];
@@ -94,4 +95,26 @@ export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailable
 	}
 
 	return timeSlots;
+};
+
+// Add unavailable slots to exclude slots that unavailable, because of the service duration
+export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeStep) =>{
+
+	if(!unavailableSlots || unavailableSlots.length === 0)
+		return [];
+	let slotsResult = [];
+	const steps= serviceDuration/timeStep;
+	let mTime;
+
+	for(let slot of unavailableSlots){
+		mTime = moment(slot,'HH:mm');
+		slotsResult.push(slot);
+
+		for(let i = 0; i<steps; i++){
+			slotsResult.push(mTime.subtract(timeStep, 'm').format('HH:mm'))
+		}
+	}
+	console.log([...new Set(slotsResult)].sort())
+	//return distinct values
+	return [...new Set(slotsResult)].sort();
 }
