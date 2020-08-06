@@ -59,7 +59,7 @@ export const updatePrices = (service, skipIndex) => {
 		selectedServicesPrices: selectedServicesPrices
 	}
 
-}
+};
 
 export const getTotalDuration = services => {
 	//service: [{serviceBase: string, serviceOption: string}, ...]
@@ -71,5 +71,4 @@ export const getTotalDuration = services => {
 		return durations.reduce((accum, current) => accum + current);
 	}
 	return 0;
-
-}
+};

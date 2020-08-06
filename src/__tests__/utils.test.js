@@ -1,6 +1,6 @@
 import {SERVICE_PRICES} from "../DATA";
 import React from "react";
-import {updatePrices, getPrices, totalPriceCalc, getTotalPrice} from '../utils'
+import {updatePrices, getPrices, totalPriceCalc, getTotalPrice, getTotalDuration} from '../utils'
 
 const Prices = SERVICE_PRICES;
 describe('1.1: getPrices from Util Getting Prices', () => {
@@ -51,4 +51,30 @@ describe('1.3: UpdatePrice form Utils', () => {
 		})
 
 
+});
+
+describe('1.4: getTotalDuration from Utils', () => {
+	it('1.4.1: it should return 0 on empty input', () => {
+		expect(getTotalDuration([])).toEqual(0);
+	});
+
+	const services1 = [{
+		serviceBase: 'th',
+		serviceOption: 'th2'
+	}];
+
+	it('1.4.2: should return 120 on th2 service', () => {
+		expect(getTotalDuration(services1)).toEqual(120);
+	})
+	const services2 = [{
+		serviceBase: 'th',
+		serviceOption: 'th2'
+	},
+		{
+			serviceBase: 'f',
+			serviceOption: 'f05'
+		}];
+	it('1.4.2: should return 150 on [th2, f05] services', () => {
+		expect(getTotalDuration(services2)).toEqual(150);
+	})
 })

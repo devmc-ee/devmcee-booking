@@ -14,7 +14,7 @@ describe('Total Price and Time:', () => {
 	});
 
 	it('1. Should exist', () => {
-		console.log('wrapper: ', wrapper.html());
+
 		expect(wrapper).not.toBeNull();
 	});
 

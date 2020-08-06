@@ -1,6 +1,5 @@
 import React from "react";
-import SelectInput from "../components/SelectInput";
-import sinon from "sinon";
+
 import ServicePrice from "../components/ServicePrice";
 import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
