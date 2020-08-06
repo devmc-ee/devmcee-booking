@@ -73,16 +73,23 @@ export const getTotalDuration = services => {
 	return 0;
 };
 
-export const getTimeSlots = (serviceDuration, workingTime, timeStep) => {
+export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailableSlots) => {
 	//console.log('serviceDuration, workingTime, timeStep', serviceDuration, workingTime, timeStep)
+	if (!unavailableSlots)
+		unavailableSlots = [];
+
 	const m = moment(workingTime.start, 'HH:mm');
 	//m.locale('en');
 	let timeSlots = [];
 	const end = moment(workingTime.end, 'HH:mm');
 	end.subtract(serviceDuration, 'm')
 
-	while (m.isSameOrBefore(end)) {
-		timeSlots.push(m.format('HH:mm'));
+	while (m.isSameOrBefore(end)  ) {
+
+		if(!unavailableSlots.includes(m.format('HH:mm'))){
+			timeSlots.push(m.format('HH:mm'));
+
+		}
 		m.add(timeStep, 'm');
 	}
 

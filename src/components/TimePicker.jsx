@@ -2,6 +2,7 @@ import React from 'react';
 import {useFormikContext} from "formik";
 import {getTotalDuration, getTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';
+import {Button} from '@material-ui/core';
 
 const TimePicker = ({selectedDate}) => {
 	const context = useFormikContext();
@@ -11,15 +12,17 @@ const TimePicker = ({selectedDate}) => {
 	const timeSlots = getTimeSlots(
 		servicesTotalLength,
 		CALENDAR_SETTINGS.workingTime,
-		CALENDAR_SETTINGS.timeStep);
+		CALENDAR_SETTINGS.timeStep,
+		['11:00', '11:30']);
 	const availableTimeSlots = timeSlots => {
-		return(
-			timeSlots.map(slot=>(
+		return (
+			timeSlots.map(slot => (
 					<div key={slot} className="calendar-time-slot">
-						{slot}
+						<Button>
+							{slot}
+						</Button>
 					</div>
 				)
-
 			)
 		)
 

@@ -90,15 +90,32 @@ describe('1.5: getTimeSlots from Utils', () => {
 	};
 	it('1.5.1 Should return 5 timeslots if in service duration 0 min  ', () => {
 		expect(getTimeSlots(
-			timePickerSettings1.servicesDuration,
+			0,
 			timePickerSettings1.workingTime,
 			timePickerSettings1.timeStep)).toHaveLength(5)
 	})
 
-	it('1.5.2 Should return 2 timeslot if service duration = 30  ', () => {
+	it('1.5.2 Should return 3 timeslot if service duration = 30  ', () => {
 		expect(getTimeSlots(
 			30,
 			timePickerSettings1.workingTime,
-			timePickerSettings1.timeStep)).toHaveLength(3)
+			timePickerSettings1.timeStep)).toHaveLength(3);
+		expect(getTimeSlots(
+			30,
+			timePickerSettings1.workingTime,
+			timePickerSettings1.timeStep)).toEqual(['11:00','11:15', '11:30']);
+	})
+
+	it('1.5.3 Should return [11:30,11:45] if service duration = 30 and unavailableSlots =[11:00,11:15]', () => {
+
+		expect(getTimeSlots(
+			30,
+			{
+				start: '11:00',
+				end: '12:15'
+			},
+			timePickerSettings1.timeStep,
+			['11:00','11:15']
+			)).toEqual([ '11:30', '11:45']);
 	})
 })
