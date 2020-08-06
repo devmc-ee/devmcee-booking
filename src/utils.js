@@ -1,10 +1,11 @@
-import {SERVICE_PRICES} from "./DATA";
+import {SERVICE_PRICES, SERVICE_OPTIONS} from "./DATA";
+
 
 export const getPrices = codes => {
 	return codes.map(code => {
-		if (SERVICE_PRICES[code]){
-			return SERVICE_PRICES[code].discountedPrice > 0?
-				SERVICE_PRICES[code].discountedPrice:
+		if (SERVICE_PRICES[code]) {
+			return SERVICE_PRICES[code].discountedPrice > 0 ?
+				SERVICE_PRICES[code].discountedPrice :
 				SERVICE_PRICES[code].price
 		}
 
@@ -21,12 +22,12 @@ export const totalPriceCalc = prices => {
 	return sum;
 };
 
-export const getTotalPrice = codes =>{
-	const prices = getPrices( codes );
-	return totalPriceCalc( prices );
+export const getTotalPrice = codes => {
+	const prices = getPrices(codes);
+	return totalPriceCalc(prices);
 }
 
-export const updatePrices=(service,skipIndex)=>{
+export const updatePrices = (service, skipIndex) => {
 	//console.log('updatePrices',service)
 
 	let totalServicesPrice = 0
@@ -34,21 +35,21 @@ export const updatePrices=(service,skipIndex)=>{
 
 	if (service && skipIndex) {
 		for (let key in service) {
-			if (SERVICE_PRICES[service[key]] && key.toString()!==skipIndex.toString()) {
+			if (SERVICE_PRICES[service[key]] && key.toString() !== skipIndex.toString()) {
 				totalServicesPrice += SERVICE_PRICES[service[key]].price
-				selectedServicesPrices[key] =SERVICE_PRICES[service[key]].price
-			}else{
-				selectedServicesPrices[key] =''
+				selectedServicesPrices[key] = SERVICE_PRICES[service[key]].price
+			} else {
+				selectedServicesPrices[key] = ''
 			}
 		}
 
-	}else{
+	} else {
 		for (let key in service) {
 			if (SERVICE_PRICES[service[key]]) {
 				totalServicesPrice += SERVICE_PRICES[service[key]].price
-				selectedServicesPrices[key] =SERVICE_PRICES[service[key]].price
-			}else{
-				selectedServicesPrices[key] =''
+				selectedServicesPrices[key] = SERVICE_PRICES[service[key]].price
+			} else {
+				selectedServicesPrices[key] = ''
 			}
 		}
 	}
@@ -57,5 +58,18 @@ export const updatePrices=(service,skipIndex)=>{
 		totalServicesPrice: totalServicesPrice,
 		selectedServicesPrices: selectedServicesPrices
 	}
+
+}
+
+export const getTotalDuration = services => {
+	//service: [{serviceBase: string, serviceOption: string}, ...]
+	let durations = [];
+	if (services && services.length > 0) {
+		durations = services.map(service => {
+			return SERVICE_OPTIONS[service.serviceBase][service.serviceOption]
+		});
+		return durations.reduce((accum, current) => accum + current);
+	}
+	return 0;
 
 }
