@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormikContext} from "formik";
 import {getTotalDuration, getTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';
 import {Button} from '@material-ui/core';
 
 const TimePicker = ({selectedDate}) => {
+	const [bookingTime, setBookingTime] = useState('');
 	const context = useFormikContext();
 	const services = context.values.services || [];
 
@@ -13,15 +14,32 @@ const TimePicker = ({selectedDate}) => {
 		servicesTotalLength,
 		CALENDAR_SETTINGS.workingTime,
 		CALENDAR_SETTINGS.timeStep,
-		['11:30','11:45', '13:00']);
+		[]);
+
+	const handleClick =  slot => event=>{
+		setBookingTime(slot);
+		context.setValues({
+			services: services,
+			appointment:{
+				date: selectedDate,
+				time: slot
+			}
+		})
+	}
+
 	const availableTimeSlots = timeSlots => {
 		return (
 			timeSlots.map(slot => (
-					<div key={slot} className="calendar-time-slot">
-						<Button>
+
+						<Button
+							variant={(slot === bookingTime )? 'contained':'text'}
+							color={(slot === bookingTime )? 'primary':'default'}
+							value={slot}
+							key={slot}
+							onClick={handleClick(slot)}>
 							{slot}
 						</Button>
-					</div>
+
 				)
 			)
 		)

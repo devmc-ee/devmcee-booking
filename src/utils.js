@@ -1,4 +1,4 @@
-import {SERVICE_PRICES, SERVICE_OPTIONS, CALENDAR_SETTINGS} from "./DATA";
+import {SERVICE_PRICES, SERVICE_OPTIONS} from "./DATA";
 import moment from 'moment'
 
 export const getPrices = codes => {
@@ -114,7 +114,7 @@ export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeSt
 			slotsResult.push(mTime.subtract(timeStep, 'm').format('HH:mm'))
 		}
 	}
-	console.log([...new Set(slotsResult)].sort())
+
 	//return distinct values
 	return [...new Set(slotsResult)].sort();
 }
