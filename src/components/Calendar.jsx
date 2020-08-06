@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import moment from 'moment';
-import {ChevronLeft, ChevronRight, ExpandMore } from '@material-ui/icons';
-import {IconButton, Button, Accordion, AccordionSummary, AccordionDetails   } from "@material-ui/core";
+import {ChevronLeft, ChevronRight} from '@material-ui/icons';
+import {IconButton, Button  } from "@material-ui/core";
 import TimePicker from './TimePicker'
 import {CALENDAR_SETTINGS} from '../DATA';
 import 'moment/locale/et';

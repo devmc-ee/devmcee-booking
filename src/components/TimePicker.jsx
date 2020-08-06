@@ -16,6 +16,7 @@ const TimePicker = ({selectedDate}) => {
 		CALENDAR_SETTINGS.workingTime,
 		CALENDAR_SETTINGS.timeStep,
 		[]);
+
 	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups );
 
 	const handleClick =  slot => event=>{
@@ -49,46 +50,27 @@ const TimePicker = ({selectedDate}) => {
 	}
 	return (
 		<>
-			{availableTimeSlots(timeSlots)}
-			<Accordion className="calendar-accordion-item">
-				<AccordionSummary
-					expandIcon={<ExpandMore />}
-					aria-controls="panel1a-content"
-					id="panel1a-header"
-				>
-					11:00 - 14:00
-				</AccordionSummary>
-				<AccordionDetails>
-					Content
-				</AccordionDetails>
-			</Accordion>
-			<Accordion className="calendar-accordion-item"
-			>
-				<AccordionSummary
-					expandIcon={<ExpandMore />}
-					aria-controls="panel2a-content"
-					id="panel2a-header"
-				>
-					14:00 - 18:00
-				</AccordionSummary>
-				<AccordionDetails>
-					Content
-				</AccordionDetails>
-			</Accordion>
-			<Accordion className="calendar-accordion-item"
-			>
-				<AccordionSummary
-					expandIcon={<ExpandMore />}
 
-					aria-controls="panel3a-content"
-					id="panel3a-header"
-				>
-					18:00 - 21:00
-				</AccordionSummary>
-				<AccordionDetails>
-					Content
-				</AccordionDetails>
-			</Accordion>
+			{groupedTimeSlots.map( (group, i) =>(
+				<Accordion key={i} className="calendar-accordion-item">
+					<AccordionSummary
+						expandIcon={<ExpandMore />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
+					>
+
+						{CALENDAR_SETTINGS.timeSlotGroups[i].start} - {CALENDAR_SETTINGS.timeSlotGroups[i].end} [
+						{group.length} available]
+
+					</AccordionSummary>
+					<AccordionDetails>
+						<div className="calendar-timeslots-container">
+						{availableTimeSlots(group)}
+						</div>
+					</AccordionDetails>
+				</Accordion>
+			))}
+
 		</>
 	)
 };
