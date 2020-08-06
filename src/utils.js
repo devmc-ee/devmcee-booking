@@ -118,3 +118,26 @@ export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeSt
 	//return distinct values
 	return [...new Set(slotsResult)].sort();
 }
+
+// group timeslots
+export const groupTimeSlots = (timeSlots, groups) => {
+	//groups: [{start: string, end: string}, ...]
+	if(!groups || groups.length === 0)
+		return [timeSlots];
+
+	let groupedTimeSlots = [];
+	for(let i=0; i < groups.length; i++ )
+		groupedTimeSlots.push([]);
+	for (let slot of timeSlots){
+
+		for(let i in groups){
+
+			const mStart = moment(groups[i].start,'HH:mm');
+			const mEnd = moment(groups[i].end,'HH:mm');
+			if(moment(slot,'HH:mm').isBetween(mStart,mEnd, 'HH:mm', '[)'))
+				groupedTimeSlots[i].push(slot);
+		}
+	}
+
+	return groupedTimeSlots;
+}

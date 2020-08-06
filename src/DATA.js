@@ -1,4 +1,3 @@
-
 export const SERVICES = {
 	th: {
 		et: "Taimassaaž",
@@ -27,11 +26,11 @@ export const SERVICES = {
 	}
 };
 export const SERVICE_OPTIONS = {
-	th: { th1: 60, th15: 90, th2: 120 },
-	oil: { oil1: 60, oil15: 90, oil2: 120 },
-	f: { f05: 30, f1: 60 },
-	h: { h05: 30 },
-	b: { b05: 30 }
+	th: {th1: 60, th15: 90, th2: 120},
+	oil: {oil1: 60, oil15: 90, oil2: 120},
+	f: {f05: 30, f1: 60},
+	h: {h05: 30},
+	b: {b05: 30}
 };
 
 export const SERVICE_OPTIONS_NAMES = {
@@ -118,5 +117,18 @@ export const CALENDAR_SETTINGS = {
 		end: '21:00'
 	},
 	timeStep: 15,
-	minimalBreak: 15
+	minimalBreak: 15,
+	timeSlotGroups: [
+		{
+			start: '11:00',
+			end: '15:00'
+		},
+		{
+			start: '15:00',
+			end: '18:00'
+		},
+		{
+			start: '18:00',
+			end: '21:00'
+		}]
 }

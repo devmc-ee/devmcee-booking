@@ -84,45 +84,7 @@ const Calendar = ({locale}) => {
 			<div className="calendar-available-times">
 				<TimePicker selectedDate={selectedDate}/>
 			</div>
-			<Accordion className="calendar-accordion-item">
-				<AccordionSummary
-					expandIcon={<ExpandMore />}
-					aria-controls="panel1a-content"
-					id="panel1a-header"
-				>
-					11:00 - 14:00
-				</AccordionSummary>
-				<AccordionDetails>
-					Content
-				</AccordionDetails>
-			</Accordion>
-			<Accordion className="calendar-accordion-item"
-				>
-				<AccordionSummary
-					expandIcon={<ExpandMore />}
-					aria-controls="panel2a-content"
-					id="panel2a-header"
-				>
-					14:00 - 18:00
-				</AccordionSummary>
-				<AccordionDetails>
-					Content
-				</AccordionDetails>
-			</Accordion>
-			<Accordion className="calendar-accordion-item"
-				>
-				<AccordionSummary
-					expandIcon={<ExpandMore />}
 
-					aria-controls="panel3a-content"
-					id="panel3a-header"
-				>
-					18:00 - 21:00
-				</AccordionSummary>
-				<AccordionDetails>
-					Content
-				</AccordionDetails>
-			</Accordion>
 
 		</>
 	)

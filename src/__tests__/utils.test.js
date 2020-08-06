@@ -7,7 +7,8 @@ import {
 	getTotalPrice,
 	getTotalDuration,
 	getTimeSlots,
-	extendUnavailableSlots
+	extendUnavailableSlots,
+	groupTimeSlots
 } from '../utils'
 
 const Prices = SERVICE_PRICES;
@@ -138,4 +139,27 @@ describe('1.6: extendUnavailableSlots from utils', () => {
 		expect(extendUnavailableSlots(['12:30','13:00'],90, 15))
 			.toHaveLength(9)
 	})
-})
+});
+
+describe('1.7: groupTimeSlots from utils', () => {
+	const timeSlotGroups= [
+		{
+			start: '11:00',
+			end: '15:00'
+		},
+		{
+			start: '15:00',
+			end: '18:00'
+		},
+		{
+			start: '18:00',
+			end: '21:00'
+		}];
+
+	it('1.7.1: Should return [ [11:00, 11:15],[15:30],[18:00]] ', () => {
+		expect(groupTimeSlots(['11:00','11:15','15:30','18:00'],timeSlotGroups))
+			.toEqual([['11:00','11:15'],['15:30'],['18:00']])
+	})
+
+
+});
