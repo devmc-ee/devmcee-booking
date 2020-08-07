@@ -66,7 +66,9 @@ export const getTotalDuration = services => {
 	let durations = [];
 	if (services && services.length > 0) {
 		durations = services.map(service => {
-			return SERVICE_OPTIONS[service.serviceBase][service.serviceOption]
+			if (service.serviceOption)
+				return SERVICE_OPTIONS[service.serviceBase][service.serviceOption]
+			return 0;
 		});
 		return durations.reduce((accum, current) => accum + current);
 	}
@@ -78,7 +80,7 @@ export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailable
 	if (!unavailableSlots)
 		unavailableSlots = [];
 
-	unavailableSlots = extendUnavailableSlots(unavailableSlots, serviceDuration,timeStep);
+	unavailableSlots = extendUnavailableSlots(unavailableSlots, serviceDuration, timeStep);
 	console.log(moment().format('HH:mm'))
 	const m = moment(workingTime.start, 'HH:mm');
 	//m.locale('en');
@@ -86,9 +88,9 @@ export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailable
 	const end = moment(workingTime.end, 'HH:mm');
 	end.subtract(serviceDuration, 'm')
 
-	while (m.isSameOrBefore(end)  ) {
+	while (m.isSameOrBefore(end)) {
 
-		if(!unavailableSlots.includes(m.format('HH:mm'))){
+		if (!unavailableSlots.includes(m.format('HH:mm'))) {
 			timeSlots.push(m.format('HH:mm'));
 
 		}
@@ -99,19 +101,19 @@ export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailable
 };
 
 // Add unavailable slots to exclude slots that unavailable, because of the service duration
-export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeStep) =>{
+export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeStep) => {
 
-	if(!unavailableSlots || unavailableSlots.length === 0)
+	if (!unavailableSlots || unavailableSlots.length === 0)
 		return [];
 	let slotsResult = [];
-	const steps= serviceDuration/timeStep;
+	const steps = serviceDuration / timeStep;
 	let mTime;
 
-	for(let slot of unavailableSlots){
-		mTime = moment(slot,'HH:mm');
+	for (let slot of unavailableSlots) {
+		mTime = moment(slot, 'HH:mm');
 		slotsResult.push(slot);
 
-		for(let i = 0; i<steps; i++){
+		for (let i = 0; i < steps; i++) {
 			slotsResult.push(mTime.subtract(timeStep, 'm').format('HH:mm'))
 		}
 	}
@@ -123,19 +125,19 @@ export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeSt
 // group timeslots
 export const groupTimeSlots = (timeSlots, groups) => {
 	//groups: [{start: string, end: string}, ...]
-	if(!groups || groups.length === 0)
+	if (!groups || groups.length === 0)
 		return [timeSlots];
 
 	let groupedTimeSlots = [];
-	for(let i=0; i < groups.length; i++ )
+	for (let i = 0; i < groups.length; i++)
 		groupedTimeSlots.push([]);
-	for (let slot of timeSlots){
+	for (let slot of timeSlots) {
 
-		for(let i in groups){
+		for (let i in groups) {
 
-			const mStart = moment(groups[i].start,'HH:mm');
-			const mEnd = moment(groups[i].end,'HH:mm');
-			if(moment(slot,'HH:mm').isBetween(mStart,mEnd, 'HH:mm', '[)'))
+			const mStart = moment(groups[i].start, 'HH:mm');
+			const mEnd = moment(groups[i].end, 'HH:mm');
+			if (moment(slot, 'HH:mm').isBetween(mStart, mEnd, 'HH:mm', '[)'))
 				groupedTimeSlots[i].push(slot);
 		}
 	}

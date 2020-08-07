@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import {Formik, Form} from "formik";
-import {Stepper, Step, StepLabel, StepContent,  IconButton} from "@material-ui/core";
-import TotalPrice from './components/TotalPrice';
+import {Stepper, Step, StepLabel, StepContent} from "@material-ui/core";
 import SelectService from './components/SelectService';
-import EditIcon from '@material-ui/icons/Edit';
+import TotalServicesLabel from './components/TotalServicesLabel';
 import './App.css';
 import Calendar from "./components/Calendar";
 
@@ -37,11 +36,8 @@ export default function App() {
 							className="booking-form-stepper-container" activeStep={activeStep} orientation="vertical">
 
 							<Step>
-								<StepLabel onClick={() => setActiveStep(0)}>Select service [Total: <TotalPrice
-									services={formik.values.services}/>] {activeStep !== 0 ?
-									<IconButton size="small" onClick={() => setActiveStep(0)}>
-										<EditIcon/>
-									</IconButton> : ''}
+								<StepLabel onClick={() => setActiveStep(0)}>
+									<TotalServicesLabel activeStep={activeStep} setActiveStep={setActiveStep} />
 								</StepLabel>
 
 								<StepContent> <SelectService setActiveStep={setActiveStep}/> </StepContent>
