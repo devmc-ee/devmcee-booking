@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useFormikContext} from "formik";
 import {getTotalDuration, getTimeSlots,groupTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';

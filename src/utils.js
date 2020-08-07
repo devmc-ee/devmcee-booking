@@ -73,12 +73,13 @@ export const getTotalDuration = services => {
 	return 0;
 };
 
-export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailableSlots) => {
+export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailableSlots, isToday) => {
 	//console.log('serviceDuration, workingTime, timeStep', serviceDuration, workingTime, timeStep)
 	if (!unavailableSlots)
 		unavailableSlots = [];
 
 	unavailableSlots = extendUnavailableSlots(unavailableSlots, serviceDuration,timeStep);
+	console.log(moment().format('HH:mm'))
 	const m = moment(workingTime.start, 'HH:mm');
 	//m.locale('en');
 	let timeSlots = [];

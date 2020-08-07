@@ -121,14 +121,11 @@ export const CALENDAR_SETTINGS = {
 	timeSlotGroups: [
 		{
 			start: '11:00',
-			end: '15:00'
+			end: '16:00'
 		},
+
 		{
-			start: '15:00',
-			end: '18:00'
-		},
-		{
-			start: '18:00',
+			start: '16:00',
 			end: '21:00'
 		}]
 }
