@@ -74,7 +74,7 @@ const Calendar = ({locale}) => {
 					{calendarDays.map(
 						(day, i) => (
 							<div key={i} className="calendar-day">
-								<div className="calendar-weekday-name">
+								<div className="calendar-weekday-name" >
 									{day.weekday}
 								</div>
 								<div className="calendar-date">

@@ -81,7 +81,7 @@ export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailable
 		unavailableSlots = [];
 
 	unavailableSlots = extendUnavailableSlots(unavailableSlots, serviceDuration, timeStep);
-	console.log(moment().format('HH:mm'))
+
 	const m = moment(workingTime.start, 'HH:mm');
 	//m.locale('en');
 	let timeSlots = [];

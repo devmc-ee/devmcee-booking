@@ -3,6 +3,7 @@ import {Formik, Form} from "formik";
 import {Stepper, Step, StepLabel, StepContent} from "@material-ui/core";
 import SelectService from './components/SelectService';
 import TotalServicesLabel from './components/TotalServicesLabel';
+import SelectAppointmentLabel from './components/SelectAppointmentLabel';
 import './App.css';
 import Calendar from "./components/Calendar";
 
@@ -18,7 +19,9 @@ const initialValues = () => {
 				serviceBase: "",
 				serviceOption: ""
 			}
-		]
+
+		],
+		appointment: ''
 	};
 };
 
@@ -36,7 +39,7 @@ export default function App() {
 							className="booking-form-stepper-container" activeStep={activeStep} orientation="vertical">
 
 							<Step>
-								<StepLabel onClick={() => setActiveStep(0)}>
+								<StepLabel >
 									<TotalServicesLabel activeStep={activeStep} setActiveStep={setActiveStep} />
 								</StepLabel>
 
@@ -44,7 +47,7 @@ export default function App() {
 
 							</Step>
 
-							<Step><StepLabel>Select Date and Time</StepLabel>
+							<Step><StepLabel><SelectAppointmentLabel /></StepLabel>
 
 								<StepContent className="step-calendar-select"> <Calendar locale="en"/> </StepContent>
 

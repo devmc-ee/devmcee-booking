@@ -16,15 +16,21 @@ const TotalServicesLabel = ({activeStep, setActiveStep}) => {
 	//TODO: change text to variables for further translation
 	const servDurationText = servicesDuration ? moment.duration(servicesDuration,
 		'minutes').asHours() +'h': '';
-
+	const handleClick = step => event => {
+		setActiveStep(step);
+		formik.setValues({
+			services: formik.values.services,
+			appointment: ''
+		})
+	}
 	const editIcon =  activeStep > 0 ? (
-		<IconButton size="small" onClick={() => setActiveStep(0)}><EditIcon/></IconButton>
+		<IconButton size="small" onClick={handleClick(0) }><EditIcon/></IconButton>
 	) :  '';
 
 	if (servicesDuration > 0) {
 		labelText = (<>
-			{numberOfServices} serivces: <TotalPrice services={formik.values.services}/>,
-			[{servDurationText} ]
+			{numberOfServices} serivces: <TotalPrice services={formik.values.services}/>/
+			{servDurationText}
 			</>);
 
 	} else {
