@@ -127,5 +127,8 @@ export const CALENDAR_SETTINGS = {
 		{
 			start: '16:00',
 			end: '21:00'
-		}]
-}
+		}],
+	locale: 'en'
+};
+
+

@@ -4,8 +4,13 @@ import {getTotalDuration, getTimeSlots,groupTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';
 import {Accordion, AccordionDetails, AccordionSummary, Button} from '@material-ui/core';
 import {ExpandMore} from "@material-ui/icons";
+import moment from 'moment';
 
 const TimePicker = ({selectedDate}) => {
+	const mSelectedDate = moment(selectedDate);
+
+	mSelectedDate.locale(CALENDAR_SETTINGS.locale);
+
 
 	const context = useFormikContext();
 	const services = context.values.services || [];
@@ -15,7 +20,8 @@ const TimePicker = ({selectedDate}) => {
 		servicesTotalLength,
 		CALENDAR_SETTINGS.workingTime,
 		CALENDAR_SETTINGS.timeStep,
-		[]);
+		[],
+		mSelectedDate.isSame(moment().format('YYYY-MM-DD')));
 
 	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups );
 

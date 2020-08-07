@@ -75,11 +75,12 @@ export const getTotalDuration = services => {
 	return 0;
 };
 
+
 export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailableSlots, isToday) => {
 	//console.log('serviceDuration, workingTime, timeStep', serviceDuration, workingTime, timeStep)
 	if (!unavailableSlots)
 		unavailableSlots = [];
-
+	console.log('isToday',isToday);
 	unavailableSlots = extendUnavailableSlots(unavailableSlots, serviceDuration, timeStep);
 
 	const m = moment(workingTime.start, 'HH:mm');
@@ -100,7 +101,13 @@ export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailable
 	return timeSlots;
 };
 
-// Add unavailable slots to exclude slots that unavailable, because of the service duration
+/**
+ * Add unavailable slots to exclude slots that unavailable, because of the service duration
+ * @param unavailableSlots
+ * @param serviceDuration
+ * @param timeStep
+ * @returns {this|Array}
+ */
 export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeStep) => {
 
 	if (!unavailableSlots || unavailableSlots.length === 0)
@@ -122,7 +129,12 @@ export const extendUnavailableSlots = (unavailableSlots, serviceDuration, timeSt
 	return [...new Set(slotsResult)].sort();
 }
 
-// group timeslots
+/**
+ *  group timeslots
+ * @param timeSlots
+ * @param groups
+ * @returns {*[]|[]}
+ */
 export const groupTimeSlots = (timeSlots, groups) => {
 	//groups: [{start: string, end: string}, ...]
 	if (!groups || groups.length === 0)
