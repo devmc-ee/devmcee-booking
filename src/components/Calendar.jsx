@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import moment from 'moment';
 import {ChevronLeft, ChevronRight} from '@material-ui/icons';
-import {IconButton, Button, Divider, Grid} from "@material-ui/core";
+import {IconButton, Button} from "@material-ui/core";
 import TimePicker from './TimePicker'
 import {CALENDAR_SETTINGS} from '../DATA';
 import 'moment/locale/et';
@@ -119,12 +119,12 @@ const Calendar = ({locale, setActiveStep}) => {
 					groupedTimeSlots={groupedTimeSlots}
 				/>
 			</div>
-			<Divider lighter="true" component="hr" />
-				<div className="calendar-appointment-step-action-footer">
+
+				<div className="calendar-step-action-footer">
 					<NextStep  step={1}
 						onClick={setActiveStep} />
 				</div>
-			<Divider lighter="true" component="hr" />
+
 
 
 		</>

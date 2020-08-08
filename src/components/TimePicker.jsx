@@ -1,6 +1,5 @@
 import React from 'react';
 import {useFormikContext} from "formik";
-import {getTotalDuration, getTimeSlots, groupTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';
 import {Accordion, AccordionDetails, AccordionSummary, Button} from '@material-ui/core';
 import {ExpandMore} from "@material-ui/icons";

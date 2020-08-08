@@ -1,36 +1,39 @@
 import React, {useEffect} from "react";
-import { Button} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import {useFormikContext} from "formik";
 
-const NextStep = ({ step, onClick, ...props}) => {
+const NextStep = ({step, onClick, ...props}) => {
 	const formik = useFormikContext();
 	useEffect(() => {
 
 		localStorage.setItem("bookingFormData", JSON.stringify(formik.values));
 
-	}, [ formik.values, formik.touched])
+	}, [formik.values, formik.touched])
 
 	let disabled = false;
 
 
 	const isDisabled = () => {
 		let failCather;
-		const length = formik.values.services.length;
+		const {services, appointment} = formik.values;
+		//const servicesLength = formik.values.services.length;
+		const servicesLength = services.length;
 		switch (step) {
 			case 0:
-				if (0 < length) {
+				if (0 < servicesLength) {
 					failCather = [];
-					for (let i = 0; i < length; i++) {
+					for (let i = 0; i < servicesLength; i++) {
 						failCather.push(formik.values.services[i].serviceBase === "");
 						failCather.push(formik.values.services[i].serviceOption === "");
 					}
 
 					disabled = failCather.includes(true);
-				}else{
+				} else {
 					disabled = true;
 				}
 				break;
 			case 1:
+				disabled = !appointment.time;
 				break;
 			case 2:
 				break;

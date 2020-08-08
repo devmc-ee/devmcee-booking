@@ -79,3 +79,7 @@ display: flex;
 	color: gray;
 	font-style: italic;
 }
+.calendar-step-action-footer{
+	display: flex;
+	justify-content: flex-end;
+}
