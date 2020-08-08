@@ -56,17 +56,24 @@ const TimePicker = ({selectedDate}) => {
 		<>
 
 			{groupedTimeSlots.map((group, i) => (
-				<Accordion key={i} className="calendar-accordion-item">
+				<Accordion key={i} className="calendar-accordion-item" disabled={group.length>0 ? false: true}>
+
 					<AccordionSummary
-					expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">
+						expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">
 
-					{CALENDAR_SETTINGS.timeSlotGroups[i].start} - {CALENDAR_SETTINGS.timeSlotGroups[i].end} [ {group.length} available]
+						{CALENDAR_SETTINGS.timeSlotGroups[i].start} - {CALENDAR_SETTINGS.timeSlotGroups[i].end}
+						<span className="calendar-accordion-label-availability">{group.length} available</span>
 
-				</AccordionSummary> <AccordionDetails>
-					<div className="calendar-timeslots-container">
-						{availableTimeSlots(group)}
-					</div>
-				</AccordionDetails> </Accordion>
+					</AccordionSummary>
+
+					<AccordionDetails>
+
+						<div className="calendar-timeslots-container">
+							{availableTimeSlots(group)}
+						</div>
+					</AccordionDetails>
+
+				</Accordion>
 			))}
 
 		</>

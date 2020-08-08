@@ -72,3 +72,10 @@ display: flex;
 .calendar-available-times{
 	margin: 15px 0;
 }
+
+.calendar-accordion-label-availability{
+	display: block;
+	padding: 0 10px;
+	color: gray;
+	font-style: italic;
+}
