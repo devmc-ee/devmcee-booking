@@ -118,6 +118,7 @@ export const CALENDAR_SETTINGS = {
 	},
 	timeStep: 15,
 	minimalBreak: 15,
+	todaysFirstTimeOffset: 60,
 	timeSlotGroups: [
 		{
 			start: '11:00',
@@ -128,7 +129,9 @@ export const CALENDAR_SETTINGS = {
 			start: '16:00',
 			end: '21:00'
 		}],
-	locale: 'en'
+	locale: 'en',
+	timeZone: 'Europe/Tallinn'
+
 };
 
 

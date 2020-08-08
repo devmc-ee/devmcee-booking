@@ -1,5 +1,5 @@
-import {SERVICE_PRICES, SERVICE_OPTIONS} from "./DATA";
-import moment from 'moment'
+import {SERVICE_PRICES, SERVICE_OPTIONS, CALENDAR_SETTINGS} from "./DATA";
+import moment from 'moment-timezone';
 
 export const getPrices = codes => {
 	return codes.map(code => {
@@ -75,29 +75,35 @@ export const getTotalDuration = services => {
 	return 0;
 };
 
-
-export const getTimeSlots = (serviceDuration, workingTime, timeStep, unavailableSlots, isToday) => {
-	//console.log('serviceDuration, workingTime, timeStep', serviceDuration, workingTime, timeStep)
+/**
+ * generates time slots array according to the set params
+ * @param serviceDuration
+ * @param workingTime
+ * @param timeStep
+ * @param unavailableSlots []
+ * @param isToday bool
+ * @returns {[]}
+ */
+export const getTimeSlots = (selectedDate,unavailableSlots, serviceDuration, calendarProps) => {
+	const { workingTime, timeStep} = calendarProps;
 	if (!unavailableSlots)
 		unavailableSlots = [];
-	console.log('isToday',isToday);
+
 	unavailableSlots = extendUnavailableSlots(unavailableSlots, serviceDuration, timeStep);
 
-	const m = moment(workingTime.start, 'HH:mm');
-	//m.locale('en');
+	let mStart = moment(getStartTime(selectedDate,calendarProps), 'HH:mm');
+
 	let timeSlots = [];
 	const end = moment(workingTime.end, 'HH:mm');
 	end.subtract(serviceDuration, 'm')
 
-	while (m.isSameOrBefore(end)) {
+	while (mStart.isSameOrBefore(end)) {
 
-		if (!unavailableSlots.includes(m.format('HH:mm'))) {
-			timeSlots.push(m.format('HH:mm'));
-
+		if (!unavailableSlots.includes(mStart.format('HH:mm'))) {
+			timeSlots.push(mStart.format('HH:mm'));
 		}
-		m.add(timeStep, 'm');
+		mStart.add(timeStep, 'm');
 	}
-
 	return timeSlots;
 };
 
@@ -155,4 +161,61 @@ export const groupTimeSlots = (timeSlots, groups) => {
 	}
 
 	return groupedTimeSlots;
+}
+/**
+ *
+ * @param  selectedDate string|obj moment
+ * @param calendarProps CalendarSettings
+ * @returns {*}
+ */
+export const  getStartTime = ( selectedDate, calendarProps) => {
+	const {workingTime,timeStep,todaysFirstTimeOffset, timeZone}=calendarProps;
+	const mTodayWorkStart = moment(workingTime.start,'HH:mm').tz(timeZone);
+	const mTomorrowWorkStart = moment(workingTime.start,'HH:mm').tz(timeZone).add(1, 'd')
+	let currTime;
+	//for testing reasons selectedDate can be a moment obj
+	let mSelectedDate = moment.isMoment(selectedDate)
+		? selectedDate
+		: moment(selectedDate, 'YYYY-MM-DD').tz(timeZone);
+
+	//selected date isToday?
+	if(mSelectedDate.isSame(mTodayWorkStart,'day')){
+		//add current time to moment
+		if(!moment.isMoment(selectedDate)){
+			mSelectedDate
+				.hour(moment().tz(timeZone).format('H'))
+				.minute(moment().tz(timeZone).format('m'))
+		}
+		//workingTime is before start
+		if(mSelectedDate.isSameOrBefore(mTodayWorkStart)){
+
+			return mTodayWorkStart
+				.add(todaysFirstTimeOffset, 'm').format('HH:mm')
+		}
+
+
+		currTime = parseInt(mSelectedDate.format('m'));
+
+		//make devidable on timeStep
+		const rCurrTime = Math.ceil(currTime / timeStep) * timeStep;
+
+		if(rCurrTime<60){
+			mSelectedDate
+				.add(todaysFirstTimeOffset, 'm').minute(rCurrTime)
+
+			return mSelectedDate.format('HH:mm')
+		}
+
+		return mSelectedDate
+			.add(2* todaysFirstTimeOffset, 'm').minute(0).format('HH:mm')
+
+	}
+
+	//tomorrow
+	if(mSelectedDate.isSame(mTomorrowWorkStart,'day')){
+		return mTomorrowWorkStart
+			.add(todaysFirstTimeOffset, 'm').format('HH:mm')
+	}
+
+	return workingTime.start;
 }

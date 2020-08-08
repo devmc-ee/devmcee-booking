@@ -1,6 +1,6 @@
 import React from 'react';
 import {useFormikContext} from "formik";
-import {getTotalDuration, getTimeSlots,groupTimeSlots} from '../utils'
+import {getTotalDuration, getTimeSlots, groupTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';
 import {Accordion, AccordionDetails, AccordionSummary, Button} from '@material-ui/core';
 import {ExpandMore} from "@material-ui/icons";
@@ -14,23 +14,22 @@ const TimePicker = ({selectedDate}) => {
 
 	const context = useFormikContext();
 	const services = context.values.services || [];
-	const time = context.values.appointment? context.values.appointment.time : '';
+	const time = context.values.appointment ? context.values.appointment.time : '';
 	const servicesTotalLength = getTotalDuration(services);
 	const timeSlots = getTimeSlots(
-		servicesTotalLength,
-		CALENDAR_SETTINGS.workingTime,
-		CALENDAR_SETTINGS.timeStep,
+		selectedDate,
 		[],
-		mSelectedDate.isSame(moment().format('YYYY-MM-DD')));
+		servicesTotalLength,
+		CALENDAR_SETTINGS);
 
-	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups );
+	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups);
 
-	const handleClick =  slot => event=>{
+	const handleClick = slot => event => {
 
 		//setBookingTime(slot);
 		context.setValues({
 			services: services,
-			appointment:{
+			appointment: {
 				date: selectedDate,
 				time: slot
 			}
@@ -42,14 +41,11 @@ const TimePicker = ({selectedDate}) => {
 		return (
 			timeSlots.map(slot => (
 
-						<Button
-							variant={(slot === time )? 'contained':'text'}
-							color={(slot === time )? 'primary':'default'}
-							value={slot}
-							key={slot}
-							onClick={handleClick(slot)}>
-							{slot}
-						</Button>
+					<Button
+						variant={(slot === time) ? 'contained' : 'text'} color={(slot === time) ? 'primary' : 'default'}
+						value={slot} key={slot} onClick={handleClick(slot)}>
+						{slot}
+					</Button>
 
 				)
 			)
@@ -59,24 +55,18 @@ const TimePicker = ({selectedDate}) => {
 	return (
 		<>
 
-			{groupedTimeSlots.map( (group, i) =>(
+			{groupedTimeSlots.map((group, i) => (
 				<Accordion key={i} className="calendar-accordion-item">
 					<AccordionSummary
-						expandIcon={<ExpandMore />}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
-					>
+					expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">
 
-						{CALENDAR_SETTINGS.timeSlotGroups[i].start} - {CALENDAR_SETTINGS.timeSlotGroups[i].end} [
-						{group.length} available]
+					{CALENDAR_SETTINGS.timeSlotGroups[i].start} - {CALENDAR_SETTINGS.timeSlotGroups[i].end} [ {group.length} available]
 
-					</AccordionSummary>
-					<AccordionDetails>
-						<div className="calendar-timeslots-container">
+				</AccordionSummary> <AccordionDetails>
+					<div className="calendar-timeslots-container">
 						{availableTimeSlots(group)}
-						</div>
-					</AccordionDetails>
-				</Accordion>
+					</div>
+				</AccordionDetails> </Accordion>
 			))}
 
 		</>

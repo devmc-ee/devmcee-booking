@@ -8,8 +8,10 @@ import {
 	getTotalDuration,
 	getTimeSlots,
 	extendUnavailableSlots,
-	groupTimeSlots
-} from '../utils'
+	groupTimeSlots,
+	getStartTime
+} from '../utils';
+import moment from 'moment-timezone';
 
 const Prices = SERVICE_PRICES;
 describe('1.1: getPrices from Util Getting Prices', () => {
@@ -37,6 +39,7 @@ describe('1.2: TotalPriceCalc from Util', () => {
 )
 
 describe('1.3: UpdatePrice form Utils', () => {
+
 	const expectedResult = {
 		totalServicesPrice: 45,
 		selectedServicesPrices: {0: 45}
@@ -89,60 +92,86 @@ describe('1.4: getTotalDuration from Utils', () => {
 })
 
 describe('1.5: getTimeSlots from Utils', () => {
-	const timePickerSettings1 = {
+
+	let calendarProps = {
 		servicesDuration: 0,
 		workingTime: {
 			start: '11:00',
 			end: '12:00'
 		},
-		timeStep: 15
+		timeStep: 15,
+		todaysFirstTimeOffset: 60,
+		timeZone: 'Europe/Tallinn'
+
 	};
+	const selectedDate = moment('11:00', 'HH:mm').tz('Europe/Tallinn');
+
 	it('1.5.1 Should return 5 timeslots if in service duration 0 min  ', () => {
+		let selectedDate = moment('11:00', 'HH:mm').tz('Europe/Tallinn');
 		expect(getTimeSlots(
+			selectedDate,
+			[],
 			0,
-			timePickerSettings1.workingTime,
-			timePickerSettings1.timeStep)).toHaveLength(5)
+			calendarProps)).toHaveLength(1)
+		let selectedDate2 = moment('11:00', 'HH:mm').tz('Europe/Tallinn');
+		expect(getTimeSlots(
+			selectedDate,
+			[],
+			0,
+			calendarProps)).toEqual(['12:00'])
 	})
 
 	it('1.5.2 Should return 3 timeslot if service duration = 30  ', () => {
+		const selectedDate = moment('11:10', 'HH:mm').tz('Europe/Tallinn');
+
+		calendarProps.workingTime = {
+			start: '11:00',
+			end: '13:00'
+		}
+
 		expect(getTimeSlots(
+			selectedDate,
+			[],
 			30,
-			timePickerSettings1.workingTime,
-			timePickerSettings1.timeStep)).toHaveLength(3);
+			calendarProps)).toHaveLength(2);
+		const selectedDate2 = moment('11:10', 'HH:mm').tz('Europe/Tallinn');
+
 		expect(getTimeSlots(
+			selectedDate2,
+			[],
 			30,
-			timePickerSettings1.workingTime,
-			timePickerSettings1.timeStep)).toEqual(['11:00', '11:15', '11:30']);
+			calendarProps)).toEqual(['12:15', '12:30']);
 	})
 
 	it('1.5.3 Should return [11:30,11:45] if service duration = 30 and unavailableSlots =[11:00,11:15]', () => {
+		const selectedDate = moment('11:10', 'HH:mm').tz('Europe/Tallinn');
 
-		expect(getTimeSlots(
+		calendarProps.workingTime = {
+			start: '11:00',
+			end: '14:00'
+		}
+		expect(getTimeSlots(selectedDate,
+			['12:15', '13:15'],
 			30,
-			{
-				start: '11:00',
-				end: '12:15'
-			},
-			timePickerSettings1.timeStep,
-			['11:00', '11:15']
-		)).toEqual(['11:30', '11:45']);
+			calendarProps
+		)).toEqual(['12:30', '13:30']);
 	})
 });
 
 describe('1.6: extendUnavailableSlots from utils', () => {
 	it('1.6.1: Should return [ 11:00, 11:15, 11:30] for 30min service and [11:30] of unavailable', () => {
-		expect(extendUnavailableSlots(['11:30'],30, 15))
-			.toEqual(['11:00','11:15','11:30'])
+		expect(extendUnavailableSlots(['11:30'], 30, 15))
+			.toEqual(['11:00', '11:15', '11:30'])
 	})
 
 	it('1.6.2: Should return 9 elements in array for 90min service and [12:30, 13:00] of unavailable', () => {
-		expect(extendUnavailableSlots(['12:30','13:00'],90, 15))
+		expect(extendUnavailableSlots(['12:30', '13:00'], 90, 15))
 			.toHaveLength(9)
 	})
 });
 
 describe('1.7: groupTimeSlots from utils', () => {
-	const timeSlotGroups= [
+	const timeSlotGroups = [
 		{
 			start: '11:00',
 			end: '15:00'
@@ -157,9 +186,71 @@ describe('1.7: groupTimeSlots from utils', () => {
 		}];
 
 	it('1.7.1: Should return [ [11:00, 11:15],[15:30],[18:00]] ', () => {
-		expect(groupTimeSlots(['11:00','11:15','15:30','18:00'],timeSlotGroups))
-			.toEqual([['11:00','11:15'],['15:30'],['18:00']])
+		expect(groupTimeSlots(['11:00', '11:15', '15:30', '18:00'], timeSlotGroups))
+			.toEqual([['11:00', '11:15'], ['15:30'], ['18:00']])
 	})
 
 
 });
+
+describe('1.8: getStartTime from Utils', () => {
+	const CALENDAR_SETTINGS = {
+		maxAvailableDays: 30,
+		disabledWeekDays: [1],
+		workingTime: {
+			start: '11:00',
+			end: '21:00'
+		},
+		timeStep: 15,
+		minimalBreak: 15,
+		todaysFirstTimeOffset: 60,
+		timeSlotGroups: [
+			{
+				start: '11:00',
+				end: '16:00'
+			},
+
+			{
+				start: '16:00',
+				end: '21:00'
+			}],
+		locale: 'en',
+		timeZone: 'Europe/Tallinn'
+
+	}
+	it('1.8.1. if selectedDate is Today & current time is before workStart, ' +
+		'should return startTime => 12:00 ', () => {
+		const selectedDate = moment('09:00', 'HH:mm').tz('Europe/Tallinn');
+
+
+		expect(getStartTime(selectedDate, CALENDAR_SETTINGS))
+			.toEqual('12:00')
+	})
+
+	it('1.8.2. if selectedDate is Today & 11:12 is after workStart, ' +
+		'should return startTime => 12:15 ', () => {
+		const selectedDate = moment('11:12', 'HH:mm').tz('Europe/Tallinn');
+
+
+		expect(getStartTime(selectedDate, CALENDAR_SETTINGS))
+			.toEqual('12:15')
+	})
+
+	it('1.8.3. if selectedDate is Today & 11:47 is after workStart, ' +
+		'should return startTime => 13:00 ', () => {
+		const selectedDate = moment('11:47', 'HH:mm').tz('Europe/Tallinn');
+
+
+		expect(getStartTime(selectedDate, CALENDAR_SETTINGS))
+			.toEqual('13:00')
+	})
+
+	it('1.8.5. if selectedDate is Tomorrow, before working time, ' +
+		'should return startTime => 12:00 ', () => {
+		const selectedDate = moment('09:00', 'HH:mm').tz('Europe/Tallinn');
+		selectedDate.add(1, 'd')
+
+		expect(getStartTime(selectedDate, CALENDAR_SETTINGS))
+			.toEqual('12:00')
+	})
+})
