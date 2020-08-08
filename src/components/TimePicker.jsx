@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormikContext} from "formik";
 import {getTotalDuration, getTimeSlots, groupTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';
@@ -6,7 +6,8 @@ import {Accordion, AccordionDetails, AccordionSummary, Button} from '@material-u
 import {ExpandMore} from "@material-ui/icons";
 import moment from 'moment';
 
-const TimePicker = ({selectedDate}) => {
+const TimePicker = ({selectedDate, expanded, setExpanded}) => {
+
 	const mSelectedDate = moment(selectedDate);
 
 	mSelectedDate.locale(CALENDAR_SETTINGS.locale);
@@ -37,6 +38,8 @@ const TimePicker = ({selectedDate}) => {
 
 	}
 
+
+
 	const availableTimeSlots = timeSlots => {
 		return (
 			timeSlots.map(slot => (
@@ -52,11 +55,19 @@ const TimePicker = ({selectedDate}) => {
 		)
 
 	}
+	const handleExpand = (panel) => (event , newExpanded)=> {
+		setExpanded(newExpanded? panel : false)
+	}
 	return (
 		<>
 
 			{groupedTimeSlots.map((group, i) => (
-				<Accordion key={i} className="calendar-accordion-item" disabled={group.length>0 ? false: true}>
+				<Accordion
+					key={i}
+					className="calendar-accordion-item"
+					expanded={expanded===`panel${i}` && group.length>0  }
+					onChange={handleExpand(`panel${i}`)}
+					disabled={group.length>0 ? false: true}>
 
 					<AccordionSummary
 						expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">

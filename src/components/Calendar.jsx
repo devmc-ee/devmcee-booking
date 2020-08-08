@@ -15,6 +15,7 @@ const Calendar = ({locale}) => {
 	moment.locale(locale);
 	const [calendarDate, setCalendarDate] = useState(moment().date());
 	const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
+	const [expanded, setExpanded] = useState('panel0');
 	const {maxAvailableDays, disabledWeekDays}= CALENDAR_SETTINGS;
 
 	let calendarDays = [];
@@ -55,8 +56,10 @@ const Calendar = ({locale}) => {
 				time: ''
 			}
 		})
+		setExpanded('panel0');
 
 	}
+
 
 	return (
 		<>
@@ -97,7 +100,7 @@ const Calendar = ({locale}) => {
 					onClick={handleRightClick}><ChevronRight/></IconButton>
 			</div>
 			<div className="calendar-available-times">
-				<TimePicker selectedDate={selectedDate}/>
+				<TimePicker selectedDate={selectedDate} expanded={expanded} setExpanded={setExpanded}/>
 			</div>
 
 
