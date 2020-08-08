@@ -171,6 +171,7 @@ export const groupTimeSlots = (timeSlots, groups) => {
 export const  getStartTime = ( selectedDate, calendarProps) => {
 	const {workingTime,timeStep,todaysFirstTimeOffset, timeZone}=calendarProps;
 	const mTodayWorkStart = moment(workingTime.start,'HH:mm').tz(timeZone);
+	const mTodayWorkEnd = moment(workingTime.end,'HH:mm').subtract(Math.ceil(todaysFirstTimeOffset/2),'m').tz(timeZone);
 	const mTomorrowWorkStart = moment(workingTime.start,'HH:mm').tz(timeZone).add(1, 'd')
 	let currTime;
 	//for testing reasons selectedDate can be a moment obj
@@ -212,7 +213,7 @@ export const  getStartTime = ( selectedDate, calendarProps) => {
 	}
 
 	//tomorrow
-	if(mSelectedDate.isSame(mTomorrowWorkStart,'day')){
+	if(mSelectedDate.isSame(mTomorrowWorkStart,'day') && moment().isAfter(mTodayWorkEnd)){
 		return mTomorrowWorkStart
 			.add(todaysFirstTimeOffset, 'm').format('HH:mm')
 	}
