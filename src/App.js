@@ -43,19 +43,26 @@ export default function App() {
 									<TotalServicesLabel activeStep={activeStep} setActiveStep={setActiveStep} />
 								</StepLabel>
 
-								<StepContent> <SelectService setActiveStep={setActiveStep}/> </StepContent>
+								<StepContent>
+									<SelectService setActiveStep={setActiveStep}/> </StepContent>
 
 							</Step>
 
 							<Step><StepLabel><SelectAppointmentLabel /></StepLabel>
 
-								<StepContent className="step-calendar-select"> <Calendar locale="en"/> </StepContent>
+								<StepContent className="step-calendar-select">
+									<Calendar
+										setActiveStep={setActiveStep}
+										locale="en"/>
+								</StepContent>
 
 							</Step>
 
 							<Step><StepLabel>Contact Details</StepLabel>
 
-								<StepContent></StepContent>
+								<StepContent>
+									contact details
+								</StepContent>
 
 							</Step>
 

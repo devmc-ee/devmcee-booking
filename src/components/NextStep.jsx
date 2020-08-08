@@ -1,7 +1,9 @@
 import React, {useEffect} from "react";
 import { Button} from "@material-ui/core";
+import {useFormikContext} from "formik";
 
-const NextStep = ({formik, step, onClick, ...props}) => {
+const NextStep = ({ step, onClick, ...props}) => {
+	const formik = useFormikContext();
 	useEffect(() => {
 
 		localStorage.setItem("bookingFormData", JSON.stringify(formik.values));

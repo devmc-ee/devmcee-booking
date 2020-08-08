@@ -50,7 +50,7 @@ const SelectService = ({setActiveStep}) => {
                         <Grid
                             justify="flex-end" alignItems="center" container item xs={6}>
 
-                            <NextStep formik={formik} step={0}
+                            <NextStep  step={0}
                                 onClick={setActiveStep} />
 
 
