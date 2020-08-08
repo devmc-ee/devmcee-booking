@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useFormikContext} from "formik";
 import {getTotalDuration, getTimeSlots, groupTimeSlots} from '../utils'
 import {CALENDAR_SETTINGS} from '../DATA';
@@ -6,7 +6,7 @@ import {Accordion, AccordionDetails, AccordionSummary, Button} from '@material-u
 import {ExpandMore} from "@material-ui/icons";
 import moment from 'moment';
 
-const TimePicker = ({selectedDate, expanded, setExpanded}) => {
+const TimePicker = ({selectedDate, expanded, setExpanded, groupedTimeSlots}) => {
 
 	const mSelectedDate = moment(selectedDate);
 
@@ -16,14 +16,9 @@ const TimePicker = ({selectedDate, expanded, setExpanded}) => {
 	const context = useFormikContext();
 	const services = context.values.services || [];
 	const time = context.values.appointment ? context.values.appointment.time : '';
-	const servicesTotalLength = getTotalDuration(services);
-	const timeSlots = getTimeSlots(
-		selectedDate,
-		[],
-		servicesTotalLength,
-		CALENDAR_SETTINGS);
 
-	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups);
+
+
 
 	const handleClick = slot => event => {
 

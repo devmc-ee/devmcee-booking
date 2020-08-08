@@ -7,6 +7,7 @@ import {CALENDAR_SETTINGS} from '../DATA';
 import 'moment/locale/et';
 import 'moment/locale/ru';
 import {useFormikContext} from "formik";
+import {getTimeSlots, getTotalDuration, groupTimeSlots} from "../utils";
 
 const Calendar = ({locale}) => {
 	const context = useFormikContext();
@@ -20,12 +21,22 @@ const Calendar = ({locale}) => {
 
 	let calendarDays = [];
 	let disabledDay, selectedDay;
+	const servicesTotalLength = getTotalDuration(services);
+	const timeSlots = getTimeSlots(
+		selectedDate,
+		[],
+		servicesTotalLength,
+		CALENDAR_SETTINGS);
+	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups);
 
 	for (let i = calendarDate; i < calendarDate + 7; i++) {
 		disabledDay = (Math.abs(moment().date() - i + 1) >= maxAvailableDays);
 		disabledDay = disabledDay || disabledWeekDays.includes(moment().date(i).day());
 
 		selectedDay = moment(moment().date(i).format('YYYY-MM-DD')).isSame(moment(selectedDate));
+		if(selectedDay){
+			disabledDay = disabledDay || timeSlots.length === 0;
+		}
 
 		calendarDays.push({
 			weekday: moment().date(i).format('ddd'),
@@ -100,7 +111,12 @@ const Calendar = ({locale}) => {
 					onClick={handleRightClick}><ChevronRight/></IconButton>
 			</div>
 			<div className="calendar-available-times">
-				<TimePicker selectedDate={selectedDate} expanded={expanded} setExpanded={setExpanded}/>
+				<TimePicker
+					selectedDate={selectedDate}
+					expanded={expanded}
+					setExpanded={setExpanded}
+					groupedTimeSlots={groupedTimeSlots}
+				/>
 			</div>
 
 

@@ -1,4 +1,4 @@
-import {SERVICE_PRICES, SERVICE_OPTIONS, CALENDAR_SETTINGS} from "./DATA";
+import {SERVICE_PRICES, SERVICE_OPTIONS} from "./DATA";
 import moment from 'moment-timezone';
 
 export const getPrices = codes => {
@@ -213,7 +213,7 @@ export const  getStartTime = ( selectedDate, calendarProps) => {
 	}
 
 	//tomorrow
-	if(mSelectedDate.isSame(mTomorrowWorkStart,'day') && moment().isAfter(mTodayWorkEnd)){
+	if(mSelectedDate.isSame(mTomorrowWorkStart,'day') && moment().tz(timeZone).isAfter(mTodayWorkEnd)){
 		return mTomorrowWorkStart
 			.add(todaysFirstTimeOffset, 'm').format('HH:mm')
 	}
