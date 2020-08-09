@@ -11,28 +11,19 @@ const TimePicker = ({selectedDate, expanded, setExpanded, groupedTimeSlots}) => 
 
 	mSelectedDate.locale(CALENDAR_SETTINGS.locale);
 
-
 	const context = useFormikContext();
 	const services = context.values.services || [];
 	const time = context.values.appointment ? context.values.appointment.time : '';
 
-
-
-
 	const handleClick = slot => event => {
-
-		//setBookingTime(slot);
-		context.setValues({
-			services: services,
+		const appointment = {
 			appointment: {
 				date: selectedDate,
 				time: slot
 			}
-		})
-
+		}
+		context.setValues({...context.values, ...appointment})
 	}
-
-
 
 	const availableTimeSlots = timeSlots => {
 		return (
@@ -61,7 +52,7 @@ const TimePicker = ({selectedDate, expanded, setExpanded, groupedTimeSlots}) => 
 					className="calendar-accordion-item"
 					expanded={expanded===`panel${i}` && group.length>0  }
 					onChange={handleExpand(`panel${i}`)}
-					disabled={group.length>0 ? false: true}>
+					disabled={group.length <= 0}>
 
 					<AccordionSummary
 						expandIcon={<ExpandMore/>} aria-controls="panel1a-content" id="panel1a-header">

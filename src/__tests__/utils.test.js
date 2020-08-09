@@ -246,12 +246,5 @@ describe('1.8: getStartTime from Utils', () => {
 	})
 
 
-	it('1.8.4. if selectedDate is Tomorrow, before working time, ' +
-		'should return startTime => 12:00 ', () => {
-		const selectedDate = moment('09:00', 'HH:mm').tz('Europe/Tallinn');
-		selectedDate.add(1, 'd')
 
-		expect(getStartTime(selectedDate, CALENDAR_SETTINGS))
-			.toEqual('12:00')
-	})
 })

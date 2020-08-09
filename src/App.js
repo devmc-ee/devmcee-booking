@@ -4,26 +4,29 @@ import {Stepper, Step, StepLabel, StepContent} from "@material-ui/core";
 import SelectService from './components/SelectService';
 import TotalServicesLabel from './components/TotalServicesLabel';
 import SelectAppointmentLabel from './components/SelectAppointmentLabel';
+import ContactDetails from "./components/ContactDetails";
+import * as Yup from 'yup';
 import './App.css';
 import Calendar from "./components/Calendar";
 
-const initialValues = () => {
+const initValues = {
+	services: [
+		{
+			serviceBase: "",
+			serviceOption: ""
+		}
 
-	const savedValue = JSON.parse(localStorage.getItem("bookingFormData"));
-	if (savedValue) {
-		return savedValue;
+	],
+	appointment: '',
+	contacts: {
+		name: '',
+		email: '',
+		telephone: '',
+		callingcode: ''
 	}
-	return {
-		services: [
-			{
-				serviceBase: "",
-				serviceOption: ""
-			}
-
-		],
-		appointment: ''
-	};
 };
+const savedValues = JSON.parse(localStorage.getItem("bookingFormData"));
+
 
 export default function App() {
 	const [activeStep, setActiveStep] = useState(0);
@@ -31,38 +34,31 @@ export default function App() {
 	return (
 		<div className="App">
 			<h1>Booking:</h1>
-			<Formik initialValues={initialValues()} onSubmit={(values) => console.log(values)}>
+			<Formik initialValues={{...initValues, ...savedValues}}
+				onSubmit={(values) => console.log(values)}>
 				{formik => (
 					<Form>
 
 						<Stepper
 							className="booking-form-stepper-container" activeStep={activeStep} orientation="vertical">
 
-							<Step>
-								<StepLabel >
-									<TotalServicesLabel activeStep={activeStep} setActiveStep={setActiveStep} />
-								</StepLabel>
+							<Step> <StepLabel> <TotalServicesLabel
+								activeStep={activeStep} setActiveStep={setActiveStep}/> </StepLabel>
 
-								<StepContent>
-									<SelectService setActiveStep={setActiveStep}/> </StepContent>
+								<StepContent> <SelectService setActiveStep={setActiveStep}/> </StepContent>
 
 							</Step>
 
-							<Step><StepLabel><SelectAppointmentLabel /></StepLabel>
+							<Step><StepLabel><SelectAppointmentLabel/></StepLabel>
 
-								<StepContent className="step-calendar-select">
-									<Calendar
-										setActiveStep={setActiveStep}
-										locale="en"/>
-								</StepContent>
+								<StepContent className="step-calendar-select"> <Calendar
+									setActiveStep={setActiveStep} locale="en"/> </StepContent>
 
 							</Step>
 
 							<Step><StepLabel>Contact Details</StepLabel>
 
-								<StepContent>
-									contact details
-								</StepContent>
+								<StepContent> <ContactDetails/> </StepContent>
 
 							</Step>
 

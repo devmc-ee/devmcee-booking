@@ -18,7 +18,7 @@ const Calendar = ({locale, setActiveStep}) => {
 	const [calendarDate, setCalendarDate] = useState(moment().date());
 	const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
 	const [expanded, setExpanded] = useState('panel0');
-	const {maxAvailableDays, disabledWeekDays}= CALENDAR_SETTINGS;
+	const {maxAvailableDays, disabledWeekDays} = CALENDAR_SETTINGS;
 
 	let calendarDays = [];
 	let disabledDay, selectedDay;
@@ -30,19 +30,20 @@ const Calendar = ({locale, setActiveStep}) => {
 		CALENDAR_SETTINGS);
 	const groupedTimeSlots = groupTimeSlots(timeSlots, CALENDAR_SETTINGS.timeSlotGroups);
 
+	//generate calendar days with properties
 	for (let i = calendarDate; i < calendarDate + 7; i++) {
 		disabledDay = (Math.abs(moment().date() - i + 1) >= maxAvailableDays);
 		disabledDay = disabledDay || disabledWeekDays.includes(moment().date(i).day());
 
 		selectedDay = moment(moment().date(i).format('YYYY-MM-DD')).isSame(moment(selectedDate));
-		if(selectedDay){
+		if (selectedDay) {
 			disabledDay = disabledDay || timeSlots.length === 0;
 		}
 
 		calendarDays.push({
 			weekday: moment().date(i).format('ddd'),
 			date: moment().date(i).format('D'),
-			fullDate : moment().date(i).format('YYYY-MM-DD'),
+			fullDate: moment().date(i).format('YYYY-MM-DD'),
 			disabled: disabledDay,
 			selected: selectedDay
 		})
@@ -60,14 +61,14 @@ const Calendar = ({locale, setActiveStep}) => {
 
 	};
 	const handleSelect = date => event => {
-		setSelectedDate( date);
-		context.setValues({
-			services: services,
-			appointment:{
+		const appointment = {
+			appointment: {
 				date: date,
 				time: ''
 			}
-		})
+		}
+		setSelectedDate(date);
+		context.setValues({...context.values, ...appointment})
 		setExpanded('panel0');
 
 	}
@@ -80,25 +81,22 @@ const Calendar = ({locale, setActiveStep}) => {
 			</div>
 			<div className="calendar-week">
 				<IconButton
-					className="calendar-btn-left"
-					disabled={calendarDate === moment().date() ? true : false}
-					onClick={handleLeftClick}
-					><ChevronLeft/></IconButton>
+					className="calendar-btn-left" disabled={calendarDate === moment().date() ? true : false}
+					onClick={handleLeftClick}><ChevronLeft/></IconButton>
 				<div className="calendar-weekdays">
 
 					{calendarDays.map(
 						(day, i) => (
 							<div key={i} className="calendar-day">
-								<div className="calendar-weekday-name" >
+								<div className="calendar-weekday-name">
 									{day.weekday}
 								</div>
 								<div className="calendar-date">
 									<Button
-										className="calendar-date-btn"
-										onClick={handleSelect( day.fullDate)}
+										className="calendar-date-btn" onClick={handleSelect(day.fullDate)}
 										variant={day.selected ? 'contained' : 'text'}
 										color={day.selected ? 'primary' : 'default'}
-											disabled={day.disabled}>{day.date}</Button>
+										disabled={day.disabled}>{day.date}</Button>
 								</div>
 							</div>
 
@@ -107,24 +105,19 @@ const Calendar = ({locale, setActiveStep}) => {
 				</div>
 
 				<IconButton
-					className="calendar-btn-right"
-					disabled={calendarDate > maxAvailableDays ? true : false}
+					className="calendar-btn-right" disabled={calendarDate > maxAvailableDays ? true : false}
 					onClick={handleRightClick}><ChevronRight/></IconButton>
 			</div>
 			<div className="calendar-available-times">
 				<TimePicker
-					selectedDate={selectedDate}
-					expanded={expanded}
-					setExpanded={setExpanded}
-					groupedTimeSlots={groupedTimeSlots}
-				/>
+					selectedDate={selectedDate} expanded={expanded} setExpanded={setExpanded}
+					groupedTimeSlots={groupedTimeSlots}/>
 			</div>
 
-				<div className="calendar-step-action-footer">
-					<NextStep  step={1}
-						onClick={setActiveStep} />
-				</div>
-
+			<div className="calendar-step-action-footer">
+				<NextStep
+					step={1} onClick={setActiveStep}/>
+			</div>
 
 
 		</>
