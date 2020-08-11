@@ -2,6 +2,7 @@ import React from "react";
 import {Field, useFormikContext} from "formik";
 import {TextField} from "formik-material-ui";
 import {Grid} from "@material-ui/core";
+import CallingCode from "./CallingCode";
 
 const ContactDetails = () => {
 	const formik = useFormikContext();
@@ -26,15 +27,11 @@ const ContactDetails = () => {
 
 				</Grid>
 
-				<Grid container xs={12} md={4} item className="contacts-telephone-wrap">
+				<Grid container xs={12} md={4} item spacing={1}>
 
 					<Grid item xs={3}>
+						<CallingCode />
 
-						<Field
-							className="contacts-telephone-callingcode" component={TextField} name="contacts.callingcode"
-							id="contacts.callingcode" type="text" label="Code"
-
-							autoComplete="off" variant="standard" placeholder="+372..."/>
 
 					</Grid>
 

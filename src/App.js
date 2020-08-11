@@ -22,14 +22,14 @@ const initValues = {
 		name: '',
 		email: '',
 		telephone: '',
-		callingcode: ''
+		callingcode: 'EE'
 	}
 };
 const savedValues = JSON.parse(localStorage.getItem("bookingFormData"));
 
 
 export default function App() {
-	const [activeStep, setActiveStep] = useState(0);
+	const [activeStep, setActiveStep] = useState(2);
 
 	return (
 		<div className="App">
