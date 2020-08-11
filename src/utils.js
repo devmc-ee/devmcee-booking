@@ -189,13 +189,17 @@ export const  getStartTime = ( selectedDate, calendarProps) => {
 		}
 		//workingTime is before start
 		if(mSelectedDate.isSameOrBefore(mTodayWorkStart)){
-
 			return mTodayWorkStart
 				.add(todaysFirstTimeOffset, 'm').format('HH:mm')
 		}
+		if(mSelectedDate.isAfter(mTodayWorkEnd)){
+			return mTodayWorkEnd.format('HH:mm')
+		}
+
 
 
 		currTime = parseInt(mSelectedDate.format('m'));
+
 
 		//make devidable on timeStep
 		const rCurrTime = Math.ceil(currTime / timeStep) * timeStep;
