@@ -12,7 +12,7 @@ const TimePicker = ({selectedDate, expanded, setExpanded, groupedTimeSlots}) => 
 	mSelectedDate.locale(CALENDAR_SETTINGS.locale);
 
 	const context = useFormikContext();
-	const services = context.values.services || [];
+	//const services = context.values.services || [];
 	const time = context.values.appointment ? context.values.appointment.time : '';
 
 	const handleClick = slot => event => {

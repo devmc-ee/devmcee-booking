@@ -5,7 +5,7 @@ import SelectService from './components/SelectService';
 import TotalServicesLabel from './components/TotalServicesLabel';
 import SelectAppointmentLabel from './components/SelectAppointmentLabel';
 import ContactDetails from "./components/ContactDetails";
-import * as Yup from 'yup';
+//import * as Yup from 'yup';
 import './App.css';
 import Calendar from "./components/Calendar";
 

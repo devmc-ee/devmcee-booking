@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {MenuItem} from "@material-ui/core";
 import {TextField} from "formik-material-ui";
 import {Field} from "formik";
-import {COUNTRIES} from "../COUNTRIES";
 
 
-const CallingCode = props => {
+const CallingCode = ({codes}) => {
+
 	const validateOption = value => {
 		let error;
 		if (!value) {
@@ -14,27 +14,25 @@ const CallingCode = props => {
 		}
 		return error;
 	};
-	//[...{"name":"Estonia","alpha2Code":"EE","callingCodes":["372"]}]
-	const [code, setCode] = useState('EE')
+
+
 	return (
 		<>
 			<Field
 				component={TextField}
 				name="contacts.callingcode"
-				id="contacts.callingcode" type="text" label="Code"
+				id="contacts.callingcode" label="Code"
 				select={true}
-				fullWidth
 				as="select"
+				type="text"
+				fullWidth
+
 				validate={validateOption}
 
 				autoComplete="off" variant="standard" placeholder="+372...">
-				{COUNTRIES.map(country => {
-					return(
-						<MenuItem key={country.alpha2Code} value={country.alpha2Code} disableRipple={true}>
-							<img src={country.flag} width="32" /> 	(+{country.callingCodes[0]}) {country.name}
-						</MenuItem>
-					)
-				})}
+				<MenuItem value="" />
+
+				{codes}
 			</Field>
 		</>
 	);
