@@ -5,6 +5,7 @@ import {TextField, Checkbox} from "formik-material-ui";
 import {Grid, FormControlLabel} from "@material-ui/core";
 import CallingCode from "./CallingCode";
 import {COUNTRIES} from "../COUNTRIES";
+import NextStep from "./NextStep";
 
 const codes = (flagsLoaded) => {
 
@@ -32,7 +33,7 @@ const checkImgs = path =>{
 
 	);
 }
-const ContactDetails = () => {
+const ContactDetails = ({setActiveStep}) => {
 	const [flagsLoaded, setFlagsLoaded] = useState( false);
 
 	useEffect(()=>{
@@ -116,7 +117,8 @@ const ContactDetails = () => {
 
 				</Grid>
 
-
+				<NextStep
+					step={2} onClick={setActiveStep}/>
 			</Grid>
 			<pre>{JSON.stringify(formik, null, 2)}</pre>
 		</>

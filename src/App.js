@@ -85,7 +85,7 @@ export default function App() {
 
 							<Step><StepLabel>Contact Details</StepLabel>
 
-								<StepContent> <ContactDetails/> </StepContent>
+								<StepContent> <ContactDetails setActiveStep={setActiveStep}/> </StepContent>
 
 							</Step>
 

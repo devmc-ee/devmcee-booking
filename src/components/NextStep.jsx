@@ -15,7 +15,8 @@ const NextStep = ({step, onClick, ...props}) => {
 
 	const isDisabled = () => {
 		let failCather;
-		const {services, appointment} = formik.values;
+		const {services, appointment,contacts} = formik.values;
+
 		//const servicesLength = formik.values.services.length;
 		const servicesLength = services.length;
 		switch (step) {
@@ -36,6 +37,7 @@ const NextStep = ({step, onClick, ...props}) => {
 				disabled = !appointment.time;
 				break;
 			case 2:
+				disabled = Object.values(contacts).slice(0,4).includes('') || formik.errors.contacts
 				break;
 			case 3:
 				break;
