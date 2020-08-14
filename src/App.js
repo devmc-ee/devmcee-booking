@@ -5,7 +5,7 @@ import SelectService from './components/SelectService';
 import TotalServicesLabel from './components/TotalServicesLabel';
 import SelectAppointmentLabel from './components/SelectAppointmentLabel';
 import ContactDetails from "./components/ContactDetails";
-//import * as Yup from 'yup';
+import * as Yup from 'yup';
 import './App.css';
 import Calendar from "./components/Calendar";
 
@@ -25,6 +25,27 @@ const initValues = {
 		callingcode: 'EE'
 	}
 };
+const ValidationSchema = Yup.object().shape({
+
+	contacts: Yup.object().shape({
+		name: Yup.string()
+			.min(3, 'Too short!')
+			.max(50, 'Too long!')
+			.required('Required!'),
+		email: Yup.string()
+			.email('Invalid email')
+			.required('Required!'),
+		callingcode: Yup.string()
+			.required('Required!'),
+		telephone: Yup.string()
+			.matches(/^\d+$/, 'Only digits, please!')
+			.min(5, 'Min 5 digits' )
+			.max(15, 'Too long! Max. 15 digits')
+
+			.required('Required!')
+	})
+
+})
 const savedValues = JSON.parse(localStorage.getItem("bookingFormData"));
 
 
@@ -34,8 +55,9 @@ export default function App() {
 	return (
 		<div className="App">
 			<h1>Booking:</h1>
-			<Formik initialValues={{...initValues, ...savedValues}}
-				onSubmit={(values) => console.log(values)}>
+			<Formik
+				initialValues={{...initValues, ...savedValues}} onSubmit={(values) => console.log(values)}
+				validationSchema={ValidationSchema}>
 				{formik => (
 					<Form>
 

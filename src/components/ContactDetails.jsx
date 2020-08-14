@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Field} from "formik";
+import {Field, useFormikContext} from "formik";
 import {MenuItem} from "@material-ui/core";
 import {TextField} from "formik-material-ui";
 import {Grid} from "@material-ui/core";
@@ -43,7 +43,7 @@ const ContactDetails = () => {
 				() => console.error('could not load images'))
 	},[])
 
-	//const formik = useFormikContext();
+	const formik = useFormikContext();
 
 	return (
 		<>
@@ -60,7 +60,7 @@ const ContactDetails = () => {
 				<Grid item xs={12} md={4}>
 
 					<Field
-						component={TextField} name="contacts.email" id="contacts.email" type="text" variant="standard"
+						component={TextField} name="contacts.email" id="contacts.email" type="email" variant="standard"
 						label="Email" placeholder="Email..." fullWidth/>
 
 				</Grid>
@@ -76,7 +76,9 @@ const ContactDetails = () => {
 					<Grid item xs={9}>
 
 						<Field
-							component={TextField} name="contacts.telephone" id="contacts.telephone" type="text"
+							component={TextField}
+							name="contacts.telephone"
+							id="contacts.telephone" type="number"
 							fullWidth autoComplete="off" variant="standard" label="Telephone"
 							placeholder="55597565..."/>
 
@@ -85,6 +87,7 @@ const ContactDetails = () => {
 				</Grid>
 
 			</Grid>
+			<pre>{JSON.stringify(formik, null, 2)}</pre>
 		</>
 	)
 }
