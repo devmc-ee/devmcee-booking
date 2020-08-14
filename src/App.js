@@ -22,7 +22,9 @@ const initValues = {
 		name: '',
 		email: '',
 		telephone: '',
-		callingcode: 'EE'
+		callingcode: 'EE',
+		forAnother:'false',
+		anotherName:''
 	}
 };
 const ValidationSchema = Yup.object().shape({
@@ -42,7 +44,10 @@ const ValidationSchema = Yup.object().shape({
 			.min(5, 'Min 5 digits' )
 			.max(15, 'Too long! Max. 15 digits')
 
-			.required('Required!')
+			.required('Required!'),
+		anotherName:Yup.string()
+			.min(3, 'Too short!')
+			.max(50, 'Too long!')
 	})
 
 })
