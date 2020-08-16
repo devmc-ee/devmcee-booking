@@ -52,10 +52,18 @@ const ValidationSchema = Yup.object().shape({
 
 })
 const savedValues = JSON.parse(localStorage.getItem("bookingFormData"));
+const ServiceStep = React.memo(({ setActiveStep})=>{
 
+	return (
+		<SelectService setActiveStep={setActiveStep}/>
+	)
+});
+const ContactsStep = React.memo(({setActiveStep})=>{
+	return(<ContactDetails setActiveStep={setActiveStep}/>)
+})
 
 export default function App() {
-	const [activeStep, setActiveStep] = useState(2);
+	const [activeStep, setActiveStep] = useState(0);
 
 	return (
 		<div className="App">
@@ -72,7 +80,12 @@ export default function App() {
 							<Step> <StepLabel> <TotalServicesLabel
 								activeStep={activeStep} setActiveStep={setActiveStep}/> </StepLabel>
 
-								<StepContent> <SelectService setActiveStep={setActiveStep}/> </StepContent>
+								<StepContent>
+									<ServiceStep setActiveStep={setActiveStep}/>
+
+									{/*<SelectService setActiveStep={setActiveStep}/>
+								*/}
+								</StepContent>
 
 							</Step>
 
@@ -85,7 +98,11 @@ export default function App() {
 
 							<Step><StepLabel>Contact Details</StepLabel>
 
-								<StepContent> <ContactDetails setActiveStep={setActiveStep}/> </StepContent>
+								<StepContent>
+
+									<ContactsStep setActiveStep={setActiveStep}/>
+
+								</StepContent>
 
 							</Step>
 

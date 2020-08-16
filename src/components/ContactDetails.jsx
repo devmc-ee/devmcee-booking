@@ -1,28 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Field, useFormikContext} from "formik";
-import {MenuItem} from "@material-ui/core";
-import {TextField, Checkbox} from "formik-material-ui";
-import {Grid, FormControlLabel} from "@material-ui/core";
+import {TextField} from "formik-material-ui";
+import {Grid, FormControlLabel, Checkbox} from "@material-ui/core";
 import CallingCode from "./CallingCode";
 import {COUNTRIES} from "../COUNTRIES";
 import NextStep from "./NextStep";
 
-const codes = (flagsLoaded) => {
-
-	return COUNTRIES.map(country => {
-
-		return(
-			<MenuItem key={country.alpha2Code} value={country.alpha2Code} disableRipple={true}>
-				{country.flag? (<img
-					className="country-flag"
-					src={country.flag}
-					width="20"
-				alt={country.alpha3Code}/>): '' } {country.name}
-				{country.callingCodes[0]?'(+'+country.callingCodes[0]+')':''}
-			</MenuItem>
-		)
-	})
-}
 const checkImgs = path =>{
 	return new Promise((resolve, reject)=>{
 			const img = new Image();
@@ -33,18 +16,20 @@ const checkImgs = path =>{
 
 	);
 }
+
 const ContactDetails = ({setActiveStep}) => {
-	const [flagsLoaded, setFlagsLoaded] = useState( false);
+	const formik = useFormikContext();
+
+	const [forAnother, setForAnother] = useState(false);
 
 	useEffect(()=>{
+		//preload images
 		Promise.all(
 			COUNTRIES.map( country => checkImgs(country.flag) )
 		)
-			.then( ()=> setFlagsLoaded(true),
-				() => console.error('could not load images'))
 	},[])
 
-	const formik = useFormikContext();
+
 
 	return (
 		<>
@@ -69,7 +54,7 @@ const ContactDetails = ({setActiveStep}) => {
 				<Grid container xs={12} md={4} item spacing={1}>
 
 					<Grid item xs={3}>
-						<CallingCode codes={codes(flagsLoaded)} />
+						<CallingCode  />
 
 
 					</Grid>
@@ -89,21 +74,21 @@ const ContactDetails = ({setActiveStep}) => {
 
 				<Grid container xs={12} md={4} item spacing={1}>
 					<Grid item xs={12} sm={6} >
-						<FormControlLabel
-							control={<Field
-								component={Checkbox}
-								name="contacts.forAnother"
-								id="contacts.forAnother"
-								color="primary"
-								fullWidth  variant="standard" label="Is it for another person"
-							/>}
-							label="Booking for another person"
-						/>
 
+						<FormControlLabel
+							control={
+								<Checkbox
+									checked={forAnother}
+									onChange={()=>setForAnother(forAnother => !forAnother)}
+									name="contacts.forAnother"
+									id="contacts.forAnother" />}
+							label="Booking for another person" />
 
 					</Grid>
 					<Grid item  xs={12} sm={6}>
-						{formik.values.contacts.forAnother === true
+						{formik.values.contacts
+						&& formik.values.contacts.forAnother === true
+
 							? (<Field
 								component={TextField}
 								name="contacts.anotherName"
@@ -116,11 +101,12 @@ const ContactDetails = ({setActiveStep}) => {
 					</Grid>
 
 				</Grid>
-
+				<div className="calendar-step-action-footer">
 				<NextStep
 					step={2} onClick={setActiveStep}/>
+				</div>
 			</Grid>
-			<pre>{JSON.stringify(formik, null, 2)}</pre>
+
 		</>
 	)
 }

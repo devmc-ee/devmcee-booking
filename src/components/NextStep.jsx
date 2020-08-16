@@ -37,7 +37,10 @@ const NextStep = ({step, onClick, ...props}) => {
 				disabled = !appointment.time;
 				break;
 			case 2:
-				disabled = Object.values(contacts).slice(0,4).includes('') || formik.errors.contacts
+				disabled = contacts
+					? Object.values(contacts).slice(0,4).includes('')
+						|| (Object.values(formik.errors).length >0)
+					: true;
 				break;
 			case 3:
 				break;

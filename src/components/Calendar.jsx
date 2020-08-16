@@ -10,7 +10,7 @@ import {useFormikContext} from "formik";
 import {getTimeSlots, getTotalDuration, groupTimeSlots} from "../utils";
 import NextStep from "./NextStep";
 
-const Calendar = ({locale, setActiveStep}) => {
+const Calendar = React.memo(({locale, setActiveStep}) => {
 	const context = useFormikContext();
 	const services = context.values.services || [];
 
@@ -122,5 +122,5 @@ const Calendar = ({locale, setActiveStep}) => {
 
 		</>
 	)
-}
+})
 export default Calendar;

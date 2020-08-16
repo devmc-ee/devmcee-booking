@@ -3,9 +3,24 @@ import PropTypes from 'prop-types';
 import {MenuItem} from "@material-ui/core";
 import {TextField} from "formik-material-ui";
 import {Field} from "formik";
+import {COUNTRIES} from "../COUNTRIES";
 
+const countryItem =(country) => {
+		const {alpha2Code, flag, alpha3Code, name, callingCodes} = country;
+		console.log('render countryItem')
+		return(
+			<MenuItem key={alpha2Code} value={alpha2Code}  disableRipple={true}>
+				{flag? (<img
+					className="country-flag"
+					src={flag}
+					width="20"
+					alt={alpha3Code}/>): '' } {name}
+				{callingCodes[0]?'(+'+callingCodes[0]+')':''}
+			</MenuItem>
+		)
+	};
 
-const CallingCode = ({codes}) => {
+const CallingCode =React.memo( () => {
 
 	const validateOption = value => {
 		let error;
@@ -14,7 +29,6 @@ const CallingCode = ({codes}) => {
 		}
 		return error;
 	};
-
 
 	return (
 		<>
@@ -32,11 +46,13 @@ const CallingCode = ({codes}) => {
 				autoComplete="off" variant="standard" placeholder="+372...">
 				<MenuItem value="" />
 
-				{codes}
+				{COUNTRIES.map( country => countryItem(country))}
+
+
 			</Field>
 		</>
 	);
-};
+});
 
 CallingCode.propTypes = {
 	//default
