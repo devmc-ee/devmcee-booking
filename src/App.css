@@ -94,3 +94,6 @@ display: flex;
 .listSubHeader{
 	background-color: white;
 }
+img.country-flag{
+	margin-right: 5px;
+}

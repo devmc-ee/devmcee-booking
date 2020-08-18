@@ -5,7 +5,7 @@ import useIntersectionObserver from "../hooks/useIntersectionObserver";
 const ImageContainer = ({flag, alpha3Code}) => {
 	const ref = useRef();
 	const [isVisible, setIsVisible] = useState(false);
-	console.log(ref)
+
 
 	useIntersectionObserver({
 		target: ref,
@@ -19,7 +19,7 @@ const ImageContainer = ({flag, alpha3Code}) => {
 			}
 		}
 	});
-	if (! 'IntersectionObserver' in window) {
+	if ( 'IntersectionObserver' in window === false) {
 		setIsVisible(true)
 	}
 	return (

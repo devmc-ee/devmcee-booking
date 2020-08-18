@@ -1,35 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Field, useFormikContext} from "formik";
 import {TextField} from "formik-material-ui";
 import {Grid, FormControlLabel, Checkbox} from "@material-ui/core";
 import CallingCode from "./CallingCode";
-import {COUNTRIES} from "../COUNTRIES";
 import NextStep from "./NextStep";
-
-/*const checkImgs = path =>{
-	return new Promise((resolve, reject)=>{
-			const img = new Image();
-			img.onload = () => resolve(path)
-			img.onerror = () => reject()
-			img.src = path
-		}
-
-	);
-}*/
 
 const ContactDetails = ({setActiveStep}) => {
 	const formik = useFormikContext();
 
 	const [forAnother, setForAnother] = useState(false);
-
-	/*useEffect(()=>{
-		//preload images
-		Promise.all(
-			COUNTRIES.map( country => checkImgs(country.flag) )
-		)
-	},[])*/
-
-
 
 	return (
 		<>

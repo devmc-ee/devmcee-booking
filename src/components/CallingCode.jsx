@@ -1,32 +1,30 @@
-import React, {useRef,useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {MenuItem, ListSubheader} from "@material-ui/core";
 import {makeStyles} from '@material-ui/styles';
 import {TextField} from "formik-material-ui";
 import {Field} from "formik";
-import {EUROPE, AMERICAS, ASIA, OCEANIA, AFRICA} from "../COUNTRIES";
+import * as REGIONS from '../COUNTRIES';
 import ImageContainer from "./ImageContainer";
 
 const useStyles = makeStyles({
 	root: {
 		background: '#ffffff',
-
 	},
-
 });
+
 const countryItem =(country) => {
 		const {alpha2Code, flag, alpha3Code, name, callingCodes} = country;
-		console.log('render countryItem')
-		return(
-			<MenuItem key={alpha2Code} value={alpha2Code}  disableRipple={true} dense={true}>
 
+		return(
+			<MenuItem
+				key={alpha2Code}
+				value={alpha2Code}
+				disableRipple={true}
+				dense={true}
+			>
 				{flag? (
-					<ImageContainer flag={flag} alpha3Code={alpha3Code}  />
-					/*<img
-					className="country-flag"
-					src={flag}
-					width="20"
-					alt={alpha3Code}/>*/
+					<ImageContainer flag={flag} alpha3Code={alpha3Code}   />
 					): '' } {name}
 				{callingCodes[0]?'(+'+callingCodes[0]+')':''}
 			</MenuItem>
@@ -35,6 +33,7 @@ const countryItem =(country) => {
 
 const CallingCode =React.memo( () => {
 	const classes = useStyles();
+
 	const validateOption = value => {
 		let error;
 		if (!value) {
@@ -42,6 +41,21 @@ const CallingCode =React.memo( () => {
 		}
 		return error;
 	};
+
+	let callingCodes = [];
+
+	for(let region of Object.keys(REGIONS)){
+
+		callingCodes.push(<ListSubheader
+			key={region}
+			component="div" classes={{root: classes.root}}
+			color="primary">{region}</ListSubheader>);
+
+		for (let country of REGIONS[region]){
+
+			callingCodes.push(countryItem(country))
+		}
+	}
 
 	return (
 		<>
@@ -53,35 +67,12 @@ const CallingCode =React.memo( () => {
 				as="select"
 				type="text"
 				fullWidth
-
 				validate={validateOption}
-
 				autoComplete="off" variant="standard" placeholder="+372...">
 
 				<MenuItem value="" />
-				<ListSubheader component="div" classes={{
-					root: classes.root
-				}} color="primary">Europe</ListSubheader>
 
-				{EUROPE.map( country => countryItem(country))}
-				<ListSubheader component="div"  classes={{
-					root: classes.root
-				}} color="primary">Asia</ListSubheader>
-				{ASIA.map( country => countryItem(country))}
-				<ListSubheader component="div"  classes={{
-					root: classes.root
-				}}color="primary">Americas</ListSubheader>
-				{AMERICAS.map( country => countryItem(country))}
-				<ListSubheader component="div"  classes={{
-					root: classes.root
-				}} color="primary">Africa</ListSubheader>
-				{AFRICA.map( country => countryItem(country))}
-				<ListSubheader  component="div" classes={{
-					root: classes.root
-				}} color="primary">Oceania</ListSubheader>
-				{OCEANIA.map( country => countryItem(country))}
-
-
+				{callingCodes}
 
 			</Field>
 		</>
@@ -89,7 +80,7 @@ const CallingCode =React.memo( () => {
 });
 
 CallingCode.propTypes = {
-	//default
+
 	props: PropTypes.object
 
 };
