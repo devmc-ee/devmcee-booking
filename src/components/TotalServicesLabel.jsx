@@ -13,16 +13,19 @@ const TotalServicesLabel = ({activeStep, setActiveStep}) => {
 	let labelText;
 	const numberOfServices = Object.keys(formik.values.services).length;
 	const servicesDuration = getTotalDuration(formik.values.services);
-	//TODO: change text to variables for further translation
-	const servDurationText = servicesDuration ? moment.duration(servicesDuration,
-		'minutes').asHours() +'h': '';
+
+	//TODO: change strings to variables for further translation
+	const servDurationText = servicesDuration
+		? moment.duration(servicesDuration,'minutes').asHours() +'h'
+		: '';
+
 	const handleClick = step => event => {
 		setActiveStep(step);
-		formik.setValues({
-			services: formik.values.services,
-			appointment: ''
-		})
-	}
+		const appointmet = {appointment: ''}
+		formik.setValues({...formik.values, ...appointmet});
+
+	};
+
 	const editIcon =  activeStep > 0 ? (
 		<IconButton size="small" onClick={handleClick(0) }><EditIcon/></IconButton>
 	) :  '';

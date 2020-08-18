@@ -17,7 +17,11 @@ const ContactDetails = ({setActiveStep}) => {
 				<Grid item xs={12} md={4}>
 
 					<Field
-						component={TextField} name="contacts.name" id="contacts.name" type="text" variant="standard"
+						component={TextField}
+						name="contacts.name"
+						id="contacts.name"
+						type="text"
+						variant="standard"
 						label="Name" placeholder="Name..." fullWidth/>
 
 				</Grid>
@@ -83,7 +87,9 @@ const ContactDetails = ({setActiveStep}) => {
 					step={2} onClick={setActiveStep}/>
 				</div>
 			</Grid>
-
+			<pre>
+			{JSON.stringify(formik.values, null, 2)}
+			</pre>
 		</>
 	)
 }

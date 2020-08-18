@@ -60,7 +60,7 @@ const ServiceStep = React.memo(({ setActiveStep})=>{
 });
 const ContactsStep = React.memo(({setActiveStep})=>{
 	return(<ContactDetails setActiveStep={setActiveStep}/>)
-})
+});
 
 export default function App() {
 	const [activeStep, setActiveStep] = useState(0);
@@ -77,14 +77,13 @@ export default function App() {
 						<Stepper
 							className="booking-form-stepper-container" activeStep={activeStep} orientation="vertical">
 
-							<Step> <StepLabel> <TotalServicesLabel
+							<Step> <StepLabel>
+								<TotalServicesLabel
 								activeStep={activeStep} setActiveStep={setActiveStep}/> </StepLabel>
 
 								<StepContent>
 									<ServiceStep setActiveStep={setActiveStep}/>
 
-									{/*<SelectService setActiveStep={setActiveStep}/>
-								*/}
 								</StepContent>
 
 							</Step>
