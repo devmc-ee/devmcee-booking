@@ -5,6 +5,7 @@ import SelectService from './components/SelectService';
 import TotalServicesLabel from './components/TotalServicesLabel';
 import SelectAppointmentLabel from './components/SelectAppointmentLabel';
 import ContactDetails from "./components/ContactDetails";
+import ContactsStepLabel from './components/ContactsStepLabel'
 import * as Yup from 'yup';
 import './App.css';
 import Calendar from "./components/Calendar";
@@ -97,7 +98,7 @@ export default function App() {
 
 							</Step>
 
-							<Step><StepLabel>Contact Details</StepLabel>
+							<Step><StepLabel><ContactsStepLabel /></StepLabel>
 
 								<StepContent>
 
