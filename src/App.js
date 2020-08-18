@@ -88,7 +88,9 @@ export default function App() {
 
 							</Step>
 
-							<Step><StepLabel><SelectAppointmentLabel/></StepLabel>
+							<Step><StepLabel>
+								<SelectAppointmentLabel/>
+							</StepLabel>
 
 								<StepContent className="step-calendar-select"> <Calendar
 									setActiveStep={setActiveStep} locale="en"/> </StepContent>

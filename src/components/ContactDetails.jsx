@@ -86,7 +86,7 @@ const ContactDetails = ({setActiveStep}) => {
 								helperText={formik.errors.contacts && formik.errors.contacts.anotherName
 									? formik.errors.contacts.anotherName
 									:"Name of the person who attends the appointment"}
-								label="Another person name" placeholder="Name..." fullWidth/>)
+								label="Another person name" placeholder="John..." fullWidth/>)
 							: ''}
 					</Grid>
 
@@ -96,8 +96,6 @@ const ContactDetails = ({setActiveStep}) => {
 					step={2} onClick={setActiveStep}/>
 				</div>
 			</Grid>
-			<pre>
-			</pre>
 		</>
 	)
 }

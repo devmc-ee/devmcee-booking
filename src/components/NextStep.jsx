@@ -36,9 +36,9 @@ const NextStep = ({step, onClick, ...props}) => {
 				break;
 			case 2:
 				disabled = contacts                                   //disable button next if
-					? Object.values(contacts).slice(0,4).includes('') //any of the required fields is empty
+					? Object.values(contacts).slice(0,4).includes('') //any of the required contact fields is empty
 						|| (Object.values(formik.errors).length >0)   //or has error
-						|| ((true === formik.values.contacts.forAnother)  //or if selected option for another person
+						|| ((true === formik.values.contacts.forAnother)  //or if the option for another person is checked
 							&& (formik.values.contacts.anotherName === '')) //but not written name
 					: true;
 				break;
