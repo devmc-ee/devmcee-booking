@@ -12,9 +12,9 @@ const SelectAppointmentLabel = () => {
 	if(formik.values.hasOwnProperty('appointment') &&
 		formik.values.appointment.time){
 		date = formik.values.appointment.date? moment(formik.values.appointment.date,
-			'YYYY-MM-DD').format('Do MMM, YYYY (dddd)'):'';
+			'YYYY-MM-DD').format('Do MMM, (dddd)'):'';
 		time = formik.values.appointment.time;
-		appointmentLabel = time + ', ' +date ;
+		appointmentLabel =date + ', ' + time ;
 	}else{
 		appointmentLabel = 'Select Date and Time';
 	}

@@ -6,7 +6,7 @@ import CallingCode from "./CallingCode";
 import {COUNTRIES} from "../COUNTRIES";
 import NextStep from "./NextStep";
 
-const checkImgs = path =>{
+/*const checkImgs = path =>{
 	return new Promise((resolve, reject)=>{
 			const img = new Image();
 			img.onload = () => resolve(path)
@@ -15,19 +15,19 @@ const checkImgs = path =>{
 		}
 
 	);
-}
+}*/
 
 const ContactDetails = ({setActiveStep}) => {
 	const formik = useFormikContext();
 
 	const [forAnother, setForAnother] = useState(false);
 
-	useEffect(()=>{
+	/*useEffect(()=>{
 		//preload images
 		Promise.all(
 			COUNTRIES.map( country => checkImgs(country.flag) )
 		)
-	},[])
+	},[])*/
 
 
 
