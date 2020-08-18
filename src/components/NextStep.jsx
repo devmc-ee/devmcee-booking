@@ -12,13 +12,11 @@ const NextStep = ({step, onClick, ...props}) => {
 
 	let disabled = false;
 
-
 	const isDisabled = () => {
 		let failCather;
 		const {services, appointment,contacts} = formik.values;
-
-		//const servicesLength = formik.values.services.length;
 		const servicesLength = services.length;
+
 		switch (step) {
 			case 0:
 				if (0 < servicesLength) {
@@ -37,9 +35,11 @@ const NextStep = ({step, onClick, ...props}) => {
 				disabled = !appointment.time;
 				break;
 			case 2:
-				disabled = contacts
-					? Object.values(contacts).slice(0,4).includes('')
-						|| (Object.values(formik.errors).length >0)
+				disabled = contacts                                   //disable button next if
+					? Object.values(contacts).slice(0,4).includes('') //any of the required fields is empty
+						|| (Object.values(formik.errors).length >0)   //or has error
+						|| ((true === formik.values.contacts.forAnother)  //or if selected option for another person
+							&& (formik.values.contacts.anotherName === '')) //but not written name
 					: true;
 				break;
 			case 3:
@@ -48,7 +48,6 @@ const NextStep = ({step, onClick, ...props}) => {
 				return false;
 
 		}
-
 
 		return disabled;
 	};

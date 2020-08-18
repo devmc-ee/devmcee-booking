@@ -9,6 +9,15 @@ const ContactDetails = ({setActiveStep}) => {
 	const formik = useFormikContext();
 
 	const [forAnother, setForAnother] = useState(false);
+	const forAnotherCheckHandler = () => {
+		let values = formik.values;
+		setForAnother(forAnother => !forAnother);
+		values.contacts.forAnother = !forAnother;
+		if(false === !forAnother){
+			values.contacts.anotherName = '';
+		}
+		formik.setValues(values);
+	};
 
 	return (
 		<>
@@ -62,7 +71,7 @@ const ContactDetails = ({setActiveStep}) => {
 							control={
 								<Checkbox
 									checked={forAnother}
-									onChange={()=>setForAnother(forAnother => !forAnother)}
+									onChange={forAnotherCheckHandler}
 									name="contacts.forAnother"
 									id="contacts.forAnother" />}
 							label="Booking for another person" />
@@ -88,7 +97,6 @@ const ContactDetails = ({setActiveStep}) => {
 				</div>
 			</Grid>
 			<pre>
-			{JSON.stringify(formik.values, null, 2)}
 			</pre>
 		</>
 	)
