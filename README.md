@@ -1,4 +1,12 @@
-This app is a booking form of a thai massage salon. It is build with **React.js** by using the hooks 
+# Booking form
+This app is a booking form of a thai massage salon. 
+It allows to select a number of services and their options,
+select avaialble date and time for an appointment, enter
+contact details (incl. another person name, if booking is for another person),
+and selecting payment options. The final step is reviewing the booking details and 
+confirmation.
+
+The app is built with **React.js** by using the hooks 
  technique. The forms are build mostly with [Formik](https://formik.org/docs/overview) library. 
  The design and form visual interactions are provided with [Material-UI](https://material-ui.com/) React library.
 Form validation is build (mostly) with [Yup](https://github.com/jquense/yup) validationSchemas, 
