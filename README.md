@@ -3,7 +3,7 @@ This app is a booking form of a thai massage salon.
 It allows to select a number of services and their options,
 select avaialble date and time for an appointment, enter
 contact details (incl. another person name, if booking is for another person),
-and selecting payment options. The final step is reviewing the booking details and 
+and selecting payment options. The final step is review of the booking details and 
 confirmation.
 
 The app is built with **React.js** by using the hooks 
