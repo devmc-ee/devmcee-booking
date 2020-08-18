@@ -1,3 +1,13 @@
+This app is a booking form of a thai massage salon. It is build with **React.js** by using the hooks 
+ technique. The forms are build mostly with [Formik](https://formik.org/docs/overview) library. 
+ The design and form visual interactions are provided with [Material-UI](https://material-ui.com/) React library.
+Form validation is build (mostly) with [Yup](https://github.com/jquense/yup) validationSchemas, 
+which integration is supportded by Formik forms.
+
+The app is supposed to be a part of a Wordpress plugin, that fetches data (configuration, settings, 
+services info, working time and etc ) from the backend. Meanwhile static JSON objects
+ (imported from js) are used as a data source.  
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -27,25 +37,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
 ### Analyzing the Bundle Size
 
