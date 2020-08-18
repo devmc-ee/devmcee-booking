@@ -65,9 +65,7 @@ const ContactDetails = ({setActiveStep}) => {
 
 					</Grid>
 					<Grid item  xs={12} sm={6}>
-						{formik.values.contacts
-						&& formik.values.contacts.forAnother === true
-
+						{forAnother
 							? (<Field
 								component={TextField}
 								name="contacts.anotherName"
