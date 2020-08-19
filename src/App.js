@@ -9,6 +9,7 @@ import ContactsStepLabel from './components/ContactsStepLabel'
 import * as Yup from 'yup';
 import './App.css';
 import Calendar from "./components/Calendar";
+import PaymentSelect from "./components/PaymentSelect";
 
 const initValues = {
 	services: [
@@ -26,6 +27,10 @@ const initValues = {
 		callingcode: 'EE',
 		forAnother:'false',
 		anotherName:''
+	},
+	payment:{
+		method: 'salon',
+		addInfo: ""
 	}
 };
 const ValidationSchema = Yup.object().shape({
@@ -110,12 +115,21 @@ export default function App() {
 
 							<Step><StepLabel>Payment Options</StepLabel>
 
+								<StepContent>
+									<PaymentSelect setActiveStep={setActiveStep} />
+
+								</StepContent>
+
+							</Step>
+
+							<Step><StepLabel>Review</StepLabel>
+
 								<StepContent></StepContent>
 
 							</Step>
 
 						</Stepper>
-
+						<pre>{JSON.stringify(formik.values.payment, null, 2)}</pre>
 					</Form>
 				)}
 			</Formik>

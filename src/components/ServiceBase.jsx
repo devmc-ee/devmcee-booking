@@ -28,6 +28,7 @@ const ServiceBase = ({ index, formik, ...props }) => {
 		}
 		return error;
 	};
+
 	return (
 		<Field
 			name={`services.${index}.serviceBase`}
