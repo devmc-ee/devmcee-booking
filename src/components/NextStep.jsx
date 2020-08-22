@@ -14,7 +14,7 @@ const NextStep = ({step, onClick, ...props}) => {
 
 	const isDisabled = () => {
 		let failCather;
-		const {services, appointment,contacts} = formik.values;
+		const {services, appointment,contacts, payment} = formik.values;
 		const servicesLength = services.length;
 
 		switch (step) {
@@ -43,6 +43,8 @@ const NextStep = ({step, onClick, ...props}) => {
 					: true;
 				break;
 			case 3:
+				disabled = (Object.values(formik.errors).length >0)
+					|| (payment.method === 'giftCard' && payment.addInfo.length < 4)
 				break;
 			default:
 				return false;

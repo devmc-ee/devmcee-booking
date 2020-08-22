@@ -43,11 +43,17 @@ const PaymentSelect = React.memo(({setActiveStep}) => {
 	}, [locale, payment.methods, appointment]);
 
 	const validateHandler = value => {
-		let error;
+
 		if (!value) {
-			error = "Required!";
+			return "Required!";
 		}
-		return error;
+		if('LTG' !== value.substr(0, 3)){
+			return "The codes of our gift cards start only from LTG..."
+		}
+		if ( value.length < 4 ){
+			return "Please write full code, like LTG1234"
+		}
+
 	};
 
 	return (
@@ -84,7 +90,7 @@ const PaymentSelect = React.memo(({setActiveStep}) => {
 			/>}
 			</Grid>
 			<Grid container item  xs={12} justify="flex-end">
-			<NextStep onClick={setActiveStep} step={4} />
+			<NextStep onClick={setActiveStep} step={3} />
 			</Grid>
 		</Grid>
 	)
