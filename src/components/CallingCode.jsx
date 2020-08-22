@@ -39,6 +39,7 @@ const CallingCode =React.memo( () => {
 		if (!value) {
 			error = "Required!";
 		}
+		console.log('calling code val', value)
 		return error;
 	};
 

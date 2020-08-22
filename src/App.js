@@ -25,7 +25,7 @@ const initValues = {
 		name: '',
 		email: '',
 		telephone: '',
-		callingcode: 'EE',
+		countryCode: 'EE',
 		forAnother:'false',
 		anotherName:''
 	},
@@ -44,7 +44,7 @@ const ValidationSchema = Yup.object().shape({
 		email: Yup.string()
 			.email('Invalid email')
 			.required('Required!'),
-		callingcode: Yup.string()
+		countryCode: Yup.string()
 			.required('Required!'),
 		telephone: Yup.string()
 			.matches(/^\d+$/, 'Only digits, please!')
@@ -71,12 +71,15 @@ const ContactsStep = React.memo(({setActiveStep})=>{
 
 export default function App() {
 	const [activeStep, setActiveStep] = useState(0);
-
+	const submitHandler = values => {
+		console.log('Submit',values);
+		localStorage.clear();
+	}
 	return (
 		<div className="App">
 			<h1>Booking:</h1>
 			<Formik
-				initialValues={{...initValues, ...savedValues}} onSubmit={(values) => console.log(values)}
+				initialValues={{...initValues, ...savedValues}} onSubmit={submitHandler}
 				validationSchema={ValidationSchema}>
 				{formik => (
 					<Form>
@@ -126,13 +129,13 @@ export default function App() {
 							<Step><StepLabel>Review & Confirm</StepLabel>
 
 								<StepContent>
-									<BookingSummary/>
+									<BookingSummary setActiveStep={setActiveStep}/>
 								</StepContent>
 
 							</Step>
 
 						</Stepper>
-						<pre>{JSON.stringify(formik.values, null, 2)}</pre>
+						<pre>{JSON.stringify(formik, null, 2)}</pre>
 					</Form>
 				)}
 			</Formik>

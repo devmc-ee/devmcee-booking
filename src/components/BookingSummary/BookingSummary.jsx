@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import {Field, useFormikContext} from "formik";
-import {Typography, List, ListItem, ListItemText, Divider, Grid} from "@material-ui/core";
+import {Typography, List, ListItem, ListItemText, Divider, Grid, Button} from "@material-ui/core";
 import {TextField} from "formik-material-ui";
-import {SERVICES, SERVICE_OPTIONS, SERVICE_OPTIONS_NAMES, SERVICE_PRICES, SETTINGS, T} from '../../DATA'
+import {SERVICES, SERVICE_OPTIONS, SERVICE_OPTIONS_NAMES, SERVICE_PRICES, SETTINGS, T} from '../../DATA';
+import {getTotalPrice} from '../../utils'
 
 const useStyles = makeStyles((theme) => ({
 	listItem: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const BookingSummary = () => {
+const BookingSummary = ({setActiveStep}) => {
 	const locale = SETTINGS.locale;
 	const [callingCode, setCallingCode] = useState('');
 	const classes = useStyles();
@@ -36,7 +37,8 @@ const BookingSummary = () => {
 
 	const {forAnother, anotherName, countryCode} = contacts;
 	const {contactBillingDetails, contactBillingHeaders} = T.bookingSummary;
-	let servicesTotalCost = 0;
+	let servicesTotalCost = getTotalPrice([...services]);
+	console.log('servicesTotalCost',servicesTotalCost, [...services]);
 	useEffect(() => {
 		let url = `https://restcountries.eu/rest/v2/alpha/${countryCode}?fields=callingCodes`;
 		fetch(url)
@@ -153,6 +155,12 @@ const BookingSummary = () => {
 					variant="outlined"
 				/>
 			</Grid>
+			<Grid item container justify="flex-end" xs={12}>
+				<Button
+					type="submit" onClick={()=>setActiveStep(prev=> prev +1)}
+					href="" variant="contained" color="primary" disableRipple={false} > Submit </Button>
+			</Grid>
+
 		</Grid>
 	)
 };

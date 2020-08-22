@@ -93,10 +93,10 @@ const ContactDetails = ({setActiveStep}) => {
 					</Grid>
 
 				</Grid>
-				<div className="calendar-step-action-footer">
+				<Grid item container xs={12} justify="flex-end" className="calendar-step-action-footer">
 				<NextStep
 					step={2} onClick={setActiveStep}/>
-				</div>
+				</Grid>
 			</Grid>
 		</>
 	)

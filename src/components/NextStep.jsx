@@ -1,14 +1,24 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {Button} from "@material-ui/core";
 import {useFormikContext} from "formik";
 
-const NextStep = ({step, onClick, ...props}) => {
+const NextStep = React.forwardRef( ({step, onClick, ...props},ref) => {
 	const formik = useFormikContext();
+	const {method} =formik.values.payment;
+	const inputRef = useRef(ref);
+
 	useEffect(() => {
 
 		localStorage.setItem("bookingFormData", JSON.stringify(formik.values));
 
 	}, [formik.values, formik.touched])
+
+	useEffect(()=>{
+		if(method !== 'giftCard'){
+			// fixes slow enabling of next button on payment select
+			inputRef.current.focus();
+		}
+	},[method])
 
 	let disabled = false;
 
@@ -44,7 +54,7 @@ const NextStep = ({step, onClick, ...props}) => {
 				break;
 			case 3:
 				disabled = (Object.values(formik.errors).length >0)
-					|| (payment.method === 'giftCard' && payment.addInfo.length < 4)
+					|| ((payment.method === 'giftCard') && (payment.addInfo.length < 4))
 				break;
 			default:
 				return false;
@@ -54,14 +64,17 @@ const NextStep = ({step, onClick, ...props}) => {
 		return disabled;
 	};
 	const clickHandler = () => {
-		if (!disabled)
+
+
+		if (!disabled )
 			onClick(prev => prev + 1)
 	}
 
 	return (
 		<Button
+			ref={inputRef}
 			href="" variant="contained" color="primary" disableRipple={false} disabled={isDisabled()}
-			onClick={clickHandler}> Next </Button>
+			onClick={clickHandler}> {step === 4 ? 'Submit': 'Next'} </Button>
 	);
-};
+});
 export default NextStep;
