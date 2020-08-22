@@ -206,3 +206,56 @@ export const SETTINGS = {
 };
 
 
+
+//Translations
+export const T = {
+
+	bookingSummary:{
+		services:{
+			header:{
+				en:'Services:'
+			},
+			total:{
+				en:'Total:'
+			},
+		},
+		appointment:{
+			header: {
+				en: 'Booking Details'
+			},
+			subbtitle:{
+				en: 'Date/Time:'
+			},
+			anotherName:{
+				en:"Appointment for:"
+			}
+
+		},
+		contactBillingHeaders: {
+			header: {
+				en: "Contact/Billing details"
+			},
+			subbtitle: {
+				en: 'Contacts'
+			},
+		},
+		contactBillingDetails:{
+
+			name:{
+				en: 'Name:'
+			},
+			email:{
+				en: 'Email:'
+			},
+
+			telephone: {
+				en: 'Telephone:'
+			},
+			paymentMethod:{
+				en: "Payment method:"
+			}
+		}
+
+
+	},
+};
