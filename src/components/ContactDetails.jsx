@@ -7,8 +7,10 @@ import NextStep from "./NextStep";
 
 const ContactDetails = ({setActiveStep}) => {
 	const formik = useFormikContext();
+	const fForAnother = formik.values.contacts.forAnother;
 
-	const [forAnother, setForAnother] = useState(false);
+
+	const [forAnother, setForAnother] = useState(  ('true' === fForAnother) || (true === fForAnother));
 	const forAnotherCheckHandler = () => {
 		let values = formik.values;
 		setForAnother(forAnother => !forAnother);
