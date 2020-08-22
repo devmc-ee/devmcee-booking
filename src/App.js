@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import './App.css';
 import Calendar from "./components/Calendar";
 import PaymentSelect from "./components/PaymentSelect";
+import BookingSummary from "./components/BookingSummary";
 
 const initValues = {
 	services: [
@@ -122,14 +123,16 @@ export default function App() {
 
 							</Step>
 
-							<Step><StepLabel>Review</StepLabel>
+							<Step><StepLabel>Review & Confirm</StepLabel>
 
-								<StepContent></StepContent>
+								<StepContent>
+									<BookingSummary/>
+								</StepContent>
 
 							</Step>
 
 						</Stepper>
-						<pre>{JSON.stringify(formik.values.payment, null, 2)}</pre>
+						<pre>{JSON.stringify(formik.values, null, 2)}</pre>
 					</Form>
 				)}
 			</Formik>
