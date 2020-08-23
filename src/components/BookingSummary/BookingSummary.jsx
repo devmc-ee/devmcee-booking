@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	total: {
 		fontWeight: 700,
+		padding: theme.spacing(1, 0)
 	},
 	title: {
 		marginTop: theme.spacing(1),
@@ -30,15 +31,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BookingSummary = ({setActiveStep}) => {
-	const locale = SETTINGS.locale;
+	const lang = SETTINGS.locale;
 	const [callingCode, setCallingCode] = useState('');
 	const classes = useStyles();
 	const {services,  appointment, contacts, payment} = useFormikContext().values;
 
 	const {forAnother, anotherName, countryCode} = contacts;
 	const {contactBillingDetails, contactBillingHeaders} = T.bookingSummary;
-	let servicesTotalCost = getTotalPrice([...services]);
-	console.log('servicesTotalCost',servicesTotalCost, [...services]);
+	const __services = T.bookingSummary.services;
+	const __appointment=  T.bookingSummary.appointment;
+	const servicesTotalCost = getTotalPrice([...services].map(service => service.serviceOption));
+
 	useEffect(() => {
 		let url = `https://restcountries.eu/rest/v2/alpha/${countryCode}?fields=callingCodes`;
 		fetch(url)
@@ -57,11 +60,11 @@ const BookingSummary = ({setActiveStep}) => {
 		<Grid container spacing={2}>
 			<Grid item xs={12} sm={5}>
 				<Typography variant="h6" gutterBottom align="left">
-					{T.bookingSummary.appointment.header[locale]}
+					{__appointment.header[lang]}
 				</Typography>
 
 				<Typography className={classes.subtitle} variant="subtitle2" gutterBottom align="left">
-					{T.bookingSummary.services.header[locale]}
+					{__services.header[lang]}
 				</Typography>
 
 				<Divider variant="inset"/>
@@ -70,8 +73,8 @@ const BookingSummary = ({setActiveStep}) => {
 					{services.map(({serviceBase, serviceOption}) => (
 						<ListItem className={classes.listItem} key={serviceOption}>
 							<ListItemText
-								primary={SERVICES[serviceBase][locale]}
-								secondary={SERVICE_OPTIONS_NAMES[SERVICE_OPTIONS[serviceBase][serviceOption]][locale]}/>
+								primary={SERVICES[serviceBase][lang]}
+								secondary={SERVICE_OPTIONS_NAMES[SERVICE_OPTIONS[serviceBase][serviceOption]][lang]}/>
 							<Typography variant="body2">
 								{SERVICE_PRICES[serviceOption].discountedPrice > 0
 									? <span className={classes.discountedPrice}>
@@ -83,16 +86,17 @@ const BookingSummary = ({setActiveStep}) => {
 					))}
 					<Divider variant="inset"/>
 					<ListItem className={classes.listItem}>
-						<ListItemText primary={T.bookingSummary.services.total[locale]}/>
+						<ListItemText primary=""/>
 						<Typography variant="subtitle1" className={classes.total}>
-							{servicesTotalCost}€
+							 {`${__services.total[lang]} ${servicesTotalCost}€`}
 						</Typography>
 					</ListItem>
+					<Divider variant="inset"/>
 				</List>
 
 				<List disablePadding>
 					<Typography className={classes.subbtitle} align="left" variant="subtitle2">
-						{T.bookingSummary.appointment.subbtitle[locale]}
+						{T.bookingSummary.appointment.subbtitle[lang]}
 					</Typography>
 					<ListItem className={classes.listItem}>
 						<ListItemText
@@ -101,7 +105,7 @@ const BookingSummary = ({setActiveStep}) => {
 
 					{((true === forAnother) || ('true' === forAnother))
 					&& (<Typography className={classes.subbtitle} align="left" variant="subtitle2">
-						{T.bookingSummary.appointment.anotherName[locale]}
+						{T.bookingSummary.appointment.anotherName[lang]}
 					</Typography>)}
 
 					{((true === forAnother) || ('true' === forAnother))
@@ -118,18 +122,18 @@ const BookingSummary = ({setActiveStep}) => {
 				<List disablePadding>
 
 					<Typography variant="h6" gutterBottom align="left">
-						{contactBillingHeaders.header[locale]}
+						{contactBillingHeaders.header[lang]}
 					</Typography>
 
 					{Object.keys(contactBillingDetails).map((key) =>
 						<div key={key}>
 							<Typography className={classes.subbtitle} align="left" variant="subtitle2">
-								{contactBillingDetails[key][locale]}
+								{contactBillingDetails[key][lang]}
 							</Typography>
 							<ListItem className={classes.listItem}>
 								{key === 'paymentMethod'
 									? <ListItemText
-										primary={SETTINGS.payment.methods[payment.method].name[locale]
+										primary={SETTINGS.payment.methods[payment.method].name[lang]
 										+ ` ${payment.addInfo}`}/>
 									: (key === 'telephone'
 										? <ListItemText

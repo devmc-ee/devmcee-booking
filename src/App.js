@@ -70,7 +70,7 @@ const ContactsStep = React.memo(({setActiveStep})=>{
 });
 
 export default function App() {
-	const [activeStep, setActiveStep] = useState(0);
+	const [activeStep, setActiveStep] = useState(4);
 	const submitHandler = values => {
 		console.log('Submit',values);
 		localStorage.clear();
