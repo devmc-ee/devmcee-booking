@@ -51,8 +51,8 @@ const PaymentSelect = React.memo(({setActiveStep}) => {
 			return "Required!";
 
 
-		if('LTG' !== value.substr(0, 3)){
-			return "The first letters of our giftcard codes are LTG..."
+		if(!(/LTG/i.test(value.substr(0, 3)))){
+			return "The first letters of our gift cards are LTG..."
 		}
 		if ( value.length < 4 ){
 			return "Please write full code, like LTG1234"

@@ -73,7 +73,6 @@ const Calendar = React.memo(({locale, setActiveStep}) => {
 
 	}
 
-
 	return (
 		<>
 			<div className="calendar-month-year">
