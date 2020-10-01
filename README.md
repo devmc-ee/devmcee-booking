@@ -5,7 +5,7 @@ select avaialble date and time for an appointment, enter
 contact details (incl. another person name, if booking is for another person),
 and selecting payment options. The final step is review of the booking details and 
 confirmation.
-
+![devmcee-booking sample view](devmcee-booking.gif "Booking app, Reactjs")
 The app is built with **React.js** by using the hooks 
  technique. The forms are build mostly with [Formik](https://formik.org/docs/overview) library. 
  The design and form visual interactions are provided with [Material-UI](https://material-ui.com/) React library.
@@ -17,6 +17,17 @@ services info, working time and etc ) from the backend. Meanwhile static JSON ob
  (imported from js) are used as a data source.  
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Start
+Clone the repository: 
+
+### `git clone https://github.com/devmc-ee/devmcee-booking.git`
+
+Install dependencies
+
+### `yarn`
+
+Start the app with the start script (see below)
 
 ## Available Scripts
 
