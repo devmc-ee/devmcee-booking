@@ -5,7 +5,8 @@ import SelectService from './components/SelectService';
 import TotalServicesLabel from './components/TotalServicesLabel';
 import SelectAppointmentLabel from './components/SelectAppointmentLabel';
 import ContactDetails from "./components/ContactDetails";
-import ContactsStepLabel from './components/ContactsStepLabel'
+import ContactsStepLabel from './components/ContactsStepLabel';
+import * as DATA from './DATA';
 import * as Yup from 'yup';
 import './App.css';
 import Calendar from "./components/Calendar";
@@ -57,7 +58,7 @@ const ValidationSchema = Yup.object().shape({
 			.max(50, 'Too long!')
 	})
 
-})
+});
 const savedValues = JSON.parse(localStorage.getItem("bookingFormData"));
 const ServiceStep = React.memo(({ setActiveStep})=>{
 
@@ -70,11 +71,11 @@ const ContactsStep = React.memo(({setActiveStep})=>{
 });
 
 export default function App() {
-	const [activeStep, setActiveStep] = useState(3);
+	const [activeStep, setActiveStep] = useState(0);
 	const submitHandler = values => {
 		console.log('Submit',values);
 		localStorage.clear();
-	}
+	};
 	return (
 		<div className="App">
 			<h1>Booking:</h1>
@@ -135,7 +136,11 @@ export default function App() {
 							</Step>
 
 						</Stepper>
+
+						<h3>Formik context data</h3>
 						<pre>{JSON.stringify(formik, null, 2)}</pre>
+						<h3>Calendar Settings</h3>
+						<pre>{JSON.stringify(DATA.CALENDAR_SETTINGS, null, 2)}</pre>
 					</Form>
 				)}
 			</Formik>
