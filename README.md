@@ -26,6 +26,10 @@ Clone the repository:
 
 ### `git clone https://github.com/devmc-ee/devmcee-booking.git`
 
+Change directory to devmcee-booking
+
+### `cd devmcee-booking`
+
 Install dependencies
 
 ### `yarn`
